@@ -204,6 +204,34 @@ main{padding-inline:24px;padding-block:24px 48px;display:grid;gap:28px;min-width
 .pocket li::before{content:"";width:14px;height:14px;border:1.5px solid var(--sec-fg);border-radius:3px;flex:none;margin-top:4px}
 .pocket .never li::before{border-color:var(--bad)}
 .copyrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+/* builder */
+.build{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+@media (max-width:980px){.build{grid-template-columns:1fr 1fr}.build .never{grid-column:1/-1}}
+@media (max-width:640px){.build{grid-template-columns:1fr}}
+.bcol{display:grid;gap:12px;padding:16px}
+.bcol-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bcol-h h3{font-size:15px;font-weight:700;color:var(--brand)}
+.cnt{font-size:12px;font-weight:600;color:var(--sec-fg);background:var(--secondary);border-radius:8px;padding:2px 8px;font-variant-numeric:tabular-nums}
+.bi{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start}
+.bt{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);margin-top:1px;display:grid;place-items:center;transition:background .15s}
+.bi.ok .bt{background:var(--accent);border-color:var(--accent)}
+.bi.ok .bt::after{content:"";width:9px;height:5px;border:2.5px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.bf{display:grid;gap:6px;min-width:0}
+.bl{font-size:14px;font-weight:500;color:var(--fg)}
+.bi.ok .bl{color:var(--accent-dk)}
+.bf input[type=text],.bf select,.bf textarea{width:100%;font:14px var(--font);color:var(--fg);background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:7px 10px}
+.bf textarea{resize:vertical;font-family:var(--font)}
+.bf input:focus,.bf select:focus,.bf textarea:focus{outline:none;border:2px solid var(--accent);padding:6px 9px}
+.inl{display:flex;gap:6px}
+.inl input{flex:1;min-width:0}
+.btn.sm{height:34px;padding:0 10px;font-size:13px;border-radius:var(--r-sm)}
+.ck{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--sec-fg);cursor:pointer}
+.ck input{width:16px;height:16px;margin-top:2px;accent-color:var(--accent-dk);flex:none}
+.nv-ck{font-size:14px;color:var(--fg);padding:6px 0;border-bottom:1px solid var(--border)}
+.nv-ck:last-child{border-bottom:0}
+.nv-ck input{accent-color:var(--bad)}
+.build-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:12px 16px;position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:5}
+.bb-status{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--accent-dk);color:#fff;padding:10px 16px;border-radius:var(--r-md);font-size:14px;z-index:60}
 
 /* footer */
@@ -227,7 +255,7 @@ footer{grid-column:1/-1;background:var(--card);border-top:1px solid var(--border
       <a href="#escalar" data-i="up">Antes de escalar<span class="n" id="n-escalar">0/6</span></a>
       <a href="#pratique" data-i="play">Pratique</a>
       <a href="#nunca" data-i="ban">Nunca<span class="n" id="n-nunca">0/5</span></a>
-      <a href="#bolso" data-i="list">Checklist de bolso</a>
+      <a href="#bolso" data-i="list">Montar chamado</a>
     </nav>
   </aside>
 
@@ -450,33 +478,80 @@ Aconteceu 3 vezes entre 14:05 e 14:15.</pre></div>
     <!-- BOLSO -->
     <section class="sec" id="bolso">
       <div class="sec-head">
-        <span class="eyebrow">Para deixar do lado do teclado</span>
-        <h2>Checklist de bolso</h2>
-        <p>A versão curta, para conferir antes de fechar ou escalar cada chamado.</p>
+        <span class="eyebrow">Para usar em cada atendimento</span>
+        <h2>Montar o chamado</h2>
+        <p>Deixe esta parte aberta durante o atendimento. Cada item do checklist se marca sozinho quando você preenche o campo dele. No final, copie o chamado pronto e cole na ferramenta.</p>
       </div>
-      <div class="pocket">
-        <div class="card"><h3>Antes de responder</h3><ul>
-          <li>Identifiquei o município, o usuário e o módulo</li>
-          <li>Classifiquei: dúvida, erro, configuração ou melhoria</li>
-          <li>Avaliei o impacto e se existe prazo legal envolvido</li></ul></div>
-        <div class="card"><h3>Antes de escalar para o N2</h3><ul>
-          <li>Consegui reproduzir o problema (ou registrei por que não consegui)</li>
-          <li>Descrevi os passos, o esperado e o obtido</li>
-          <li>Anexei print da tela e da mensagem de erro</li>
-          <li>Capturei a requisição no F12 (status, URL, resposta)</li>
-          <li>Registrei a data e hora da ocorrência</li>
-          <li>Registrei o que já tentei</li></ul></div>
-        <div class="card never"><h3 style="color:var(--bad)">Nunca</h3><ul>
-          <li>Pedir senha ao usuário</li>
-          <li>Prometer prazo de correção</li>
-          <li>Alterar dados em produção</li>
-          <li>Comentar o caso de um cliente com outro</li>
-          <li>Expor CPF ou dados pessoais fora do chamado</li></ul></div>
+      <div class="build">
+        <div class="card bcol">
+          <div class="bcol-h"><h3>Antes de responder</h3><span class="cnt" id="cR">0/3</span></div>
+          <div class="bi" data-k="ident"><span class="bt"></span><div class="bf">
+            <label class="bl">Identifiquei o município, o usuário e o módulo</label>
+            <input id="f-mun" type="text" placeholder="Município">
+            <input id="f-usu" type="text" placeholder="Usuário e setor">
+            <input id="f-mod" type="text" placeholder="Módulo e tela">
+          </div></div>
+          <div class="bi" data-k="class"><span class="bt"></span><div class="bf">
+            <label class="bl" for="f-cla">Classifiquei: dúvida, erro, configuração ou melhoria</label>
+            <select id="f-cla"><option value="">Selecione</option><option>Dúvida</option><option>Erro</option><option>Configuração</option><option>Melhoria</option></select>
+          </div></div>
+          <div class="bi" data-k="prio"><span class="bt"></span><div class="bf">
+            <label class="bl" for="f-pri">Avaliei o impacto e se existe prazo legal envolvido</label>
+            <select id="f-pri"><option value="">Prioridade</option><option>Normal</option><option>Alta</option><option>Crítica</option></select>
+            <input id="f-imp" type="text" placeholder="Por quê? Ex.: 1 usuário, vencimento sexta">
+          </div></div>
+        </div>
+
+        <div class="card bcol">
+          <div class="bcol-h"><h3>Antes de escalar para o N2</h3><span class="cnt" id="cE">0/6</span></div>
+          <div class="bi" data-k="repro"><span class="bt"></span><div class="bf">
+            <label class="bl" for="f-rep">Consegui reproduzir (ou registrei por que não consegui)</label>
+            <input id="f-rep" type="text" placeholder="Ex.: reproduzi em homologação com a inscrição X">
+          </div></div>
+          <div class="bi" data-k="passos"><span class="bt"></span><div class="bf">
+            <label class="bl" for="f-pas">Descrevi os passos, o esperado e o obtido</label>
+            <textarea id="f-pas" rows="3" placeholder="1. ...&#10;2. ..."></textarea>
+            <input id="f-esp" type="text" placeholder="Esperado">
+            <input id="f-obt" type="text" placeholder="Obtido">
+          </div></div>
+          <div class="bi" data-k="print"><span class="bt"></span><div class="bf">
+            <label class="bl" for="f-msg">Anexei print da tela e da mensagem de erro</label>
+            <input id="f-msg" type="text" placeholder="Mensagem de erro exata">
+            <label class="ck"><input id="f-prt" type="checkbox"> Print da tela inteira anexado</label>
+          </div></div>
+          <div class="bi" data-k="f12"><span class="bt"></span><div class="bf">
+            <label class="bl" for="f-f12">Capturei a requisição no F12 (status, URL, resposta)</label>
+            <textarea id="f-f12" rows="2" placeholder="Cole aqui o que copiou da aba Network"></textarea>
+            <label class="ck"><input id="f-nof12" type="checkbox"> Não se aplica (sem requisição com erro)</label>
+          </div></div>
+          <div class="bi" data-k="hora"><span class="bt"></span><div class="bf">
+            <label class="bl" for="f-hor">Registrei a data e hora da ocorrência</label>
+            <div class="inl"><input id="f-hor" type="text" placeholder="dd/mm/aaaa hh:mm"><button class="btn btn-o sm" type="button" id="agora"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Agora</button></div>
+          </div></div>
+          <div class="bi" data-k="tent"><span class="bt"></span><div class="bf">
+            <label class="bl" for="f-ten">Registrei o que já tentei</label>
+            <textarea id="f-ten" rows="2" placeholder="Ex.: limpou cache, testou em outro navegador"></textarea>
+          </div></div>
+        </div>
+
+        <div class="card bcol never">
+          <div class="bcol-h"><h3 style="color:var(--bad)">Nunca</h3><span class="cnt" id="cN">0/5</span></div>
+          <p class="note">Confirme antes de fechar o atendimento.</p>
+          <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv1"> Não pedi senha ao usuário</label>
+          <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv2"> Não prometi prazo de correção</label>
+          <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv3"> Não alterei dados em produção</label>
+          <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv4"> Não comentei o caso com outro cliente</label>
+          <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv5"> Não expus CPF ou dados pessoais fora do chamado</label>
+        </div>
       </div>
-      <div class="copyrow">
-        <button class="btn btn-p" type="button" id="copyTpl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar modelo de chamado</button>
-        <span class="note">Copia os campos em branco para colar na ferramenta de chamados.</span>
+      <div class="build-bar">
+        <div class="bb-status"><span class="chip" id="bbChip" style="background:var(--bad)">Incompleto</span><span id="bbTxt" class="note">Faltam 9 itens antes de escalar.</span></div>
+        <div class="pr-ctrl">
+          <button class="btn btn-o" type="button" id="bbNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Novo chamado</button>
+          <button class="btn btn-p" type="button" id="bbCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar chamado</button>
+        </div>
       </div>
+      <p class="note">O rascunho fica salvo só neste navegador. Não coloque CPF nem dados pessoais aqui: eles vão direto na ferramenta oficial de chamados.</p>
     </section>
   </main>
 
@@ -620,23 +695,67 @@ Aconteceu 3 vezes entre 14:05 e 14:15.</pre></div>
   $('#prReset').addEventListener('click',()=>{ st=0; tk={...base}; drawTicket(); });
   drawTicket();
 
-  /* template copy */
-  $('#copyTpl').addEventListener('click',()=>copy(
-`Município / cliente:
-Usuário (nome e setor):
-Produto / módulo:
-Tela / funcionalidade:
-Classificação (dúvida | erro | configuração | melhoria):
-Prioridade (impacto e prazo legal):
-Reproduzi? (sim, com qual dado / não, por quê):
+  /* builder */
+  const BK='coplan-n1-rascunho';
+  const fids=['f-mun','f-usu','f-mod','f-cla','f-pri','f-imp','f-rep','f-pas','f-esp','f-obt','f-msg','f-prt','f-f12','f-nof12','f-hor','f-ten','nv1','nv2','nv3','nv4','nv5'];
+  const v=id=>{ const el=document.getElementById(id); return el.type==='checkbox'?el.checked:el.value.trim(); };
+  const rules={
+    ident:()=>v('f-mun')&&v('f-usu')&&v('f-mod'),
+    class:()=>!!v('f-cla'),
+    prio:()=>v('f-pri')&&v('f-imp'),
+    repro:()=>!!v('f-rep'),
+    passos:()=>v('f-pas')&&v('f-esp')&&v('f-obt'),
+    print:()=>v('f-prt')&&(v('f-msg')||v('f-cla')!=='Erro'),
+    f12:()=>!!(v('f-f12')||v('f-nof12')),
+    hora:()=>!!v('f-hor'),
+    tent:()=>!!v('f-ten')
+  };
+  const labelsB={ident:'município, usuário e módulo',class:'classificação',prio:'prioridade e motivo',repro:'reprodução',passos:'passos, esperado e obtido',print:'print e mensagem de erro',f12:'requisição do F12 (ou marcar que não se aplica)',hora:'data e hora',tent:'o que já tentou'};
+  function evalB(){
+    const miss=[];
+    $$('.build .bi').forEach(b=>{ const ok=!!rules[b.dataset.k](); b.classList.toggle('ok',ok); if(!ok) miss.push(b.dataset.k); });
+    const r=['ident','class','prio'].filter(k=>!miss.includes(k)).length;
+    const e=['repro','passos','print','f12','hora','tent'].filter(k=>!miss.includes(k)).length;
+    const n=$$('.nv-in').filter(x=>x.checked).length;
+    $('#cR').textContent=r+'/3'; $('#cE').textContent=e+'/6'; $('#cN').textContent=n+'/5';
+    const chip=$('#bbChip'), txt=$('#bbTxt');
+    if(!miss.length && n===5){ chip.textContent='Pronto para o N2'; chip.style.background='var(--accent-dk)'; txt.textContent='Tudo preenchido. Pode copiar e escalar.'; }
+    else if(!miss.length){ chip.textContent='Quase'; chip.style.background='var(--warn)'; txt.textContent='Confirme os itens do Nunca antes de fechar.'; }
+    else { chip.textContent=miss.length>5?'Incompleto':'Melhorando'; chip.style.background=miss.length>5?'var(--bad)':'var(--warn)'; txt.textContent='Falta: '+miss.map(k=>labelsB[k]).join(', ')+'.'; }
+    return miss;
+  }
+  function saveB(){ try{ const o={}; fids.forEach(id=>o[id]=v(id)); localStorage.setItem(BK,JSON.stringify(o)); }catch(e){} }
+  try{ const o=JSON.parse(localStorage.getItem(BK)||'null'); if(o) fids.forEach(id=>{ const el=document.getElementById(id); if(id in o){ if(el.type==='checkbox') el.checked=!!o[id]; else el.value=o[id]; } }); }catch(e){}
+  fids.forEach(id=>{ const el=document.getElementById(id); el.addEventListener('input',()=>{evalB();saveB();}); el.addEventListener('change',()=>{evalB();saveB();}); });
+  $('#agora').addEventListener('click',()=>{ const d=new Date(); const p=x=>String(x).padStart(2,'0'); $('#f-hor').value=`${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`; evalB(); saveB(); });
+  let confirmNew=false;
+  $('#bbNew').addEventListener('click',()=>{
+    const b=$('#bbNew');
+    if(!confirmNew){ confirmNew=true; b.lastChild.textContent='Clique de novo para limpar'; setTimeout(()=>{confirmNew=false; b.lastChild.textContent='Novo chamado';},3000); return; }
+    fids.forEach(id=>{ const el=document.getElementById(id); if(el.type==='checkbox') el.checked=false; else el.value=''; });
+    confirmNew=false; b.lastChild.textContent='Novo chamado'; evalB(); saveB(); toast('Campos limpos para um novo chamado.');
+  });
+  $('#bbCopy').addEventListener('click',()=>{
+    const miss=evalB(); const o=k=>v(k)||'(não informado)';
+    const text=
+`Município / cliente: ${o('f-mun')}
+Usuário (nome e setor): ${o('f-usu')}
+Módulo / tela: ${o('f-mod')}
+Classificação: ${o('f-cla')}
+Prioridade: ${o('f-pri')}${v('f-imp')?' ('+v('f-imp')+')':''}
+Reprodução: ${o('f-rep')}
 Passos para reproduzir:
-1.
-Resultado esperado:
-Resultado obtido:
-Mensagem de erro:
-Evidências (prints, requisição F12: URL, status, resposta):
-Data e hora:
-Já tentado:`,'Modelo copiado.'));
+${o('f-pas')}
+Resultado esperado: ${o('f-esp')}
+Resultado obtido: ${o('f-obt')}
+Mensagem de erro: ${o('f-msg')}
+Print anexado: ${v('f-prt')?'sim':'não'}
+Requisição (F12): ${v('f-nof12')&&!v('f-f12')?'não se aplica':o('f-f12')}
+Data e hora: ${o('f-hor')}
+Já tentado: ${o('f-ten')}`;
+    copy(text, miss.length?'Copiado, mas faltam '+miss.length+' itens. Revise antes de escalar.':'Chamado copiado. Cole na ferramenta de chamados.');
+  });
+  evalB();
 
   /* scroll spy */
   const links=$$('#nav a'); const secs=links.map(a=>document.querySelector(a.getAttribute('href')));

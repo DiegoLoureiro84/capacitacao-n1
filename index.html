@@ -3,113 +3,191 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
 </head>
 <body>
-<title>Checklist do N1</title>
+<title>Guia de Capacitação N1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: shell do Design System Coplan v2.0 (header fixo, sidebar, rodapé); conteúdo em cards por etapa do checklist. Tema único claro, como o DS v2.0. */
+/* Layout: shell do Design System Coplan v2.0 (header fixo, menu lateral com o roteiro do dia, rodapé). Uma tela por bloco do cronograma, com anterior/próximo. Tema claro único, como o DS v2.0. */
 :root{
   color-scheme:light;
-  --primary:#1F4993; --primary-dk:#1A3E7D; --brand:#032861;
+  --primary:#1F4993; --primary-dk:#183A78; --brand:#032861;
   --accent:#75C566; --accent-dk:#01814E; --accent-soft:#E6F8F0; --row:#EAF7EE;
-  --bg:#F5F7FC; --card:#FFFFFF; --fg:#0A1A2E; --muted:#8A8A8D; --sec-fg:#57575A;
+  --bg:#F5F7FC; --card:#FFFFFF; --fg:#0A1A2E; --muted:#6E6E73; --sec-fg:#57575A;
   --border:#E0E0E1; --secondary:#F5F5F6; --readonly:#EEF1FA;
-  --bad:#EF4444; --bad-soft:#FDECEC; --warn:#F97316; --warn-soft:#FEF0E6;
+  --bad:#DC2626; --bad-soft:#FDECEC; --warn:#C2410C; --warn-soft:#FEF0E6;
+  --manha:#9A5B06; --manha-soft:#FEF4D8; --tarde:#1F4993; --tarde-soft:#E8EEF9; --n2:#6B21A8; --n2-soft:#F3EAFB;
   --font:"Exo 2",ui-sans-serif,system-ui,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
   --r-lg:12.8px; --r-md:10.8px; --r-sm:8.8px;
 }
 *{box-sizing:border-box}
-html,body{background:var(--bg)}
-body{color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.55}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15.5px;line-height:1.55;margin:0}
 h1,h2,h3,h4{margin:0;line-height:1.2;text-wrap:balance}
 p{margin:0}
-button{font-family:var(--font)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-
-/* ===== header ===== */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--card);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;gap:16px;padding-inline:16px}
-.brand{display:flex;align-items:center;gap:10px;min-width:0}
-.brand .mark{width:30px;height:30px;border-radius:8px;background:var(--primary);display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;flex:none}
-.brand b{font-size:18px;font-weight:700;color:var(--brand);white-space:nowrap}
-.brand span{font-size:13px;color:var(--muted);white-space:nowrap}
-.unit{margin-left:auto;display:flex;align-items:center;gap:12px}
-.ug{font-size:13px;border:1px solid var(--border);border-radius:var(--r-sm);padding:6px 10px;color:var(--sec-fg);background:var(--secondary);white-space:nowrap}
-.prog{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sec-fg);white-space:nowrap}
-.bar{width:120px;height:8px;border-radius:99px;background:var(--muted);background:#E6E6E7;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
-@media (max-width:720px){.ug,.brand span{display:none}.bar{width:70px}}
-
-/* ===== shell ===== */
-.shell{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:calc(100vh - 60px)}
-.side{background:var(--card);border-right:1px solid var(--border);padding:16px 12px;position:sticky;top:60px;align-self:start;height:calc(100vh - 60px);overflow-y:auto}
-.side p{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:4px 10px 8px}
-.nav{display:grid;gap:4px}
-.nav a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;color:var(--sec-fg);text-decoration:none;font-weight:500;font-size:14px;transition:background .15s,color .15s}
-.nav a svg{width:18px;height:18px;flex:none}
-.nav a .n{margin-left:auto;font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted)}
-.nav a:hover,.nav a.on{background:var(--accent);color:#fff}
-.nav a:hover .n,.nav a.on .n{color:#fff}
-main{padding-inline:24px;padding-block:24px 48px;display:grid;gap:28px;min-width:0;max-width:1000px}
-@media (max-width:900px){
-  .shell{grid-template-columns:1fr}
-  .side{position:sticky;top:60px;z-index:20;height:auto;border-right:0;border-bottom:1px solid var(--border);padding:8px 16px;overflow-x:auto}
-  .side p{display:none}
-  .nav{display:flex;gap:6px;width:max-content}
-  .nav a{white-space:nowrap;padding:7px 10px}
-  .nav a .n{display:none}
-  main{padding-inline:16px}
-}
-
-/* ===== common ===== */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px}
-.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--primary);font-weight:600}
-.sec{display:grid;gap:14px;scroll-margin-top:120px}
-.sec-head{display:grid;gap:6px}
-.sec-head h2{font-size:26px;font-weight:700;color:var(--brand)}
-.sec-head p{color:var(--sec-fg);max-width:68ch}
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:var(--r-sm);color:#fff;white-space:nowrap}
-.chip.ok{background:var(--accent-dk)} .chip.bad{background:var(--bad)} .chip.info{background:var(--primary)} .chip.warn{background:var(--warn)}
-.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:var(--r-lg);border:1px solid transparent;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s}
-.btn svg{width:16px;height:16px}
-.btn-p{background:var(--primary);color:#fff} .btn-p:hover{background:var(--primary-dk)}
-.btn-o{background:var(--card);color:var(--sec-fg);border-color:var(--border)} .btn-o:hover{background:var(--accent-soft)}
-.btn[disabled]{opacity:.5;cursor:not-allowed}
+a{color:var(--primary)}
+button,input,select,textarea{font-family:var(--font);color:var(--fg)}
+:focus-visible{outline:2px solid var(--accent-dk);outline-offset:2px}
 .mono{font-family:var(--mono);font-size:13px}
-
-/* ===== hero ===== */
-.hero{display:grid;gap:16px;background:var(--brand);color:#fff;border:0}
-.hero h1{font-size:clamp(28px,4.5vw,36px);font-weight:800}
-.hero p{max-width:62ch;color:#D6E0F2;font-size:16px}
-.hero strong{color:#fff}
-.stats{display:flex;flex-wrap:wrap;gap:10px}
-.stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:var(--r-md);padding:10px 14px;display:grid;gap:2px;min-width:140px}
-.stat b{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
-.stat span{font-size:13px;color:#C9D5EC}
-.hero .btn-p{background:var(--accent);color:var(--brand);font-weight:600}
-.hero .btn-p:hover{background:#86D178}
 .note{font-size:13px;color:var(--muted)}
 
-/* ===== checklist item ===== */
-.items{display:grid;gap:10px}
-.item{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.item.done{border-color:var(--accent)}
-.item-h{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;width:100%;background:none;border:0;text-align:left;color:var(--fg)}
-.item-h:hover{background:var(--row)}
-.tick{width:24px;height:24px;border-radius:7px;border:2px solid var(--border);display:grid;place-items:center;flex:none;background:var(--card)}
-.tick svg{width:15px;height:15px;opacity:0;color:#fff}
-.item.done .tick{background:var(--accent);border-color:var(--accent)}
-.item.done .tick svg{opacity:1}
-.item-h h3{font-size:16px;font-weight:600;flex:1;min-width:0}
-.item-h .chev{width:18px;height:18px;color:var(--muted);transition:transform .2s;flex:none}
-.item.open .chev{transform:rotate(180deg)}
-.item-b{padding:4px 16px 18px 52px;display:grid;gap:14px}
-@media (max-width:600px){.item-b{padding-left:16px}}
-.why{color:var(--sec-fg);max-width:68ch}
-.why b{color:var(--fg)}
+/* ===== header ===== */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--card);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;gap:12px;padding-inline:16px}
+.menu-btn{display:none;width:40px;height:40px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--card);align-items:center;justify-content:center;cursor:pointer;flex:none}
+.menu-btn svg{width:20px;height:20px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;text-decoration:none;color:inherit}
+.brand .mark{width:32px;height:32px;border-radius:8px;background:var(--primary);display:grid;place-items:center;color:#fff;font-weight:800;font-size:16px;flex:none}
+.brand .bt{display:grid;line-height:1.15;min-width:0}
+.brand b{font-size:17px;font-weight:700;color:var(--brand)}
+.brand small{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sec-fg);white-space:nowrap}
+.bar{width:120px;height:8px;border-radius:99px;background:#E6E6E7;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+@media (max-width:560px){.bar{width:56px}.prog .lbl{display:none}}
+
+/* ===== shell ===== */
+.shell{display:grid;grid-template-columns:288px minmax(0,1fr)}
+.side{position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;background:var(--card);border-right:1px solid var(--border);padding:12px 10px 32px}
+.ng{display:grid;gap:2px;margin-bottom:12px}
+.ng-h{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:8px 10px 4px;display:flex;gap:6px;align-items:center}
+.ng-h.m{color:var(--manha)} .ng-h.t{color:var(--tarde)} .ng-h.f{color:var(--accent-dk)} .ng-h.n2{color:var(--n2)} .ng-h.i{color:var(--muted)}
+.ni{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:6px;align-items:center;padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--sec-fg);font-size:14px;font-weight:500;transition:background .15s,color .15s}
+.ni .tm{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.ni:hover{background:var(--accent-soft);color:var(--fg)}
+.ni.on{background:var(--accent);color:#fff} .ni.on .tm{color:#fff}
+.ni .ok{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border);display:grid;place-items:center}
+.ni.done .ok{background:var(--accent-dk);border-color:var(--accent-dk)}
+.ni.done .ok::after{content:"";width:7px;height:4px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(0,-1px)}
+.ni.on.done .ok{background:#fff;border-color:#fff} .ni.on.done .ok::after{border-color:var(--accent-dk)}
+.ni.pausa{grid-template-columns:42px minmax(0,1fr);font-size:12.5px;color:var(--muted);padding:3px 10px;pointer-events:none}
+.now-pill{font-size:10.5px;font-weight:700;background:var(--bad);color:#fff;border-radius:6px;padding:1px 6px;letter-spacing:.04em}
+main{padding-inline:24px;padding-block:24px 40px;min-width:0;display:grid;gap:24px;align-content:start}
+.scrim{position:fixed;inset:0;background:rgba(3,40,97,.35);z-index:34}
+@media (max-width:960px){
+  .menu-btn{display:inline-flex}
+  .shell{grid-template-columns:1fr}
+  .side{position:fixed;top:calc(60px + env(safe-area-inset-top,0px));left:0;bottom:0;height:auto;width:min(320px,88vw);z-index:35;transform:translateX(-105%);transition:transform .2s ease;box-shadow:8px 0 24px rgba(3,40,97,.12)}
+  .side.open{transform:none}
+  main{padding-inline:16px;padding-block:18px 40px}
+}
+
+/* ===== now bar ===== */
+.nowbar{max-width:880px;width:100%;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bad-soft);border:1px solid #F7C4C4;color:var(--fg);border-radius:var(--r-md);padding:10px 14px;text-decoration:none;font-size:14px}
+.nowbar b{color:var(--bad)}
+
+/* ===== views ===== */
+.view{max-width:880px;width:100%;margin:0 auto;display:grid;gap:22px;min-width:0}
+#v-os{max-width:1120px}
+.vh{display:grid;gap:12px}
+.vmeta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px;color:var(--sec-fg)}
+.per{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.per.m{background:var(--manha-soft);color:var(--manha)} .per.t{background:var(--tarde-soft);color:var(--tarde)}
+.per.f{background:var(--accent-soft);color:var(--accent-dk)} .per.n2{background:var(--n2-soft);color:var(--n2)}
+.per.x{background:var(--bad-soft);color:var(--bad)}
+.vh h1{font-size:clamp(26px,4.4vw,34px);font-weight:800;color:var(--brand)}
+.lead{font-size:16.5px;color:var(--sec-fg);max-width:66ch}
+.topics{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.topics .tl{font-size:12px;color:var(--muted);margin-right:2px}
+.topic{font-size:13px;border:1px solid var(--border);background:var(--card);border-radius:999px;padding:3px 11px;color:var(--fg)}
+.whos{display:flex;flex-wrap:wrap;gap:10px 18px}
+.who{display:flex;gap:10px;align-items:center;min-width:0}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;color:#fff;flex:none}
+.who b{font-size:14px;display:block}
+.who span{font-size:12.5px;color:var(--muted)}
+
+.blk{display:grid;gap:12px;min-width:0}
+.blk > h2{font-size:21px;font-weight:700;color:var(--brand)}
+.blk > p{max-width:68ch;color:var(--sec-fg)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;min-width:0}
+.card h3{font-size:16.5px;font-weight:700;color:var(--brand)}
+.stack{display:grid;gap:10px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.g3{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.g2,.g3{grid-template-columns:1fr}}
+.kv{display:grid;gap:4px}
+.kv .k{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.kv.coplan .k{color:var(--accent-dk)}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:5px}
+ol.clean{margin:0;padding-left:20px;display:grid;gap:6px}
+.ex-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--primary)}
+.ex-badge::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent)}
+.exercise{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:var(--r-lg);padding:18px;display:grid;gap:12px;min-width:0}
+.exercise h3{font-size:17px;font-weight:700;color:var(--fg)}
+.callout{background:var(--readonly);border:1px solid #D5DCF0;border-radius:var(--r-lg);padding:14px 16px;display:grid;gap:6px}
+.callout.warn{background:var(--warn-soft);border-color:#F9D3B5}
+.callout b{color:var(--brand)}
+
+/* hero */
+.hero{background:var(--brand);color:#fff;border-radius:var(--r-lg);padding:24px;display:grid;gap:16px}
+.hero .eb{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#9FD993}
+.hero h1{color:#fff;font-size:clamp(28px,5vw,40px);font-weight:800}
+.hero p{color:#D6E0F2;max-width:62ch;font-size:16px}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.facts{grid-template-columns:1fr 1fr}}
+.fact{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:var(--r-md);padding:10px 12px;display:grid;gap:2px;min-width:0}
+.fact span{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#AFC1E3}
+.fact b{font-size:15.5px;font-weight:600}
+.fact small{font-size:12.5px;color:#C9D5EC}
+.daystat{display:flex;align-items:center;gap:8px;font-size:14px;background:rgba(117,197,102,.16);border:1px solid rgba(117,197,102,.4);border-radius:var(--r-sm);padding:8px 12px;color:#fff}
+.daystat a{color:#B9E8AE}
+.halves{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:620px){.halves{grid-template-columns:1fr}}
+.half{border-radius:var(--r-lg);padding:16px;display:grid;gap:6px;border:1px solid var(--border);background:var(--card)}
+.half.m{border-top:4px solid var(--manha)} .half.t{border-top:4px solid var(--tarde)}
+.half .per{justify-self:start}
+
+/* agenda */
+.agenda{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.ag-h{display:grid;gap:8px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.ag-h.m{background:var(--manha-soft)} .ag-h.t{background:var(--tarde-soft)}
+.ag-h .row{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between}
+.ag-h h3{font-size:17px;color:var(--fg)}
+.ag{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--fg);align-items:start}
+.ag:last-child{border-bottom:0}
+a.ag:hover{background:var(--row)}
+.ag .tm{font-family:var(--mono);font-size:12.5px;color:var(--sec-fg);display:grid}
+.ag .tm small{font-family:var(--font);color:var(--muted);font-size:12px}
+.ag .tt{display:grid;gap:2px;min-width:0}
+.ag .tt b{font-size:15px}
+.ag .tt span{font-size:13px;color:var(--sec-fg)}
+.ag .q{font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
+.ag.pausa{background:var(--secondary);padding:7px 16px;font-size:13px;color:var(--muted)}
+.ag.pausa .tt b{font-size:13px;font-weight:500;color:var(--sec-fg)}
+.ag.now{box-shadow:inset 4px 0 0 var(--bad);background:var(--bad-soft)}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-dk);background:var(--accent-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+@media (max-width:560px){.ag{grid-template-columns:72px minmax(0,1fr)}.ag .q{grid-column:2;text-align:left}}
+
+/* chat */
+.chat{display:grid;gap:8px}
+.msg{max-width:min(560px,94%);padding:10px 12px;border-radius:12px;font-size:14.5px;line-height:1.45;min-width:0;overflow-wrap:anywhere}
+.msg.in{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:4px;justify-self:start}
+.msg.out{background:#DDF3D7;border:1px solid #C3E6BA;border-bottom-right-radius:4px;justify-self:end}
+.msg .ms{display:block;font-size:11.5px;color:var(--muted);margin-bottom:3px;font-weight:600}
+.case{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;background:var(--readonly);border:1px solid #D5DCF0;border-radius:var(--r-lg);padding:14px 16px}
+.case .av{background:#7C3AED}
+.case .lbl{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--primary)}
+.case .body{display:grid;gap:8px;min-width:0}
+
+/* quiz */
+.quiz{display:grid;gap:10px}
+.q{border:1px solid var(--border);border-radius:var(--r-md);padding:12px;display:grid;gap:10px;background:var(--card)}
+.qp{font-weight:500}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts.stack{display:grid}
+.opt{border:1px solid var(--border);background:var(--card);border-radius:8px;padding:7px 12px;font-size:14px;cursor:pointer;color:var(--fg);text-align:left;line-height:1.4}
+.opt:hover{background:var(--row)}
+.opt.sel{border-color:var(--primary);background:var(--tarde-soft);box-shadow:inset 0 0 0 1px var(--primary)}
+.opt.right{background:var(--accent-dk);border-color:var(--accent-dk);color:#fff}
+.opt.wrong{background:var(--bad);border-color:var(--bad);color:#fff}
+.fb{font-size:14px;border-radius:8px;padding:8px 10px}
+.fb.ok{background:var(--accent-soft);color:#0B5A37}
+.fb.no{background:var(--bad-soft);color:#991B1B}
+
+/* compare */
 .cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media (max-width:640px){.cmp{grid-template-columns:1fr}}
 .ex{border-radius:var(--r-md);padding:12px 14px;display:grid;gap:6px;font-size:14px;min-width:0}
@@ -118,28 +196,91 @@ main{padding-inline:24px;padding-block:24px 48px;display:grid;gap:28px;min-width
 .ex .lbl{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 .ex.bad .lbl{color:#B42318} .ex.good .lbl{color:var(--accent-dk)}
 .ex pre{margin:0;font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;word-break:break-word;color:var(--fg)}
-.got{display:flex;justify-content:flex-end}
+.ex ul{margin:0;padding-left:18px;display:grid;gap:4px}
 
-/* classify quiz */
-.quiz{display:grid;gap:8px}
-.q{border:1px solid var(--border);border-radius:var(--r-md);padding:12px;display:grid;gap:8px}
-.q > p{font-weight:500}
-.opts{display:flex;flex-wrap:wrap;gap:6px}
-.opt{border:1px solid var(--border);background:var(--card);border-radius:8px;padding:5px 12px;font-size:13px;cursor:pointer;color:var(--sec-fg)}
-.opt:hover{background:var(--row)}
-.opt.right{background:var(--accent-dk);border-color:var(--accent-dk);color:#fff}
-.opt.wrong{background:var(--bad);border-color:var(--bad);color:#fff}
-.fb{font-size:13.5px;color:var(--sec-fg)}
+/* details (checklist, reveal) */
+details.it{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+details.it[open]{border-color:#BFE5B6}
+details.it > summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:13px 16px;font-weight:600;font-size:15px}
+details.it > summary::-webkit-details-marker{display:none}
+details.it > summary:hover{background:var(--row)}
+details.it > summary .n{width:26px;height:26px;border-radius:7px;background:var(--tarde-soft);color:var(--primary);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+details.it > summary .chev{margin-left:auto;width:18px;height:18px;color:var(--muted);transition:transform .2s;flex:none}
+details.it[open] > summary .chev{transform:rotate(180deg)}
+details.it .db{padding:2px 16px 16px 54px;display:grid;gap:12px}
+@media (max-width:600px){details.it .db{padding-left:16px}}
+details.rv{border:1px dashed var(--border);border-radius:var(--r-sm);padding:8px 12px;background:var(--card)}
+details.rv summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--primary)}
+details.rv[open]{border-style:solid;border-color:#BFE5B6;background:var(--accent-soft)}
+details.rv > div{margin-top:8px;font-size:14.5px}
 
-/* priority matrix */
+/* forms */
+.fld{display:grid;gap:5px;min-width:0}
+.fld label,.flbl{font-size:13px;font-weight:600;color:var(--sec-fg)}
+input[type=text],select,textarea{width:100%;font-size:14.5px;background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 10px;min-width:0}
+textarea{resize:vertical;line-height:1.45}
+input[type=text]:focus,select:focus,textarea:focus{outline:none;border:2px solid var(--accent);padding:7px 9px}
+.ck{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--fg);cursor:pointer}
+.ck input{width:17px;height:17px;margin-top:2px;accent-color:var(--accent-dk);flex:none}
+.counter{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.counter.over{color:var(--warn);font-weight:600}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:var(--r-lg);border:1px solid transparent;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s;text-decoration:none;white-space:nowrap}
+.btn svg{width:16px;height:16px;flex:none}
+.btn-p{background:var(--primary);color:#fff} .btn-p:hover{background:var(--primary-dk)}
+.btn-g{background:var(--accent-dk);color:#fff} .btn-g:hover{background:#016B41}
+.btn-o{background:var(--card);color:var(--sec-fg);border-color:var(--border)} .btn-o:hover{background:var(--accent-soft)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.sm{min-height:34px;padding:0 11px;font-size:13px;border-radius:var(--r-sm)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* view footer */
+.vf{display:grid;gap:12px;border-top:1px solid var(--border);padding-top:18px}
+.vf .nav2{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.vf .nav2 a{display:grid;gap:2px;text-decoration:none;border:1px solid var(--border);background:var(--card);border-radius:var(--r-md);padding:10px 14px;min-width:0;max-width:48%;color:var(--fg)}
+.vf .nav2 a:hover{background:var(--accent-soft)}
+.vf .nav2 a span{font-size:12px;color:var(--muted)}
+.vf .nav2 a b{font-size:14.5px;font-weight:600}
+.vf .nav2 a.nx{margin-left:auto;text-align:right}
+@media (max-width:520px){.vf .nav2 a{max-width:100%;flex:1 1 100%}}
+.notes{display:grid;gap:8px}
+
+/* matrix */
 .mx{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px;font-size:13.5px}
 .mx div{border-radius:8px;padding:10px;display:grid;gap:4px;align-content:start}
-.mx .ax{background:none;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;align-content:center}
+.mx .ax{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;align-content:center}
 .mx .c{border:1px solid var(--border)}
 .mx .c.p1{background:var(--bad-soft);border-color:#F7C4C4}
-.mx .c.p2,.mx .c.p3{background:var(--warn-soft);border-color:#F9D3B5}
+.mx .c.p2{background:var(--warn-soft);border-color:#F9D3B5}
 .mx .c.p4{background:var(--secondary)}
-@media (max-width:560px){.mx{grid-template-columns:1fr 1fr}.mx .ax.side-ax{display:none}}
+@media (max-width:560px){.mx{grid-template-columns:1fr 1fr}.mx .ax.sd{display:none}}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:var(--r-sm);color:#fff;white-space:nowrap;justify-self:start}
+.chip.ok{background:var(--accent-dk)} .chip.bad{background:var(--bad)} .chip.info{background:var(--primary)} .chip.warn{background:var(--warn)}
+
+/* flow */
+.flow{display:grid;gap:6px;justify-items:center}
+.fs{width:100%;max-width:560px;border-radius:var(--r-md);padding:12px 14px;border:1px solid var(--border);background:var(--card);display:grid;gap:3px}
+.fs .lv{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.fs b{font-size:15px}
+.fs span.d{font-size:13.5px;color:var(--sec-fg)}
+.fs.cli{background:var(--secondary)} .fs.cli .lv{color:var(--muted)}
+.fs.n1{border:2px solid var(--accent);background:var(--accent-soft)} .fs.n1 .lv{color:var(--accent-dk)}
+.fs.n2{border-color:#B9C8E8;background:var(--tarde-soft)} .fs.n2 .lv{color:var(--primary)}
+.fs.dev{border-color:#D8C4F0;background:var(--n2-soft)} .fs.dev .lv{color:var(--n2)}
+.farr{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.farr::before{content:"";width:2px;height:16px;background:var(--border)}
+.fbr{width:100%;max-width:560px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fbr div{border-radius:var(--r-sm);padding:10px 12px;font-size:13.5px;border:1px dashed var(--border);background:var(--card)}
+.fbr b{display:block;font-size:13.5px}
+@media (max-width:480px){.fbr{grid-template-columns:1fr}}
+
+/* products */
+.prod{display:grid;gap:6px;align-content:start}
+.prod .ic{width:34px;height:34px;border-radius:9px;background:var(--tarde-soft);color:var(--primary);display:grid;place-items:center}
+.prod .ic svg{width:18px;height:18px}
+.prod p{font-size:14px;color:var(--sec-fg)}
+.prod small{font-size:12.5px;color:var(--muted)}
 
 /* devtools mock */
 .dev{border:1px solid #3C4043;border-radius:var(--r-md);overflow:hidden;background:#202124;color:#E8EAED;font-family:var(--mono);font-size:12px}
@@ -148,7 +289,7 @@ main{padding-inline:24px;padding-block:24px 48px;display:grid;gap:28px;min-width
 .dev-tabs span.on{color:#E8EAED;border-bottom:2px solid #8AB4F8}
 .dev-wrap{overflow-x:auto}
 .dev table{border-collapse:collapse;width:100%;min-width:520px}
-.dev th,.dev td{padding:6px 10px;text-align:left;border-bottom:1px solid #3C4043;white-space:nowrap}
+.dev th,.dev td{padding:7px 10px;text-align:left;border-bottom:1px solid #3C4043;white-space:nowrap}
 .dev th{color:#9AA0A6;font-weight:400;background:#292A2D}
 .dev tbody tr{cursor:pointer}
 .dev tbody tr:hover{background:#2D3A4F}
@@ -157,383 +298,588 @@ main{padding-inline:24px;padding-block:24px 48px;display:grid;gap:28px;min-width
 .dev-det{border-top:1px solid #3C4043;padding:10px 12px;display:grid;gap:4px;background:#1B1C1E}
 .dev-det .k{color:#9AA0A6}
 .dev-det pre{margin:4px 0 0;white-space:pre-wrap;word-break:break-word;color:#E8EAED;font-family:var(--mono);font-size:12px}
-.dev-hint{font-family:var(--font);font-size:13.5px;color:var(--sec-fg)}
 
-/* practice */
-.pr{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start}
-@media (max-width:820px){.pr{grid-template-columns:1fr}}
-.ticket{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.ticket-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.ticket-h b{font-size:15px}
-.tf{display:grid;grid-template-columns:150px minmax(0,1fr);border-bottom:1px solid var(--border);font-size:14px}
-.tf:last-child{border-bottom:0}
-.tf .k{padding:9px 14px;color:var(--sec-fg);background:var(--secondary);font-weight:500}
-.tf .v{padding:9px 14px;min-width:0;word-break:break-word}
-.tf .v.empty{color:var(--muted);font-style:italic}
-.tf.new{animation:flash 1.4s ease}
-@keyframes flash{0%{background:var(--accent-soft)}100%{background:transparent}}
-@media (max-width:520px){.tf{grid-template-columns:1fr}.tf .k{padding-bottom:4px}}
-.n2{display:grid;gap:10px}
-.bubble{background:var(--readonly);border:1px solid #D5DCF0;border-radius:var(--r-lg);padding:14px;display:grid;gap:8px}
-.bubble h4{font-size:14px;color:var(--primary);display:flex;align-items:center;gap:8px}
-.bubble h4 svg{width:16px;height:16px}
-.bubble ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
-.bubble li.gone{text-decoration:line-through;color:var(--muted)}
+/* simulation */
+.rot{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg)}
+.rot table{border-collapse:collapse;width:100%;min-width:440px;font-size:14px}
+.rot th,.rot td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:left}
+.rot th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--secondary);font-weight:600}
+.rot tr:last-child td{border-bottom:0}
+.timer{display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between}
+.clock{font-family:var(--mono);font-size:44px;font-weight:500;color:var(--brand);font-variant-numeric:tabular-nums;line-height:1}
+.clock.end{color:var(--bad)}
+.rounds{display:flex;gap:6px}
+.rounds button{border:1px solid var(--border);background:var(--card);border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer}
+.rounds button.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:720px){.cases{grid-template-columns:1fr 1fr}}
+.cbtn{display:grid;gap:3px;text-align:left;border:1px solid var(--border);background:var(--card);border-radius:var(--r-md);padding:10px 12px;cursor:pointer;min-width:0}
+.cbtn:hover{background:var(--row)}
+.cbtn.on{border:2px solid var(--primary);padding:9px 11px;background:var(--tarde-soft)}
+.cbtn span{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.cbtn b{font-size:14px}
+.roles{display:flex;gap:6px;flex-wrap:wrap}
+.roles button{border:1px solid var(--border);background:var(--card);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;font-weight:500}
+.roles button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.rolebox{display:grid;gap:12px}
 .score{display:flex;align-items:baseline;gap:8px}
 .score b{font-size:30px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums}
-.pr-ctrl{display:flex;gap:8px;flex-wrap:wrap}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* never */
-.nv{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.nv-c{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;display:grid;gap:10px;align-content:start}
-.nv-c h3{font-size:16px;font-weight:600;display:flex;gap:8px;align-items:center}
-.nv-c h3 svg{width:18px;height:18px;color:var(--bad);flex:none}
-.say{font-size:14px;background:var(--secondary);border-radius:var(--r-sm);padding:10px 12px}
-.say i{font-style:normal;font-size:12px;color:var(--muted);display:block;margin-bottom:2px}
-.ans{font-size:14px;background:var(--accent-soft);border:1px solid #BFE5B6;border-radius:var(--r-sm);padding:10px 12px}
-.ans i{font-style:normal;font-size:12px;color:var(--accent-dk);display:block;margin-bottom:2px;font-weight:600}
-
-/* pocket */
-.pocket{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-@media (max-width:820px){.pocket{grid-template-columns:1fr}}
-.pocket .card{display:grid;gap:10px;align-content:start;padding:16px}
-.pocket h3{font-size:15px;font-weight:700;color:var(--brand)}
-.pocket ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14px}
-.pocket li{display:flex;gap:8px}
-.pocket li::before{content:"";width:14px;height:14px;border:1.5px solid var(--sec-fg);border-radius:3px;flex:none;margin-top:4px}
-.pocket .never li::before{border-color:var(--bad)}
-.copyrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 /* builder */
 .build{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
-@media (max-width:980px){.build{grid-template-columns:1fr 1fr}.build .never{grid-column:1/-1}}
+@media (max-width:1100px){.build{grid-template-columns:1fr 1fr}.build .never{grid-column:1/-1}}
 @media (max-width:640px){.build{grid-template-columns:1fr}}
 .bcol{display:grid;gap:12px;padding:16px}
 .bcol-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .bcol-h h3{font-size:15px;font-weight:700;color:var(--brand)}
 .cnt{font-size:12px;font-weight:600;color:var(--sec-fg);background:var(--secondary);border-radius:8px;padding:2px 8px;font-variant-numeric:tabular-nums}
 .bi{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start}
-.bt{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);margin-top:1px;display:grid;place-items:center;transition:background .15s}
-.bi.ok .bt{background:var(--accent);border-color:var(--accent)}
-.bi.ok .bt::after{content:"";width:9px;height:5px;border:2.5px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.bt2{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);margin-top:1px;display:grid;place-items:center;transition:background .15s}
+.bi.ok .bt2{background:var(--accent);border-color:var(--accent)}
+.bi.ok .bt2::after{content:"";width:9px;height:5px;border:2.5px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
 .bf{display:grid;gap:6px;min-width:0}
 .bl{font-size:14px;font-weight:500;color:var(--fg)}
 .bi.ok .bl{color:var(--accent-dk)}
-.bf input[type=text],.bf select,.bf textarea{width:100%;font:14px var(--font);color:var(--fg);background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:7px 10px}
-.bf textarea{resize:vertical;font-family:var(--font)}
-.bf input:focus,.bf select:focus,.bf textarea:focus{outline:none;border:2px solid var(--accent);padding:6px 9px}
 .inl{display:flex;gap:6px}
 .inl input{flex:1;min-width:0}
-.btn.sm{height:34px;padding:0 10px;font-size:13px;border-radius:var(--r-sm)}
-.ck{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--sec-fg);cursor:pointer}
-.ck input{width:16px;height:16px;margin-top:2px;accent-color:var(--accent-dk);flex:none}
-.nv-ck{font-size:14px;color:var(--fg);padding:6px 0;border-bottom:1px solid var(--border)}
+.nv-ck{padding:6px 0;border-bottom:1px solid var(--border)}
 .nv-ck:last-child{border-bottom:0}
 .nv-ck input{accent-color:var(--bad)}
-.build-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:12px 16px;position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:5}
-.bb-status{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--accent-dk);color:#fff;padding:10px 16px;border-radius:var(--r-md);font-size:14px;z-index:60}
+.build-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:12px 16px;position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:5;box-shadow:0 6px 20px rgba(3,40,97,.08)}
+.bb-status{display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-width:0}
 
-/* footer */
-footer{grid-column:1/-1;background:var(--card);border-top:1px solid var(--border);padding:16px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-size:13px;color:var(--muted)}
+/* tests */
+.tres{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.tbig{font-size:28px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums}
+
+/* N2 */
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg)}
+.tbl table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}
+.tbl th,.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.tbl th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--secondary);font-weight:600}
+.tbl tr:last-child td{border-bottom:0}
+.code{font-family:var(--mono);font-size:12.5px;font-weight:500;padding:1px 6px;border-radius:5px;background:var(--secondary)}
+.s2{color:#0B5A37;background:var(--accent-soft)} .s4{color:#9A3412;background:var(--warn-soft)} .s5{color:#991B1B;background:var(--bad-soft)}
+.analogy{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.analogy{grid-template-columns:1fr 1fr}}
+.an{border:1px solid var(--border);border-radius:var(--r-md);padding:12px;background:var(--card);display:grid;gap:4px}
+.an span{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.an b{font-size:15px;color:var(--brand)}
+.an p{font-size:13.5px;color:var(--sec-fg)}
+.sw{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
+.sw-op{border-bottom:1px solid var(--border)}
+.sw-op:last-child{border-bottom:0}
+.sw-op > summary{list-style:none;display:flex;gap:10px;align-items:center;padding:10px 12px;cursor:pointer;flex-wrap:wrap}
+.sw-op > summary::-webkit-details-marker{display:none}
+.mth{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;border-radius:5px;padding:4px 8px;min-width:58px;text-align:center}
+.mth.get{background:#0F6CBD} .mth.post{background:#0B7A4B}
+.sw-op.get > summary{background:#EEF5FC} .sw-op.post > summary{background:#ECF7F1}
+.sw-path{font-family:var(--mono);font-size:13px;font-weight:600;overflow-wrap:anywhere}
+.sw-sum{font-size:13px;color:var(--sec-fg)}
+.sw-b{padding:12px;display:grid;gap:10px;font-size:14px}
+.sw-b h4{font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+pre.json{margin:0;background:#1B1C1E;color:#E8EAED;border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;word-break:break-word}
+.pm{border:1px solid var(--border);border-radius:var(--r-md);background:var(--card);overflow:hidden}
+.pm-bar{display:flex;gap:6px;padding:10px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:var(--secondary)}
+.pm-bar select{width:auto;font-family:var(--mono);font-weight:700;font-size:13px}
+.pm-bar .url{flex:1 1 220px;min-width:0}
+.pm-params{padding:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border-bottom:1px solid var(--border)}
+@media (max-width:520px){.pm-params{grid-template-columns:1fr}}
+.pm-res{padding:10px;display:grid;gap:8px}
+.pm-st{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--sec-fg)}
+
+.sitefoot{max-width:880px;width:100%;margin:12px auto 0;border-top:1px solid var(--border);padding-top:16px;display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--accent-dk);color:#fff;padding:10px 16px;border-radius:var(--r-md);font-size:14px;z-index:60;max-width:calc(100vw - 32px)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
 <header class="top">
-  <div class="brand"><div class="mark" aria-hidden="true">C</div><b>Coplan</b><span>Portal de Capacitação</span></div>
-  <div class="unit">
-    <span class="ug">Trilha: Atendimento N1</span>
-    <div class="prog" title="Itens marcados como entendidos"><div class="bar"><i id="barFill"></i></div><span id="progTxt">0 de 14</span></div>
-  </div>
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir o roteiro do dia" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <a class="brand" href="#inicio"><span class="mark" aria-hidden="true">C</span><span class="bt"><b>Coplan</b><small>Guia de Capacitação N1</small></span></a>
+  <div class="prog" title="Blocos do dia que você marcou como concluídos"><div class="bar"><i id="barFill"></i></div><span id="progTxt">0 de 12</span><span class="lbl">blocos</span></div>
 </header>
+<div class="scrim" id="scrim" hidden></div>
 
 <div class="shell">
-  <aside class="side">
-    <p>Checklist do N1</p>
-    <nav class="nav" id="nav">
-      <a href="#inicio" data-i="home">Início</a>
-      <a href="#responder" data-i="msg">Antes de responder<span class="n" id="n-responder">0/3</span></a>
-      <a href="#escalar" data-i="up">Antes de escalar<span class="n" id="n-escalar">0/6</span></a>
-      <a href="#pratique" data-i="play">Pratique</a>
-      <a href="#nunca" data-i="ban">Nunca<span class="n" id="n-nunca">0/5</span></a>
-      <a href="#bolso" data-i="list">Montar chamado</a>
-    </nav>
-  </aside>
+  <aside class="side" id="side" aria-label="Roteiro do dia"><nav id="nav"></nav></aside>
 
-  <main>
-    <!-- HERO -->
-    <section class="card hero sec" id="inicio">
-      <span class="eyebrow" style="color:#9FD993">Capacitação de Jovens Aprendizes</span>
-      <h1>Checklist do N1</h1>
-      <p>Um bom atendimento N1 termina com um <strong>chamado que o N2 consegue resolver sem voltar para perguntar</strong>. Cada item abaixo existe por um motivo. Abra, veja o exemplo ruim e o bom, e marque quando entender.</p>
-      <div class="stats">
-        <div class="stat"><b>3</b><span>antes de responder</span></div>
-        <div class="stat"><b>6</b><span>antes de escalar</span></div>
-        <div class="stat"><b>5</b><span>coisas que você nunca faz</span></div>
+  <main id="main">
+    <a class="nowbar" id="nowBar" href="#inicio" hidden></a>
+
+    <!-- ================= INÍCIO ================= -->
+    <section class="view" id="v-inicio" hidden>
+      <div class="hero">
+        <span class="eb">Dia de Imersão · Coplan</span>
+        <h1>Guia de Capacitação N1</h1>
+        <p>Workshop de Atendimento &amp; Comunicação para jovens aprendizes e trainees. Tudo do dia em um lugar só: o cronograma, o que cada facilitador vai trabalhar, os exercícios e as ferramentas que você vai usar no atendimento de verdade.</p>
+        <div class="facts">
+          <div class="fact"><span>Data</span><b>04/11/2026</b><small>quarta-feira</small></div>
+          <div class="fact"><span>Horário</span><b>08h às 17h</b><small>dia inteiro</small></div>
+          <div class="fact"><span>Local</span><b>Sebrae</b><small>Shopping Goiabeiras</small></div>
+          <div class="fact"><span>Turma</span><b>15 pessoas</b><small>12 jovens aprendizes + 3 trainees</small></div>
+        </div>
+        <div class="daystat" id="dayStat"></div>
       </div>
-      <div><a class="btn btn-p" href="#responder" style="text-decoration:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Começar</a></div>
+
+      <div class="blk">
+        <h2>O objetivo do dia</h2>
+        <p>Ao final do dia, você vai saber atender um servidor de prefeitura com empatia e registrar uma Ordem de Serviço (OS) que o N2 consegue resolver sem voltar para perguntar.</p>
+        <div class="halves">
+          <div class="half m"><span class="per m">Manhã · Comportamental</span><b>Como falar com as pessoas</b><p class="note">Empatia, perfis, comunicação escrita e falada. Com Leonardo Soares.</p></div>
+          <div class="half t"><span class="per t">Tarde · Técnico</span><b>Como a Coplan funciona e como registrar</b><p class="note">Produtos, fluxo N1, N2 e desenvolvedor, Cliente Mais, checklist e prática. Com Diego Loureiro.</p></div>
+        </div>
+      </div>
+
+      <div class="blk">
+        <h2>O caso que vai te acompanhar o dia todo</h2>
+        <div class="case">
+          <div class="av" aria-hidden="true">JL</div>
+          <div class="body">
+            <span class="lbl">Caso da Joana · fictício</span>
+            <p>Joana Lima trabalha no Setor de Tributos da Prefeitura de Exemplo. Às 9h12 chega esta mensagem no chat do Cliente Mais:</p>
+            <div class="chat"><div class="msg in"><span class="ms">Joana · Setor de Tributos · 09:12</span>Bom dia. O sistema não está emitindo a guia de IPTU e tenho contribuinte esperando no balcão. Preciso disso URGENTE!!</div></div>
+            <p class="note">De manhã, você aprende a conversar com a Joana. À tarde, aprende a entender o problema dela, registrar a OS e escalar do jeito certo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="blk">
+        <h2>Como usar este guia</h2>
+        <div class="g3">
+          <div class="card stack"><h3>Siga o roteiro</h3><p class="note">Abra o bloco que está acontecendo. No dia, o menu mostra o que está rolando agora.</p></div>
+          <div class="card stack"><h3>Anote tudo</h3><p class="note">Cada bloco tem um campo de anotações. Fica salvo só neste aparelho, então use sempre o mesmo.</p></div>
+          <div class="card stack"><h3>Volte depois</h3><p class="note">O checklist e o montador de OS são para o dia a dia, não só para o treinamento.</p></div>
+        </div>
+      </div>
+
+      <div class="exercise">
+        <span class="ex-badge">Antes de começar · 2 minutos</span>
+        <h3>Teste rápido: o que você já sabe?</h3>
+        <p class="note">Responda sem pesquisar. Você vai refazer o mesmo teste no fim do dia e comparar.</p>
+        <div id="t-pre"></div>
+      </div>
+
+      <div class="blk">
+        <h2>Cronograma do dia</h2>
+        <div class="agenda" id="agenda"></div>
+      </div>
     </section>
 
-    <!-- ANTES DE RESPONDER -->
-    <section class="sec" id="responder">
-      <div class="sec-head">
-        <span class="eyebrow">Etapa 1</span>
-        <h2>Antes de responder</h2>
-        <p>Nos primeiros minutos da conversa você descobre com quem está falando, que tipo de pedido é e quanto ele é urgente.</p>
+    <!-- ================= MANHÃ ================= -->
+    <section class="view" id="v-abertura" hidden data-ag>
+      <div class="blk">
+        <h2>Quem conduz o dia</h2>
+        <div class="g3">
+          <div class="card stack"><div class="who"><div class="av" style="background:#9A5B06">LS</div><div><b>Leonardo Soares</b><span>Manhã · Comportamental</span></div></div><p class="note">Treinador de Vendas. Coordenador de Vendas do Sistema Indústria (SESI, SENAI e IEL). Mais de 15 anos em vendas enterprise e atendimento consultivo. Especialista em Gestão de Pessoas.</p></div>
+          <div class="card stack"><div class="who"><div class="av" style="background:#1F4993">DL</div><div><b>Diego Loureiro</b><span>Tarde · Técnico</span></div></div><p class="note">Gerente de Inovação da Coplan. Mais de 17 anos em Tecnologia da Informação. Especialista em transformação digital no setor público.</p></div>
+          <div class="card stack"><div class="who"><div class="av" style="background:#01814E">G</div><div><b>Gabryelle</b><span>RH Coplan</span></div></div><p class="note">Departamento de Pessoas &amp; Cultura. Abre o dia, participa de Perfis Comportamentais e conduz o encerramento.</p></div>
+        </div>
       </div>
-      <div class="items" data-group="responder">
+      <div class="blk">
+        <h2>Para aproveitar o dia</h2>
+        <ul class="clean">
+          <li>Deixe este guia aberto no celular ou no notebook. É nele que estão os exercícios.</li>
+          <li>Pergunte na hora. Dúvida que fica para depois vira erro no atendimento.</li>
+          <li>Nas simulações ninguém está sendo julgado. Errar no treino é o jeito mais barato de aprender.</li>
+          <li>Se ainda não fez, faça o teste rápido no <a href="#inicio">Início</a>.</li>
+        </ul>
+      </div>
+    </section>
 
-        <div class="item" data-id="r1">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Identifiquei o município, o usuário e o módulo</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">A Coplan atende várias prefeituras, cada uma com sua base de dados, e cada prefeitura usa vários sistemas (Tributário, Contábil, RH, Educação, Administrativo). <b>Sem esses três dados, o N2 não sabe nem onde procurar.</b></p>
-            <div class="cmp">
-              <div class="ex bad"><span class="lbl">Assim não</span><pre>O sistema está dando erro, o cliente pediu urgência.</pre></div>
-              <div class="ex good"><span class="lbl">Assim sim</span><pre>Município: Prefeitura de Exemplo
+    <section class="view" id="v-ssc" hidden data-ag>
+      <div class="blk">
+        <h2>Como funciona</h2>
+        <div class="g3">
+          <div class="card stack"><span class="chip ok">Start</span><p>O que você vai <b>começar</b> a fazer no atendimento.</p></div>
+          <div class="card stack"><span class="chip bad">Stop</span><p>O que você vai <b>parar</b> de fazer.</p></div>
+          <div class="card stack"><span class="chip info">Continue</span><p>O que você já faz bem e vai <b>continuar</b>.</p></div>
+        </div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Sua vez</span>
+        <h3>Seu Start, Stop, Continue</h3>
+        <p class="note">Pense no seu jeito de atender hoje: no chat, no telefone ou pessoalmente. Fica salvo neste aparelho. No fim do dia, no bloco de Avaliação, você vai reler e ver o que mudou.</p>
+        <div class="g3">
+          <div class="fld"><label for="ssc-start">Start: vou começar a...</label><textarea id="ssc-start" rows="4" placeholder="Ex.: chamar o cliente pelo nome"></textarea></div>
+          <div class="fld"><label for="ssc-stop">Stop: vou parar de...</label><textarea id="ssc-stop" rows="4" placeholder="Ex.: responder só &quot;ok&quot;"></textarea></div>
+          <div class="fld"><label for="ssc-cont">Continue: vou continuar...</label><textarea id="ssc-cont" rows="4" placeholder="Ex.: sendo educado mesmo com cliente apressado"></textarea></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="v-empatia" hidden data-ag>
+      <div class="callout"><b>Na prática da Coplan</b><p>O atendimento chega pelo chat do Cliente Mais. Sem ver o rosto nem ouvir a voz do cliente, a empatia aparece nas suas palavras e no seu jeito de conduzir a conversa.</p></div>
+      <div class="blk">
+        <h2>Os quatro conceitos, no chat</h2>
+        <div class="g2">
+          <div class="card stack"><h3>Rapport</h3><div class="kv"><span class="k">O que é</span><p>Criar confiança e sintonia com a pessoa.</p></div><div class="kv coplan"><span class="k">No chat do Cliente Mais</span><p>Chame pelo nome, mostre que está do lado dela e cumpra o que prometer, principalmente o retorno.</p></div></div>
+          <div class="card stack"><h3>Escuta ativa</h3><div class="kv"><span class="k">O que é</span><p>Ouvir para entender, não para responder. Confirmar o que entendeu antes de seguir.</p></div><div class="kv coplan"><span class="k">No chat do Cliente Mais</span><p>Leia a mensagem inteira, repita o que entendeu e pergunte só o que falta. Uma pergunta por vez.</p></div></div>
+          <div class="card stack"><h3>Quebra-gelo</h3><div class="kv"><span class="k">O que é</span><p>Um começo leve que tira a tensão da conversa.</p></div><div class="kv coplan"><span class="k">No chat do Cliente Mais</span><p>Com cliente apressado, o quebra-gelo é curto: cumprimento com o nome e reconhecer a situação. Conversa longa com quem tem fila no balcão irrita.</p></div></div>
+          <div class="card stack"><h3>Espelhamento</h3><div class="kv"><span class="k">O que é</span><p>Acompanhar o jeito da pessoa: ritmo, tom e palavras.</p></div><div class="kv coplan"><span class="k">No chat do Cliente Mais</span><p>Use as palavras do cliente. Se ele diz "guia", não responda "documento de arrecadação". Se ele é formal, seja formal.</p></div></div>
+        </div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício 1 · Rapport e quebra-gelo</span>
+        <h3>Qual é a melhor primeira resposta para a Joana?</h3>
+        <div class="chat"><div class="msg in"><span class="ms">Joana · Setor de Tributos · 09:12</span>Bom dia. O sistema não está emitindo a guia de IPTU e tenho contribuinte esperando no balcão. Preciso disso URGENTE!!</div></div>
+        <div id="q-emp1"></div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício 2 · Escuta ativa</span>
+        <h3>Marque só o que a Joana já te contou</h3>
+        <div class="stack" id="escuta"></div>
+        <div class="row"><button class="btn btn-p" type="button" id="escutaBtn">Conferir</button></div>
+        <p class="fb" id="escutaFb" hidden></p>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício 3 · Espelhamento</span>
+        <h3>Qual resposta usa as palavras da Joana?</h3>
+        <div id="q-emp3"></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-perfis" hidden data-ag>
+      <p class="lead">Cada pessoa tem um jeito preferido de se comunicar. Reconhecer esse jeito ajuda você a ajustar a forma de atender. Abaixo está como cada perfil costuma aparecer no chat da Coplan.</p>
+      <div class="g2">
+        <div class="card stack"><h3>Executor</h3><div class="kv"><span class="k">No chat, ele...</span><p>Escreve curto, cobra rapidez, usa "urgente". Quer solução, não explicação.</p></div><div class="kv coplan"><span class="k">Para atender bem</span><p>Vá direto ao ponto. Poucas perguntas, objetivas. Diga o próximo passo e quando vai dar retorno.</p></div></div>
+        <div class="card stack"><h3>Comunicador</h3><div class="kv"><span class="k">No chat, ele...</span><p>Escreve bastante, conta o contexto, usa emoji, muda de assunto.</p></div><div class="kv coplan"><span class="k">Para atender bem</span><p>Seja simpático, mas traga a conversa de volta para os fatos. Resuma o que ele disse em uma frase.</p></div></div>
+        <div class="card stack"><h3>Planejador</h3><div class="kv"><span class="k">No chat, ele...</span><p>É educado, pede desculpa pelo incômodo, tem medo de "estragar alguma coisa".</p></div><div class="kv coplan"><span class="k">Para atender bem</span><p>Tranquilize. Explique passo a passo e confirme cada passo antes do próximo.</p></div></div>
+        <div class="card stack"><h3>Analítico</h3><div class="kv"><span class="k">No chat, ele...</span><p>Manda número, print, fórmula. Pergunta "por quê" e "qual regra".</p></div><div class="kv coplan"><span class="k">Para atender bem</span><p>Seja preciso. Não chute. Se não souber, diga que vai verificar e volte com a resposta.</p></div></div>
+      </div>
+      <div class="callout warn"><b>Pista, não rótulo</b><p>Ninguém é um perfil só, e a mesma pessoa muda de jeito quando está sob pressão. Use o perfil para ajustar sua forma de falar. Nunca escreva o perfil do cliente na OS.</p></div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício de identificação</span>
+        <h3>Qual perfil escreveu cada mensagem?</h3>
+        <div id="q-perfis"></div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Em dupla · 5 minutos</span>
+        <h3>Responda do jeito do perfil</h3>
+        <p>Escolha uma das mensagens acima. Um escreve a primeira resposta, o outro diz se a resposta combina com o perfil e por quê. Depois troquem.</p>
+      </div>
+    </section>
+
+    <section class="view" id="v-comunicacao" hidden data-ag>
+      <div class="blk">
+        <h2>Fundamentos, no chat</h2>
+        <div class="g2">
+          <div class="card stack"><h3>Uma ideia por mensagem</h3><p class="note">Mensagem longa com cinco assuntos faz o cliente responder só um.</p></div>
+          <div class="card stack"><h3>Uma pergunta por vez</h3><p class="note">Três perguntas juntas recebem uma resposta pela metade.</p></div>
+          <div class="card stack"><h3>Sem jargão</h3><p class="note">"Erro 500", "cache" e "endpoint" são palavras nossas. Para o cliente, explique o que ele vê na tela.</p></div>
+          <div class="card stack"><h3>Confirme o entendimento</h3><p class="note">"Só para confirmar: a guia não abre quando você clica em Emitir, certo?"</p></div>
+        </div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Pitch de apresentação · na Coplan</span>
+        <h3>Sua abertura de atendimento</h3>
+        <p class="note">O pitch de apresentação, no chat, é a sua primeira mensagem. Preencha e veja como fica.</p>
+        <div class="g3">
+          <div class="fld"><label for="pa-eu">Seu nome</label><input type="text" id="pa-eu" placeholder="Ex.: Ana"></div>
+          <div class="fld"><label for="pa-cli">Nome do cliente</label><input type="text" id="pa-cli" value="Joana"></div>
+          <div class="fld"><label for="pa-ass">Assunto, nas palavras dele</label><input type="text" id="pa-ass" value="a emissão da guia de IPTU"></div>
+        </div>
+        <div class="fld"><label for="pa-perg">Primeira pergunta</label><input type="text" id="pa-perg" value="qual é a inscrição do imóvel"></div>
+        <div class="chat"><div class="msg out" id="paPrev"></div></div>
+        <div class="row"><button class="btn btn-o sm" type="button" id="paCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar minha abertura</button></div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Pitch de elevador · na Coplan</span>
+        <h3>A Coplan em 30 segundos</h3>
+        <p class="note">Alguém te pergunta: "o que a Coplan faz?". Escreva sua resposta. Conte o que a Coplan faz, para quem e por que importa.</p>
+        <textarea id="pe-txt" rows="4" placeholder="A Coplan é..."></textarea>
+        <span class="counter" id="peCount">0 palavras · cerca de 0 segundos falando</span>
+        <details class="rv"><summary>Ver um exemplo</summary><div>"A Coplan é uma empresa de Cuiabá que desenvolve sistemas para prefeituras. É com o nosso sistema que o município emite o IPTU, paga a folha dos servidores, controla as contas e as escolas. Eu trabalho no atendimento: quando um servidor tem dúvida ou problema no sistema, sou eu quem ajuda primeiro."</div></details>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Pitch do problema · para o N2</span>
+        <h3>Explique o caso em três frases</h3>
+        <p class="note">Quando escalar, o N2 precisa entender o caso em segundos. Use três frases: o que acontece e onde, qual o impacto e o prazo, o que você já sabe.</p>
+        <textarea id="pp-txt" rows="4" placeholder="1. O que acontece e onde&#10;2. Impacto e prazo&#10;3. O que já sei"></textarea>
+        <details class="rv"><summary>Ver o pitch do caso da Joana</summary><div>"Prefeitura de Exemplo, Tributário: a emissão da guia de IPTU dá erro inesperado desde 9h. Duas servidoras paradas, contribuinte no balcão e o vencimento é sexta. Reproduzi em homologação com a inscrição 01.02.003.0045, e a resposta do servidor fala em parâmetro de desconto de 2026."</div></details>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Simulação prática</span>
+        <h3>Em dupla</h3>
+        <p>Leia sua abertura e seu pitch de elevador em voz alta para o colega. Ele responde com um Start, um Stop e um Continue. Depois troquem.</p>
+      </div>
+    </section>
+
+    <section class="view" id="v-corporal" hidden data-ag>
+      <p class="lead">Pessoalmente ou em vídeo, o corpo fala antes de você. No chat, quem faz esse papel é a forma da mensagem: pontuação, maiúsculas, tempo de resposta. Pense nisso como a linguagem corporal do texto.</p>
+      <div class="blk">
+        <h2>O que fazer x o que não fazer, no chat</h2>
+        <div class="cmp">
+          <div class="ex good"><span class="lbl">Fazer</span><ul><li>Cumprimentar pelo nome</li><li>Responder logo, nem que seja "Estou verificando, já te retorno"</li><li>Frases completas e educadas</li><li>Avisar antes de sumir: "Vou testar aqui, me dá 5 minutos"</li><li>Fechar a conversa confirmando que resolveu</li></ul></div>
+          <div class="ex bad"><span class="lbl">Não fazer</span><ul><li>ESCREVER EM MAIÚSCULAS, que soa como grito</li><li>"???" ou "!!!"</li><li>Responder só "ok" ou "blz"</li><li>Abreviar: "vc", "pq", "tb"</li><li>Emoji em excesso com cliente irritado</li><li>Deixar o cliente sem resposta sem avisar</li></ul></div>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="card stack"><h3>Pessoalmente ou em vídeo</h3><ul class="clean"><li>Postura aberta, sem braço cruzado</li><li>Olhe para a pessoa enquanto ela fala</li><li>Celular guardado</li><li>Acene com a cabeça para mostrar que está acompanhando</li></ul></div>
+        <div class="card stack"><h3>Carisma no atendimento</h3><ul class="clean"><li>Lembre o nome da pessoa</li><li>Retome algo que ela disse</li><li>Agradeça a paciência</li><li>Termine a conversa melhor do que começou</li></ul></div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício</span>
+        <h3>Qual mensagem tem a melhor "postura"?</h3>
+        <div id="q-corp"></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-oral" hidden data-ag>
+      <p class="lead">Na ligação, numa reunião ou numa visita ao cliente, a voz carrega boa parte da mensagem. No chat, a mesma ideia vale para o ritmo e a escolha das palavras.</p>
+      <div class="g3">
+        <div class="card stack"><h3>Modulação de voz</h3><div class="kv"><span class="k">Na ligação</span><p>Ritmo calmo e volume constante. Com cliente nervoso, fale mais devagar do que ele.</p></div><div class="kv coplan"><span class="k">No chat</span><p>O tom vem das palavras. "Não tem como" e "Hoje o sistema não faz isso, mas posso registrar como sugestão" dizem o mesmo com tons diferentes.</p></div></div>
+        <div class="card stack"><h3>Poder do silêncio</h3><div class="kv"><span class="k">Na ligação</span><p>Deixe o cliente terminar. Uma pausa depois da pergunta dá tempo para ele pensar.</p></div><div class="kv coplan"><span class="k">No chat</span><p>Espere a pessoa terminar de digitar. Muita gente manda a mensagem em pedaços.</p></div></div>
+        <div class="card stack"><h3>Marcadores de fala</h3><div class="kv"><span class="k">O que são</span><p>Palavras que mostram que você está acompanhando e organizam a conversa.</p></div><div class="kv coplan"><span class="k">Use</span><p>"Entendi." · "Só para confirmar:" · "Um momento, vou verificar." · "Primeiro... depois..." · "Resumindo:"</p></div><div class="kv"><span class="k">Evite</span><p>"tipo", "né", "então assim"</p></div></div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Atividade prática</span>
+        <h3>Reescreva estas respostas</h3>
+        <p class="note">Escreva sua versão e só depois abra a sugestão.</p>
+        <div class="stack">
+          <div class="fld"><label for="rw1">Original: "não dá pra fazer isso"</label><textarea id="rw1" rows="2"></textarea><details class="rv"><summary>Ver sugestão</summary><div>"Hoje o sistema não faz isso. O que posso fazer é registrar como sugestão de melhoria para a equipe do produto. Quer que eu registre?"</div></details></div>
+          <div class="fld"><label for="rw2">Original: "vc tem q ir no menu e clicar la"</label><textarea id="rw2" rows="2"></textarea><details class="rv"><summary>Ver sugestão</summary><div>"Vamos juntos: abra o menu do Tributário e depois clique em Emissão de guia. Me avisa quando estiver nessa tela."</div></details></div>
+          <div class="fld"><label for="rw3">Original: "já falei que o problema não é aqui"</label><textarea id="rw3" rows="2"></textarea><details class="rv"><summary>Ver sugestão</summary><div>"Entendo a sua preocupação. Pelo que testei, o erro acontece quando a guia é gerada. Vou encaminhar para a equipe técnica com tudo o que você me passou e te dou um retorno até as 16h."</div></details></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TARDE ================= -->
+    <section class="view" id="v-coplan" hidden data-ag>
+      <div class="blk">
+        <h2>O que a Coplan faz</h2>
+        <p>A Coplan é uma GovTech de Cuiabá que desenvolve sistemas de gestão pública para prefeituras. Quando um município emite o IPTU, paga a folha dos servidores, presta contas ou organiza as escolas, é o sistema da Coplan que está por trás.</p>
+      </div>
+      <div class="blk">
+        <h2>Produtos e serviços</h2>
+        <div class="g3" id="prods"></div>
+      </div>
+      <div class="callout"><b>Quem está do outro lado do chat</b><p>Você atende o servidor público, não o cidadão. Mas muitas vezes tem um cidadão na frente desse servidor, esperando no balcão. Quando o sistema para, a fila para.</p></div>
+      <div class="blk">
+        <h2>Épocas de pico no atendimento</h2>
+        <div class="g2">
+          <div class="card stack"><h3>Início do ano</h3><p class="note">IPTU e taxas do novo exercício. Muita emissão de guia e muita dúvida de contribuinte.</p></div>
+          <div class="card stack"><h3>Todo fim de mês</h3><p class="note">Fechamento da folha de pagamento. Erro aqui mexe no salário de alguém.</p></div>
+          <div class="card stack"><h3>Fim do ano</h3><p class="note">13º salário e encerramento do exercício contábil em 31 de dezembro.</p></div>
+          <div class="card stack"><h3>Prazos de prestação de contas</h3><p class="note">Envio de dados ao Tribunal de Contas. Perder o prazo pode gerar multa para o município.</p></div>
+        </div>
+      </div>
+      <div class="blk">
+        <h2>Por que o atendimento importa</h2>
+        <div class="g3">
+          <div class="card stack"><h3>Prazo na lei</h3><p class="note">Vencimento de imposto, folha e prestação de contas têm data. Atraso vira problema legal para o município.</p></div>
+          <div class="card stack"><h3>Dinheiro público</h3><p class="note">Cada erro mexe com dinheiro do município e pode ser auditado.</p></div>
+          <div class="card stack"><h3>A imagem da Coplan</h3><p class="note">O atendimento é a parte da Coplan que o cliente mais vê. Um bom atendimento ajuda a manter o contrato.</p></div>
+        </div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício</span>
+        <h3>Em que área está o problema?</h3>
+        <div id="q-area"></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-fluxo" hidden data-ag>
+      <div class="blk">
+        <h2>O caminho de um atendimento</h2>
+        <div class="flow">
+          <div class="fs cli"><span class="lv">Cliente</span><b>Servidor da prefeitura</b><span class="d">Manda mensagem no chat do Cliente Mais.</span></div>
+          <div class="farr"></div>
+          <div class="fs n1"><span class="lv">Nível 1 · você</span><b>Atendimento inicial</b><span class="d">Acolhe, entende, classifica e tenta resolver.</span></div>
+          <div class="fbr">
+            <div><b>Resolveu</b>Confirma com o cliente e registra a OS como resolvida.</div>
+            <div><b>Não resolveu</b>Monta a OS completa com o checklist e escala para o N2.</div>
+          </div>
+          <div class="farr">não resolveu</div>
+          <div class="fs n2"><span class="lv">Nível 2</span><b>Suporte especializado</b><span class="d">Reproduz, analisa dados e configurações e resolve o que não exige mudar o sistema.</span></div>
+          <div class="farr">é defeito no sistema</div>
+          <div class="fs dev"><span class="lv">Desenvolvedor</span><b>Encaminhamento para o desenvolvedor</b><span class="d">Corrige o código e publica a correção.</span></div>
+          <div class="farr"></div>
+          <div class="fs cli"><span class="lv">Retorno</span><b>O cliente é avisado</b><span class="d">Ninguém fica sem resposta. A OS registra cada etapa.</span></div>
+        </div>
+      </div>
+      <div class="callout"><b>Escalar não é passar o problema adiante</b><p>É entregar o problema com tudo o que o próximo nível precisa para resolver sem voltar para perguntar.</p></div>
+      <div class="blk">
+        <h2>Os quatro tipos de pedido</h2>
+        <div class="g2">
+          <div class="card stack"><span class="chip info">Dúvida</span><p class="note">O sistema funciona, a pessoa não sabe como usar. Normalmente o N1 resolve na hora.</p></div>
+          <div class="card stack"><span class="chip bad">Erro</span><p class="note">O sistema não faz o que deveria. Coletar evidências e escalar.</p></div>
+          <div class="card stack"><span class="chip warn">Configuração</span><p class="note">O sistema funciona, mas falta um parâmetro ou cadastro do município.</p></div>
+          <div class="card stack"><span class="chip ok">Melhoria</span><p class="note">O sistema faz o que foi feito para fazer, mas o cliente quer outra coisa. Vira sugestão.</p></div>
+        </div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício 1</span>
+        <h3>Classifique cada pedido</h3>
+        <div id="q-class"></div>
+      </div>
+      <div class="blk">
+        <h2>Prioridade: impacto x prazo</h2>
+        <p>Pergunte sempre: quantas pessoas estão paradas e existe uma data que não pode passar?</p>
+        <div class="mx" role="table" aria-label="Matriz de prioridade">
+          <div class="ax sd"></div><div class="ax">Sem prazo próximo</div><div class="ax">Com prazo legal próximo</div>
+          <div class="ax sd">Muitos usuários parados</div>
+          <div class="c p2"><span class="chip warn">Alta</span>Nenhum servidor do RH consegue abrir a tela de férias.</div>
+          <div class="c p1"><span class="chip bad">Crítica</span>A folha não fecha e o pagamento é amanhã.</div>
+          <div class="ax sd">Um usuário afetado</div>
+          <div class="c p4"><span class="chip info">Normal</span>Um usuário não consegue exportar um relatório em PDF.</div>
+          <div class="c p2"><span class="chip warn">Alta</span>A única servidora que emite guia de IPTU está travada, e o vencimento é sexta.</div>
+        </div>
+        <p class="note">Os níveis de prioridade aqui são um exemplo de raciocínio. No Cliente Mais, use as opções de prioridade que a equipe definir.</p>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício 2</span>
+        <h3>Quem resolve?</h3>
+        <div id="q-quem"></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-registro" hidden data-ag>
+      <div class="blk">
+        <h2>As ferramentas</h2>
+        <div class="g2">
+          <div class="card stack"><h3>Chat do Cliente Mais</h3><p class="note">Onde o cliente fala com você. É aqui que você usa tudo o que aprendeu de manhã.</p></div>
+          <div class="card stack"><h3>Ordem de Serviço (OS) no Cliente Mais</h3><p class="note">Onde tudo fica registrado: o que o cliente pediu, o que foi feito e com quem está o caso.</p></div>
+        </div>
+        <div class="row"><a class="btn btn-p" href="https://cliente.coplanmt.com.br/clientemais_clientemais/servlet/login_coplan" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14L21 3"/></svg>Abrir o Cliente Mais</a><a class="btn btn-o" href="#os">Usar o montador de OS</a></div>
+      </div>
+      <div class="callout"><b>Regra de ouro: se não está na OS, não aconteceu.</b>
+        <ul class="clean"><li>Registre durante o atendimento, não no fim do dia.</li><li>Escreva para quem não estava na conversa.</li><li>Use as palavras do cliente e acrescente os dados técnicos.</li><li>Cole a mensagem de erro exata, não um resumo dela.</li><li>Nada de senha. CPF e dados pessoais só no campo próprio, nunca fora do Cliente Mais.</li></ul>
+      </div>
+
+      <div class="blk">
+        <h2>Checklist antes de responder</h2>
+        <div class="stack">
+          <details class="it"><summary><span class="n">1</span>Identifiquei o município, o usuário e o módulo<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>A Coplan atende várias prefeituras, e cada uma usa vários sistemas. Sem esses três dados, o N2 não sabe nem onde procurar. Se o chat já mostrar o município e o usuário, confira mesmo assim.</p><div class="cmp"><div class="ex bad"><span class="lbl">Assim não</span><pre>O sistema está dando erro, o cliente pediu urgência.</pre></div><div class="ex good"><span class="lbl">Assim sim</span><pre>Município: Prefeitura de Exemplo
 Usuário: Joana Lima, Setor de Tributos
-Módulo: Tributário</pre></div>
-            </div>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
-        </div>
-
-        <div class="item" data-id="r2">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Classifiquei: dúvida, erro, configuração ou melhoria</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">Cada tipo vai para um caminho diferente. Dúvida você resolve na hora. Erro vai para o N2. Configuração costuma ser um parâmetro do cliente. Melhoria vira pedido para o produto. <b>Classificar errado manda o chamado para a fila errada.</b> Teste você mesmo:</p>
-            <div class="quiz" id="quiz"></div>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
-        </div>
-
-        <div class="item" data-id="r3">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Avaliei o impacto e se existe prazo legal envolvido</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">Em gestão pública muita coisa tem data na lei: vencimento do IPTU, fechamento da folha, prestação de contas ao Tribunal de Contas. <b>Pergunte sempre: quantas pessoas estão paradas e existe uma data que não pode passar?</b></p>
-            <div class="mx" role="table" aria-label="Matriz de prioridade">
-              <div class="ax side-ax"></div><div class="ax">Sem prazo próximo</div><div class="ax">Com prazo legal próximo</div>
-              <div class="ax side-ax">Muitos usuários parados</div>
-              <div class="c p2"><span class="chip warn">Alta</span>Nenhum servidor do RH consegue abrir a tela de férias.</div>
-              <div class="c p1"><span class="chip bad">Crítica</span>Folha não fecha e o pagamento é amanhã.</div>
-              <div class="ax side-ax">Um usuário afetado</div>
-              <div class="c p4"><span class="chip info">Normal</span>Um usuário não consegue exportar um relatório em PDF.</div>
-              <div class="c p3"><span class="chip warn">Alta</span>O único servidor que emite guias de IPTU está travado, e o vencimento é sexta.</div>
-            </div>
-            <p class="note">Os níveis de prioridade aqui são um exemplo. Use a régua oficial da sua equipe.</p>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
+Módulo: Tributário, emissão de guia de IPTU</pre></div></div></div></details>
+          <details class="it"><summary><span class="n">2</span>Classifiquei: dúvida, erro, configuração ou melhoria<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>Cada tipo vai para um caminho diferente. Classificar errado manda a OS para a fila errada. Na dúvida entre erro e configuração, registre como erro e explique a sua suspeita.</p></div></details>
+          <details class="it"><summary><span class="n">3</span>Avaliei o impacto e se existe prazo legal envolvido<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>Quantas pessoas estão paradas? Existe vencimento, folha ou prestação de contas chegando? Escreva o motivo da prioridade, não só o nível.</p><div class="cmp"><div class="ex bad"><span class="lbl">Assim não</span><pre>Prioridade: alta</pre></div><div class="ex good"><span class="lbl">Assim sim</span><pre>Prioridade: alta. Duas servidoras sem emitir guia, vencimento do IPTU na sexta.</pre></div></div></div></details>
         </div>
       </div>
-    </section>
 
-    <!-- ANTES DE ESCALAR -->
-    <section class="sec" id="escalar">
-      <div class="sec-head">
-        <span class="eyebrow">Etapa 2</span>
-        <h2>Antes de escalar para o N2</h2>
-        <p>Se você não resolveu, o chamado sobe. Antes de subir, ele precisa ter tudo o que o N2 vai perguntar.</p>
-      </div>
-      <div class="items" data-group="escalar">
-
-        <div class="item" data-id="e1">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Consegui reproduzir o problema (ou registrei por que não consegui)</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">Reproduzir é fazer o problema acontecer de novo, de preferência em homologação. Se acontece com você, é provável que seja do sistema. Se só acontece com aquele usuário, a pista muda: permissão, cadastro ou computador dele. <b>As duas respostas ajudam o N2.</b></p>
-            <div class="cmp">
-              <div class="ex bad"><span class="lbl">Assim não</span><pre>Não testei, o cliente disse que dá erro.</pre></div>
-              <div class="ex good"><span class="lbl">Assim sim</span><pre>Reproduzi em homologação com a inscrição 01.02.003.0045: o erro aparece.
+      <div class="blk">
+        <h2>Checklist antes de escalar ao N2</h2>
+        <div class="stack">
+          <details class="it"><summary><span class="n">4</span>Consegui reproduzir o problema (ou registrei por que não consegui)<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>Reproduzir é fazer o problema acontecer de novo, de preferência em homologação. Se só acontece com aquele usuário, a pista muda: permissão, cadastro ou o computador dele. As duas respostas ajudam o N2.</p><div class="cmp"><div class="ex bad"><span class="lbl">Assim não</span><pre>Não testei, o cliente disse que dá erro.</pre></div><div class="ex good"><span class="lbl">Assim sim</span><pre>Reproduzi em homologação com a inscrição 01.02.003.0045: o erro aparece.
 
 ou
 
-Não reproduzi: com meu usuário de teste funciona. Só acontece com o usuário da Joana.</pre></div>
-            </div>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
-        </div>
-
-        <div class="item" data-id="e2">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Descrevi os passos, o esperado e o obtido</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">Os passos são a receita para o N2 chegar no mesmo lugar que o cliente. O esperado e o obtido mostram a diferença que é o problema. <b>Se o N2 seguir seus passos e não ver o erro, faltou passo.</b></p>
-            <div class="cmp">
-              <div class="ex bad"><span class="lbl">Assim não</span><pre>Não emite a guia.</pre></div>
-              <div class="ex good"><span class="lbl">Assim sim</span><pre>Passos:
-1. Entrar no Tributário
+Não reproduzi: com o usuário de teste funciona. Só acontece com o usuário da Joana.</pre></div></div></div></details>
+          <details class="it"><summary><span class="n">5</span>Descrevi os passos, o esperado e o obtido<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>Os passos são a receita para o N2 chegar no mesmo lugar que o cliente. Se o N2 seguir seus passos e não ver o erro, faltou passo.</p><div class="cmp"><div class="ex bad"><span class="lbl">Assim não</span><pre>Não emite a guia.</pre></div><div class="ex good"><span class="lbl">Assim sim</span><pre>1. Entrar no Tributário
 2. Abrir Emissão de guia de IPTU
 3. Informar a inscrição 01.02.003.0045
 4. Clicar em Emitir
-
 Esperado: abrir o PDF da guia 2026.
-Obtido: aparece "Erro inesperado" e nada abre.</pre></div>
-            </div>
-            <p class="note">O caminho de menu acima é um exemplo. Use os nomes exatos que aparecem na tela.</p>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
-        </div>
-
-        <div class="item" data-id="e3">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Anexei print da tela e da mensagem de erro</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">Um print mostra coisas que o cliente nem percebeu: a tela, o usuário logado, o endereço, a mensagem inteira. <b>Tire o print da tela toda, não só do pedaço com o erro.</b></p>
-            <div class="cmp">
-              <div class="ex bad"><span class="lbl">Assim não</span><pre>Print recortado só com "Erro inesperado".
-Foto da tela tirada com o celular, torta e com reflexo.</pre></div>
-              <div class="ex good"><span class="lbl">Assim sim</span><pre>Print da janela inteira, com:
+Obtido: aparece "Erro inesperado" e nada abre.</pre></div></div><p class="note">O caminho de menu é um exemplo. Use os nomes exatos que aparecem na tela.</p></div></details>
+          <details class="it"><summary><span class="n">6</span>Anexei print da tela e da mensagem de erro<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>Um print mostra coisas que o cliente nem percebeu. Peça o print da tela inteira, não só do pedaço com o erro.</p><div class="cmp"><div class="ex bad"><span class="lbl">Assim não</span><pre>Print recortado só com "Erro inesperado".
+Foto da tela tirada com o celular, torta e com reflexo.</pre></div><div class="ex good"><span class="lbl">Assim sim</span><pre>Print da janela inteira, com:
 - endereço (URL) visível
 - usuário logado visível
-- mensagem de erro completa
-- relógio do computador, se der</pre></div>
-            </div>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
-        </div>
-
-        <div class="item" data-id="e4">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Capturei a requisição no F12 (status, URL, resposta)</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">A tela mostra "Erro inesperado", mas por trás o navegador conversou com o servidor e recebeu uma resposta com o motivo real. Você vê essa conversa apertando <b>F12</b> e abrindo a aba <b>Network</b> (ou Rede). Linha vermelha é o que importa. <b>Clique nas linhas abaixo:</b></p>
-            <div class="dev" aria-label="Simulação da aba Network do navegador">
-              <div class="dev-tabs"><span>Elements</span><span>Console</span><span class="on">Network</span><span>Application</span></div>
-              <div class="dev-wrap">
-                <table>
-                  <thead><tr><th>Name</th><th>Status</th><th>Method</th><th>Type</th><th>Time</th></tr></thead>
-                  <tbody id="devRows"></tbody>
-                </table>
-              </div>
-              <div class="dev-det" id="devDet"><span class="k">Selecione uma linha para ver os detalhes.</span></div>
-            </div>
-            <p class="dev-hint" id="devHint">Dica: 2xx deu certo. 4xx costuma ser algo do pedido (dado faltando, sem permissão). 5xx é falha no servidor e quase sempre vai para o N2.</p>
-            <div class="copyrow"><button class="btn btn-o" type="button" id="devCopy" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar para o chamado</button><span class="note">Tela, endereços e resposta são fictícios.</span></div>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
-        </div>
-
-        <div class="item" data-id="e5">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Registrei a data e hora da ocorrência</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">O servidor guarda um registro (log) de tudo o que acontece, mas são milhares de linhas por minuto. <b>Com a hora exata, o N2 acha o erro em segundos. Com "ontem à tarde", pode levar horas.</b></p>
-            <div class="cmp">
-              <div class="ex bad"><span class="lbl">Assim não</span><pre>Aconteceu ontem à tarde.</pre></div>
-              <div class="ex good"><span class="lbl">Assim sim</span><pre>07/10/2026 às 14:12 (horário de Cuiabá).
-Aconteceu 3 vezes entre 14:05 e 14:15.</pre></div>
-            </div>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
-        </div>
-
-        <div class="item" data-id="e6">
-          <button class="item-h" type="button" aria-expanded="false"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span><h3>Registrei o que já tentei</h3><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-          <div class="item-b" hidden>
-            <p class="why">Se você não escreve o que já testou, o N2 vai testar tudo de novo. <b>Cada tentativa registrada economiza tempo de quem vem depois e mostra o seu trabalho.</b></p>
-            <div class="cmp">
-              <div class="ex bad"><span class="lbl">Assim não</span><pre>(campo vazio)</pre></div>
-              <div class="ex good"><span class="lbl">Assim sim</span><pre>- Pedi para limpar o cache e entrar de novo: mesmo erro
+- mensagem de erro completa</pre></div></div></div></details>
+          <details class="it"><summary><span class="n">7</span>Capturei a requisição no F12 (status, URL, resposta)<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>A tela mostra "Erro inesperado", mas por trás o navegador conversou com o servidor e recebeu uma resposta com o motivo real. Você vê essa conversa apertando <b>F12</b> e abrindo a aba <b>Network</b> (ou Rede). Pratique logo abaixo.</p></div></details>
+          <details class="it"><summary><span class="n">8</span>Registrei a data e a hora da ocorrência<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>O servidor guarda um registro (log) de tudo, mas são milhares de linhas por minuto. Com a hora exata, o N2 acha o erro em segundos.</p><div class="cmp"><div class="ex bad"><span class="lbl">Assim não</span><pre>Aconteceu ontem à tarde.</pre></div><div class="ex good"><span class="lbl">Assim sim</span><pre>04/11/2026 às 09:12 (horário de Cuiabá).
+Aconteceu 3 vezes entre 09:05 e 09:15.</pre></div></div></div></details>
+          <details class="it"><summary><span class="n">9</span>Registrei o que já tentei<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="db"><p>Se você não escreve o que já testou, o N2 vai testar tudo de novo.</p><div class="cmp"><div class="ex bad"><span class="lbl">Assim não</span><pre>(campo vazio)</pre></div><div class="ex good"><span class="lbl">Assim sim</span><pre>- Pedi para limpar o cache e entrar de novo: mesmo erro
 - Testou no Chrome e no Edge: mesmo erro
-- Outro servidor do mesmo setor emite normalmente</pre></div>
-            </div>
-            <div class="got"><button class="btn btn-p mark-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Entendi</button></div>
-          </div>
+- A colega do lado também não consegue</pre></div></div></div></details>
         </div>
       </div>
-    </section>
 
-    <!-- PRATIQUE -->
-    <section class="sec" id="pratique">
-      <div class="sec-head">
-        <span class="eyebrow">Na prática</span>
-        <h2>Do chamado ruim ao chamado bom</h2>
-        <p>A Joana ligou dizendo que "o sistema não emite a guia". Veja o primeiro chamado que foi aberto e as perguntas que o N2 teria que fazer. Aplique o checklist um item por vez.</p>
-      </div>
-      <div class="pr">
-        <div class="ticket">
-          <div class="ticket-h"><b>Chamado #4821</b><span class="chip" id="tkStatus" style="background:var(--bad)">Incompleto</span></div>
-          <div id="tkFields"></div>
+      <div class="exercise">
+        <span class="ex-badge">Prática · F12</span>
+        <h3>Ache o erro da Joana na aba Network</h3>
+        <p class="note">Clique nas linhas. Linha vermelha é a que importa.</p>
+        <div class="dev" aria-label="Simulação da aba Network do navegador">
+          <div class="dev-tabs"><span>Elements</span><span>Console</span><span class="on">Network</span><span>Application</span></div>
+          <div class="dev-wrap"><table><thead><tr><th>Name</th><th>Status</th><th>Method</th><th>Type</th><th>Time</th></tr></thead><tbody id="devRows"></tbody></table></div>
+          <div class="dev-det" id="devDet"><span class="k">Selecione uma linha para ver os detalhes.</span></div>
         </div>
-        <div class="n2">
-          <div class="bubble">
-            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>O que o N2 teria que perguntar</h4>
-            <ul id="n2q"></ul>
-          </div>
-          <div class="card" style="display:grid;gap:10px">
-            <div class="score"><b id="prScore">0</b><span class="note">de 7 itens aplicados</span></div>
-            <p class="note" id="prNext">Próximo: identificar município, usuário e módulo.</p>
-            <div class="pr-ctrl">
-              <button class="btn btn-p" type="button" id="prStep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Aplicar próximo item</button>
-              <button class="btn btn-o" type="button" id="prReset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Recomeçar</button>
-            </div>
-          </div>
-        </div>
+        <p id="devHint">2xx deu certo. 4xx costuma ser algo do pedido (dado faltando, sem permissão). 5xx é falha no servidor e quase sempre vai para o N2.</p>
+        <div class="row"><button class="btn btn-o" type="button" id="devCopy" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar para a OS</button><span class="note">Tela, endereços e resposta são fictícios.</span></div>
       </div>
-    </section>
 
-    <!-- NUNCA -->
-    <section class="sec" id="nunca">
-      <div class="sec-head">
-        <span class="eyebrow">Etapa 3</span>
+      <div class="blk">
         <h2>Nunca</h2>
-        <p>Estas cinco situações aparecem de verdade, normalmente com o cliente com pressa. Leia o que ele diz, pense na sua resposta e só depois veja a sugestão.</p>
+        <p>Estas situações acontecem de verdade, quase sempre com o cliente com pressa. Pense na sua resposta antes de abrir a sugestão.</p>
+        <div class="g2" id="nunca"></div>
       </div>
-      <div class="nv" id="nvList"></div>
     </section>
 
-    <!-- BOLSO -->
-    <section class="sec" id="bolso">
-      <div class="sec-head">
-        <span class="eyebrow">Para usar em cada atendimento</span>
-        <h2>Montar o chamado</h2>
-        <p>Deixe esta parte aberta durante o atendimento. Cada item do checklist se marca sozinho quando você preenche o campo dele. No final, copie o chamado pronto e cole na ferramenta.</p>
+    <section class="view" id="v-simulacao" hidden data-ag>
+      <div class="blk">
+        <h2>Como funciona</h2>
+        <p>A turma se divide em trios. Cada pessoa passa pelos três papéis, em três rodadas de 12 minutos. Todos os trios jogam ao mesmo tempo, cada um com um caso diferente.</p>
+        <div class="g3">
+          <div class="card stack"><h3>Cliente</h3><p class="note">Interpreta o caso. Só revela uma informação se o atendente perguntar.</p></div>
+          <div class="card stack"><h3>Atendente N1</h3><p class="note">Atende pelo "chat" (conversa falada ou escrita) e monta a OS no <a href="#os">montador</a>.</p></div>
+          <div class="card stack"><h3>Observador</h3><p class="note">Marca o checklist durante o atendimento e dá o feedback no fim.</p></div>
+        </div>
+        <div class="rot"><table><thead><tr><th>Rodada</th><th>Cliente</th><th>Atendente N1</th><th>Observador</th></tr></thead><tbody><tr><td>1</td><td>Pessoa A</td><td>Pessoa B</td><td>Pessoa C</td></tr><tr><td>2</td><td>Pessoa B</td><td>Pessoa C</td><td>Pessoa A</td></tr><tr><td>3</td><td>Pessoa C</td><td>Pessoa A</td><td>Pessoa B</td></tr></tbody></table></div>
+        <p class="note">Cada rodada: 10 minutos de atendimento e 2 de feedback (um Start, um Stop e um Continue para o atendente). Troque de caso a cada rodada.</p>
+      </div>
+      <div class="card stack">
+        <div class="timer">
+          <div class="stack" style="gap:6px"><span class="flbl">Rodada</span><div class="rounds" id="rounds"><button type="button" class="on" data-r="1">1</button><button type="button" data-r="2">2</button><button type="button" data-r="3">3</button></div></div>
+          <div class="clock" id="clock" aria-live="polite">12:00</div>
+          <div class="row"><button class="btn btn-p" type="button" id="tStart">Iniciar</button><button class="btn btn-o" type="button" id="tReset">Zerar</button></div>
+        </div>
+        <p class="note" id="tMsg">Aos 2 minutos finais, o timer avisa que é hora do feedback.</p>
+      </div>
+      <div class="blk">
+        <h2>Escolha o caso do seu trio</h2>
+        <div class="cases" id="cases"></div>
+      </div>
+      <div class="card stack" id="caseBox" hidden>
+        <div class="row" style="justify-content:space-between"><h3 id="caseTit"></h3><span class="per t" id="caseArea"></span></div>
+        <p class="note">Cada pessoa abre só o próprio papel. Não olhe a aba dos outros.</p>
+        <div class="roles" id="roles"><button type="button" data-role="cli">Sou o cliente</button><button type="button" data-role="n1">Sou o atendente</button><button type="button" data-role="obs">Sou o observador</button></div>
+        <div class="rolebox" id="roleBox"></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-avaliacao" hidden data-ag>
+      <div class="exercise">
+        <span class="ex-badge">Teste rápido · depois</span>
+        <h3>O mesmo teste do começo do dia</h3>
+        <p class="note">Responda de novo e compare com o resultado da manhã.</p>
+        <div id="t-pos"></div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Start, Stop, Continue</span>
+        <h3>O que você escreveu de manhã</h3>
+        <div class="g3" id="sscBack"></div>
+        <div class="fld"><label for="ssc-depois">Depois de hoje, o que muda no seu atendimento?</label><textarea id="ssc-depois" rows="3"></textarea></div>
+      </div>
+      <div class="g2">
+        <div class="card stack"><h3>Avaliação de reação</h3><p class="note">O RH vai aplicar a avaliação de reação do dia. A sua opinião define como serão as próximas turmas.</p></div>
+        <div class="card stack"><h3>Este guia continua com você</h3><ul class="clean"><li>O <a href="#registro">checklist</a> e o <a href="#os">montador de OS</a> são para o dia a dia.</li><li>A <a href="#n2-requisitos">trilha N2</a> é para quem quiser ir além.</li></ul></div>
+      </div>
+    </section>
+
+    <!-- ================= MONTAR OS ================= -->
+    <section class="view" id="v-os" hidden>
+      <div class="vh">
+        <div class="vmeta"><span class="per f">Ferramenta do dia a dia</span></div>
+        <h1>Montar a OS</h1>
+        <p class="lead">Deixe aberto durante o atendimento. Cada item do checklist se marca sozinho quando você preenche o campo dele. No final, copie o texto e cole na Ordem de Serviço do Cliente Mais.</p>
+        <div class="row"><a class="btn btn-o sm" href="https://cliente.coplanmt.com.br/clientemais_clientemais/servlet/login_coplan" target="_blank" rel="noopener">Abrir o Cliente Mais</a><button class="btn btn-o sm" type="button" id="bbEx">Preencher com o caso da Joana</button></div>
       </div>
       <div class="build">
         <div class="card bcol">
           <div class="bcol-h"><h3>Antes de responder</h3><span class="cnt" id="cR">0/3</span></div>
-          <div class="bi" data-k="ident"><span class="bt"></span><div class="bf">
-            <label class="bl">Identifiquei o município, o usuário e o módulo</label>
-            <input id="f-mun" type="text" placeholder="Município">
-            <input id="f-usu" type="text" placeholder="Usuário e setor">
-            <input id="f-mod" type="text" placeholder="Módulo e tela">
-          </div></div>
-          <div class="bi" data-k="class"><span class="bt"></span><div class="bf">
-            <label class="bl" for="f-cla">Classifiquei: dúvida, erro, configuração ou melhoria</label>
-            <select id="f-cla"><option value="">Selecione</option><option>Dúvida</option><option>Erro</option><option>Configuração</option><option>Melhoria</option></select>
-          </div></div>
-          <div class="bi" data-k="prio"><span class="bt"></span><div class="bf">
-            <label class="bl" for="f-pri">Avaliei o impacto e se existe prazo legal envolvido</label>
-            <select id="f-pri"><option value="">Prioridade</option><option>Normal</option><option>Alta</option><option>Crítica</option></select>
-            <input id="f-imp" type="text" placeholder="Por quê? Ex.: 1 usuário, vencimento sexta">
-          </div></div>
+          <div class="bi" data-k="ident"><span class="bt2"></span><div class="bf"><span class="bl">Identifiquei o município, o usuário e o módulo</span><input id="f-mun" type="text" placeholder="Município" aria-label="Município"><input id="f-usu" type="text" placeholder="Usuário e setor" aria-label="Usuário e setor"><input id="f-mod" type="text" placeholder="Módulo e tela" aria-label="Módulo e tela"></div></div>
+          <div class="bi" data-k="class"><span class="bt2"></span><div class="bf"><label class="bl" for="f-cla">Classifiquei o pedido</label><select id="f-cla"><option value="">Selecione</option><option>Dúvida</option><option>Erro</option><option>Configuração</option><option>Melhoria</option></select></div></div>
+          <div class="bi" data-k="prio"><span class="bt2"></span><div class="bf"><label class="bl" for="f-pri">Avaliei o impacto e o prazo</label><select id="f-pri"><option value="">Prioridade</option><option>Normal</option><option>Alta</option><option>Crítica</option></select><input id="f-imp" type="text" placeholder="Por quê? Ex.: 2 pessoas paradas, vencimento sexta" aria-label="Motivo da prioridade"></div></div>
         </div>
-
         <div class="card bcol">
-          <div class="bcol-h"><h3>Antes de escalar para o N2</h3><span class="cnt" id="cE">0/6</span></div>
-          <div class="bi" data-k="repro"><span class="bt"></span><div class="bf">
-            <label class="bl" for="f-rep">Consegui reproduzir (ou registrei por que não consegui)</label>
-            <input id="f-rep" type="text" placeholder="Ex.: reproduzi em homologação com a inscrição X">
-          </div></div>
-          <div class="bi" data-k="passos"><span class="bt"></span><div class="bf">
-            <label class="bl" for="f-pas">Descrevi os passos, o esperado e o obtido</label>
-            <textarea id="f-pas" rows="3" placeholder="1. ...&#10;2. ..."></textarea>
-            <input id="f-esp" type="text" placeholder="Esperado">
-            <input id="f-obt" type="text" placeholder="Obtido">
-          </div></div>
-          <div class="bi" data-k="print"><span class="bt"></span><div class="bf">
-            <label class="bl" for="f-msg">Anexei print da tela e da mensagem de erro</label>
-            <input id="f-msg" type="text" placeholder="Mensagem de erro exata">
-            <label class="ck"><input id="f-prt" type="checkbox"> Print da tela inteira anexado</label>
-          </div></div>
-          <div class="bi" data-k="f12"><span class="bt"></span><div class="bf">
-            <label class="bl" for="f-f12">Capturei a requisição no F12 (status, URL, resposta)</label>
-            <textarea id="f-f12" rows="2" placeholder="Cole aqui o que copiou da aba Network"></textarea>
-            <label class="ck"><input id="f-nof12" type="checkbox"> Não se aplica (sem requisição com erro)</label>
-          </div></div>
-          <div class="bi" data-k="hora"><span class="bt"></span><div class="bf">
-            <label class="bl" for="f-hor">Registrei a data e hora da ocorrência</label>
-            <div class="inl"><input id="f-hor" type="text" placeholder="dd/mm/aaaa hh:mm"><button class="btn btn-o sm" type="button" id="agora"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Agora</button></div>
-          </div></div>
-          <div class="bi" data-k="tent"><span class="bt"></span><div class="bf">
-            <label class="bl" for="f-ten">Registrei o que já tentei</label>
-            <textarea id="f-ten" rows="2" placeholder="Ex.: limpou cache, testou em outro navegador"></textarea>
-          </div></div>
+          <div class="bcol-h"><h3>Antes de escalar ao N2</h3><span class="cnt" id="cE">0/6</span></div>
+          <div class="bi" data-k="repro"><span class="bt2"></span><div class="bf"><label class="bl" for="f-rep">Reproduzi (ou registrei por que não)</label><input id="f-rep" type="text" placeholder="Ex.: reproduzi em homologação com a inscrição X"></div></div>
+          <div class="bi" data-k="passos"><span class="bt2"></span><div class="bf"><label class="bl" for="f-pas">Passos, esperado e obtido</label><textarea id="f-pas" rows="3" placeholder="1. ...&#10;2. ..."></textarea><input id="f-esp" type="text" placeholder="Esperado" aria-label="Resultado esperado"><input id="f-obt" type="text" placeholder="Obtido" aria-label="Resultado obtido"></div></div>
+          <div class="bi" data-k="print"><span class="bt2"></span><div class="bf"><label class="bl" for="f-msg">Print e mensagem de erro</label><input id="f-msg" type="text" placeholder="Mensagem de erro exata"><label class="ck"><input id="f-prt" type="checkbox"> Print da tela inteira anexado</label></div></div>
+          <div class="bi" data-k="f12"><span class="bt2"></span><div class="bf"><label class="bl" for="f-f12">Requisição do F12</label><textarea id="f-f12" rows="2" placeholder="Cole o que copiou da aba Network"></textarea><label class="ck"><input id="f-nof12" type="checkbox"> Não se aplica (sem requisição com erro)</label></div></div>
+          <div class="bi" data-k="hora"><span class="bt2"></span><div class="bf"><label class="bl" for="f-hor">Data e hora da ocorrência</label><div class="inl"><input id="f-hor" type="text" placeholder="dd/mm/aaaa hh:mm"><button class="btn btn-o sm" type="button" id="agora">Agora</button></div></div></div>
+          <div class="bi" data-k="tent"><span class="bt2"></span><div class="bf"><label class="bl" for="f-ten">O que já tentei</label><textarea id="f-ten" rows="2" placeholder="Ex.: limpou o cache, testou em outro navegador"></textarea></div></div>
         </div>
-
         <div class="card bcol never">
           <div class="bcol-h"><h3 style="color:var(--bad)">Nunca</h3><span class="cnt" id="cN">0/5</span></div>
           <p class="note">Confirme antes de fechar o atendimento.</p>
@@ -541,230 +887,511 @@ Aconteceu 3 vezes entre 14:05 e 14:15.</pre></div>
           <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv2"> Não prometi prazo de correção</label>
           <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv3"> Não alterei dados em produção</label>
           <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv4"> Não comentei o caso com outro cliente</label>
-          <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv5"> Não expus CPF ou dados pessoais fora do chamado</label>
+          <label class="ck nv-ck"><input type="checkbox" class="nv-in" id="nv5"> Não expus CPF ou dados pessoais fora do Cliente Mais</label>
         </div>
       </div>
       <div class="build-bar">
-        <div class="bb-status"><span class="chip" id="bbChip" style="background:var(--bad)">Incompleto</span><span id="bbTxt" class="note">Faltam 9 itens antes de escalar.</span></div>
-        <div class="pr-ctrl">
-          <button class="btn btn-o" type="button" id="bbNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Novo chamado</button>
-          <button class="btn btn-p" type="button" id="bbCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar chamado</button>
+        <div class="bb-status"><span class="chip bad" id="bbChip">Incompleta</span><span id="bbTxt" class="note"></span></div>
+        <div class="row"><button class="btn btn-o" type="button" id="bbNew">Nova OS</button><button class="btn btn-p" type="button" id="bbCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar texto da OS</button></div>
+      </div>
+      <p class="note">O rascunho fica salvo só neste navegador. Não coloque CPF nem dados pessoais aqui: eles vão direto no Cliente Mais.</p>
+      <div class="vf"><div class="nav2"><a href="#simulacao"><span>Voltar para</span><b>Simulações de atendimento</b></a><a class="nx" href="#registro"><span>Rever</span><b>O checklist com exemplos</b></a></div></div>
+    </section>
+
+    <!-- ================= TRILHA N2 ================= -->
+    <section class="view" id="v-n2-requisitos" hidden data-n2="1" data-tit="Do problema ao requisito">
+      <div class="callout"><b>Para que serve esta trilha</b><p>Você não vai fazer o trabalho do N2. Vai entender como ele pensa, para entregar OS melhores e crescer na carreira. Estude depois da imersão, no seu ritmo.</p></div>
+      <div class="blk">
+        <h2>Erro ou melhoria?</h2>
+        <div class="cmp">
+          <div class="ex bad"><span class="lbl">Erro</span><p>O sistema não faz o que deveria fazer. Ex.: o botão Emitir mostra "Erro inesperado".</p></div>
+          <div class="ex good"><span class="lbl">Melhoria</span><p>O sistema faz o que foi feito para fazer, mas o cliente quer outra coisa. Ex.: exportar em Excel um relatório que só sai em PDF.</p></div>
         </div>
       </div>
-      <p class="note">O rascunho fica salvo só neste navegador. Não coloque CPF nem dados pessoais aqui: eles vão direto na ferramenta oficial de chamados.</p>
+      <div class="g2">
+        <div class="card stack"><h3>História de usuário</h3><p class="mono">Como [quem], quero [o quê], para [por quê].</p><p class="note">"Como contadora da prefeitura, quero exportar o relatório de arrecadação em Excel, para montar a prestação de contas sem digitar os valores de novo."</p></div>
+        <div class="card stack"><h3>Critério de aceite</h3><p class="mono">Dado [situação], quando [ação], então [resultado].</p><p class="note">"Dado que estou no relatório de arrecadação, quando clico em Exportar, então recebo um arquivo .xlsx com as mesmas colunas e totais da tela."</p></div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Exercício</span>
+        <h3>Transforme o pedido vago em requisito</h3>
+        <div class="stack">
+          <div class="fld"><label for="rq1">Pedido: "Queria ser avisada quando um processo chegar no meu setor."</label><textarea id="rq1" rows="3" placeholder="História de usuário e critério de aceite"></textarea><details class="rv"><summary>Ver sugestão</summary><div>História: "Como servidora do setor de compras, quero ser avisada quando um processo chegar ao meu setor, para não deixar processo parado." Critério: "Dado que um processo foi tramitado para o meu setor, quando ele chega, então recebo um aviso no sistema com o número do processo."</div></details></div>
+          <div class="fld"><label for="rq2">Pedido: "O relatório da folha devia mostrar o total por secretaria."</label><textarea id="rq2" rows="3" placeholder="História de usuário e critério de aceite"></textarea><details class="rv"><summary>Ver sugestão</summary><div>História: "Como gestora do RH, quero ver o total da folha por secretaria, para conferir o gasto de cada uma antes de fechar." Critério: "Dado que gero o relatório da folha do mês, quando ele abre, então vejo um subtotal por secretaria e o total geral igual ao de hoje."</div></details></div>
+        </div>
+      </div>
     </section>
-  </main>
 
-  <footer>
-    <span>© 2026 Coplan · Inovação</span>
-    <span>Material de capacitação interna. Exemplos, nomes e telas são fictícios.</span>
-  </footer>
+    <section class="view" id="v-n2-api" hidden data-n2="2" data-tit="Como o sistema funciona por dentro">
+      <div class="blk">
+        <h2>Um restaurante</h2>
+        <div class="analogy">
+          <div class="an"><span>Tela</span><b>Salão</b><p>O que o cliente vê e onde ele faz o pedido.</p></div>
+          <div class="an"><span>API</span><b>Garçom</b><p>Leva o pedido para a cozinha e traz a resposta.</p></div>
+          <div class="an"><span>Servidor</span><b>Cozinha</b><p>Faz o trabalho: calcula, valida, gera a guia.</p></div>
+          <div class="an"><span>Banco de dados</span><b>Despensa</b><p>Onde os dados ficam guardados.</p></div>
+        </div>
+        <p>Quando a tela mostra "Erro inesperado", o garçom voltou da cozinha com uma resposta ruim. O F12 e o Postman mostram o que ele trouxe.</p>
+      </div>
+      <div class="blk">
+        <h2>O que tem numa requisição</h2>
+        <div class="tbl"><table><thead><tr><th>Parte</th><th>O que é</th><th>Exemplo</th></tr></thead><tbody>
+          <tr><td>Método</td><td>O tipo de pedido</td><td><span class="code">GET</span> buscar · <span class="code">POST</span> criar ou executar · <span class="code">PUT</span> alterar · <span class="code">DELETE</span> apagar</td></tr>
+          <tr><td>URL</td><td>O endereço do pedido</td><td class="mono">/api/tributario/contribuinte</td></tr>
+          <tr><td>Parâmetros ou corpo</td><td>Os dados enviados</td><td class="mono">inscricao=01.02.003.0045</td></tr>
+          <tr><td>Cabeçalhos</td><td>Informações extras, como o token de acesso</td><td class="mono">Authorization: Bearer ...</td></tr>
+          <tr><td>Resposta</td><td>O status e o conteúdo devolvido</td><td><span class="code s2">200</span> e os dados do contribuinte</td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="blk">
+        <h2>Status que importam</h2>
+        <div class="tbl"><table><thead><tr><th>Status</th><th>Significa</th><th>O que costuma indicar</th></tr></thead><tbody>
+          <tr><td><span class="code s2">200</span></td><td>Deu certo</td><td>A requisição funcionou</td></tr>
+          <tr><td><span class="code s4">400</span></td><td>Pedido inválido</td><td>Dado faltando ou no formato errado</td></tr>
+          <tr><td><span class="code s4">401</span></td><td>Não autenticado</td><td>Sessão expirada ou token ausente</td></tr>
+          <tr><td><span class="code s4">403</span></td><td>Sem permissão</td><td>O usuário não tem acesso a isso</td></tr>
+          <tr><td><span class="code s4">404</span></td><td>Não encontrado</td><td>Endereço ou registro que não existe</td></tr>
+          <tr><td><span class="code s5">500</span></td><td>Erro no servidor</td><td>Falha do lado da Coplan. Quase sempre vai para o N2</td></tr>
+        </tbody></table></div>
+      </div>
+    </section>
+
+    <section class="view" id="v-n2-swagger" hidden data-n2="3" data-tit="Lendo o Swagger">
+      <p class="lead">O Swagger é a documentação viva de uma API: lista cada endereço, o que ele recebe e o que devolve. Abra os dois endereços abaixo.</p>
+      <div class="sw">
+        <details class="sw-op get"><summary><span class="mth get">GET</span><span class="sw-path">/api/tributario/contribuinte</span><span class="sw-sum">Busca um contribuinte pela inscrição</span></summary>
+          <div class="sw-b"><h4>Parâmetros</h4><div class="tbl"><table><thead><tr><th>Nome</th><th>Onde</th><th>Tipo</th><th>Obrigatório</th></tr></thead><tbody><tr><td class="mono">inscricao</td><td>query</td><td>texto</td><td>sim</td></tr></tbody></table></div>
+          <h4>Respostas</h4><p><span class="code s2">200</span> Contribuinte encontrado</p><pre class="json">{ "nome": "Contribuinte de Teste", "situacao": "ATIVO" }</pre><p><span class="code s4">404</span> Inscrição não encontrada</p></div></details>
+        <details class="sw-op post"><summary><span class="mth post">POST</span><span class="sw-path">/api/tributario/guias/iptu/emitir</span><span class="sw-sum">Emite a guia de IPTU do exercício</span></summary>
+          <div class="sw-b"><h4>Corpo da requisição</h4><pre class="json">{ "inscricao": "01.02.003.0045", "exercicio": 2026 }</pre>
+          <h4>Respostas</h4><p><span class="code s2">200</span> Guia emitida</p><pre class="json">{ "numeroGuia": "2026000123", "valor": 1840.32, "vencimento": "2026-11-06" }</pre><p><span class="code s4">400</span> Dados inválidos · <span class="code s4">404</span> Inscrição não encontrada · <span class="code s5">500</span> Erro interno</p></div></details>
+      </div>
+      <p class="note">Endereços e dados fictícios, só para treino.</p>
+      <div class="exercise"><span class="ex-badge">Exercício</span><h3>Leia o Swagger acima e responda</h3><div id="q-swagger"></div></div>
+    </section>
+
+    <section class="view" id="v-n2-postman" hidden data-n2="4" data-tit="Montando a requisição no Postman">
+      <div class="callout warn"><b>Regras do Postman</b><ul class="clean"><li>Só no ambiente de homologação. Nunca em produção.</li><li>Nunca use token de produção nem o seu login pessoal de cliente.</li><li>Use a collection e o environment que o N2 te passar.</li><li>Postman serve para entender e evidenciar, não para corrigir.</li></ul></div>
+      <div class="blk">
+        <h2>No Postman de verdade</h2>
+        <ol class="clean"><li>Abra a collection que o N2 compartilhou.</li><li>No canto superior direito, selecione o environment <span class="code">Homologação</span>.</li><li>Escolha a requisição e preencha os parâmetros.</li><li>Clique em <b>Send</b>.</li><li>Compare o status e a resposta com o que o F12 mostrou.</li><li>Cole o resultado no campo de evidências da OS.</li></ol>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Simulador</span>
+        <h3>Monte a requisição</h3>
+        <p class="note">Missão: reproduza o erro da Joana. Dica: a guia dela é do exercício 2026.</p>
+        <div class="pm">
+          <div class="pm-bar"><select id="pmM" aria-label="Método"><option>GET</option><option>POST</option></select><select id="pmP" class="url" aria-label="Endereço"><option value="contribuinte">{{baseUrl}}/api/tributario/contribuinte</option><option value="emitir">{{baseUrl}}/api/tributario/guias/iptu/emitir</option></select><button class="btn btn-p sm" type="button" id="pmSend">Send</button></div>
+          <div class="pm-params"><div class="fld"><label for="pmI">inscricao</label><input type="text" id="pmI" placeholder="01.02.003.0045"></div><div class="fld"><label for="pmE">exercicio (só para emitir)</label><input type="text" id="pmE" placeholder="2026"></div></div>
+          <div class="pm-res" id="pmRes"><p class="note">A resposta aparece aqui.</p></div>
+        </div>
+      </div>
+      <div class="exercise">
+        <span class="ex-badge">Fechamento</span>
+        <h3>Escreva o pitch do problema para o N2</h3>
+        <p class="note">Use o que o simulador mostrou: o que acontece e onde, o impacto e o que você já sabe.</p>
+        <textarea id="pmPitch" rows="4"></textarea>
+      </div>
+    </section>
+
+    <footer class="sitefoot"><span>© 2026 Coplan · Pessoas &amp; Cultura e Inovação</span><span>Material de capacitação interna. Casos, nomes, telas e endereços dos exercícios são fictícios.</span></footer>
+  </main>
 </div>
 
 <script>
 (function(){
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-  const ICON={
-    home:'<path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
-    msg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
-    up:'<path d="M12 19V5M5 12l7-7 7 7"/>',
-    play:'<circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z"/>',
-    ban:'<circle cx="12" cy="12" r="10"/><path d="M4.9 4.9l14.2 14.2"/>',
-    list:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>'
-  };
-  const svg=k=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+ICON[k]+'</svg>';
-  $$('#nav a').forEach(a=>a.insertAdjacentHTML('afterbegin',svg(a.dataset.i)));
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const S={get(k,d){try{const v=localStorage.getItem('cn1:'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem('cn1:'+k,JSON.stringify(v));}catch(e){}}};
+  function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600);}
+  async function copy(text,ok){try{await navigator.clipboard.writeText(text);toast(ok);}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(ok);}catch(_){toast('Selecione o texto e copie manualmente.');}ta.remove();}}
+  const CHEV='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
 
-  /* storage (per-viewer convenience) */
-  const KEY='coplan-n1-checklist';
-  let done=new Set();
-  try{ done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]')); }catch(e){}
-  const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify([...done])); }catch(e){} };
+  /* ================= data ================= */
+  const P={l:{n:'Leonardo Soares',r:'Treinador de Vendas',c:'#9A5B06',i:'LS'},g:{n:'Gabryelle',r:'RH Coplan',c:'#01814E',i:'G'},d:{n:'Diego Loureiro',r:'Gerente de Inovação',c:'#1F4993',i:'DL'}};
+  const AG=[
+    {id:'abertura',t:'08:00',f:'08:20',min:20,tit:'Boas-vindas',per:'m',q:['g'],tag:'Abertura',top:['Recepção dos participantes','Apresentação do dia e dos facilitadores']},
+    {id:'ssc',t:'08:20',f:'08:40',min:20,tit:'Dinâmica Start, Stop, Continue',per:'m',q:['l'],top:['O que começar, parar e continuar fazendo no atendimento']},
+    {id:'empatia',t:'08:40',f:'09:30',min:50,tit:'Conexão Pessoal &amp; Empatia',per:'m',q:['l'],top:['Rapport','Escuta ativa','Técnica do quebra-gelo','Técnica do espelhamento']},
+    {id:'perfis',t:'09:30',f:'10:20',min:50,tit:'Perfis Comportamentais',per:'m',q:['l','g'],top:['Executor','Comunicador','Planejador','Analítico','Exercício de identificação']},
+    {pausa:1,t:'10:20',f:'10:30',min:10,tit:'Coffee break'},
+    {id:'comunicacao',t:'10:30',f:'11:20',min:50,tit:'Comunicação Eficaz',per:'m',q:['l'],top:['Fundamentos','Pitch de apresentação','Pitch de elevador','Simulação prática']},
+    {id:'corporal',t:'11:20',f:'11:50',min:30,tit:'Linguagem Corporal',per:'m',q:['l'],top:['Fundamentos','O que fazer x o que não fazer','Carisma']},
+    {id:'oral',t:'11:50',f:'12:30',min:40,tit:'Comunicação Oral',per:'m',q:['l'],top:['Modulação de voz','Poder do silêncio','Marcadores de fala','Atividade prática']},
+    {pausa:1,t:'12:30',f:'13:30',min:60,tit:'Almoço'},
+    {id:'coplan',t:'13:30',f:'14:15',min:45,tit:'Introdução à Coplan',per:'t',q:['d'],top:['Produtos e serviços','Importância do atendimento ao cliente']},
+    {id:'fluxo',t:'14:15',f:'15:15',min:60,tit:'Fluxo de atendimento',per:'t',q:['d'],top:['Nível 1: atendimento inicial','Nível 2: suporte especializado','Encaminhamento para o desenvolvedor']},
+    {pausa:1,t:'15:15',f:'15:30',min:15,tit:'Coffee break'},
+    {id:'registro',t:'15:30',f:'16:00',min:30,tit:'Ferramentas e registro',per:'t',q:['d'],top:['Ferramentas de atendimento','Organização e registro de informações','Checklist antes de escalar ao N2']},
+    {id:'simulacao',t:'16:00',f:'16:40',min:40,tit:'Simulações de atendimento',per:'t',q:['d'],tag:'Prática',top:['Casos práticos de atendimento N1 aplicando o checklist e a montagem de OS']},
+    {id:'avaliacao',t:'16:40',f:'17:00',min:20,tit:'Avaliação e feedback',per:'t',q:['d','g'],tag:'Encerramento',top:['Avaliação de reação','Feedback do dia','Apresentação do Guia de Capacitação N1']}
+  ];
+  const BLOCKS=AG.filter(a=>!a.pausa);
+  const N2=$$('[data-n2]').map(s=>({id:s.id.slice(2),tit:s.dataset.tit,n:s.dataset.n2}));
+  const ORDER=['inicio',...BLOCKS.map(a=>a.id),...N2.map(n=>n.id)];
+  const TITLE={inicio:'Início',os:'Montar a OS'}; BLOCKS.forEach(a=>TITLE[a.id]=a.tit.replace('&amp;','&')); N2.forEach(n=>TITLE[n.id]=n.tit);
+  const toMin=h=>{const [a,b]=h.split(':').map(Number);return a*60+b;};
+  const avatar=k=>`<div class="who"><div class="av" style="background:${P[k].c}">${P[k].i}</div><div><b>${P[k].n}</b><span>${P[k].r}</span></div></div>`;
 
-  function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
-  async function copy(text,ok){
-    try{ await navigator.clipboard.writeText(text); toast(ok); }
-    catch(e){ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); toast(ok);}catch(_){toast('Selecione e copie manualmente.');} ta.remove(); }
+  /* ================= now ================= */
+  function current(){
+    const d=new Date(); if(!(d.getFullYear()===2026&&d.getMonth()===10&&d.getDate()===4)) return null;
+    const m=d.getHours()*60+d.getMinutes();
+    for(const a of AG){ if(m>=toMin(a.t)&&m<toMin(a.f)) return a; }
+    return {fora:true,antes:m<480};
+  }
+  function dayStatus(){
+    const now=new Date(); const today=new Date(now.getFullYear(),now.getMonth(),now.getDate()); const ev=new Date(2026,10,4);
+    const diff=Math.round((ev-today)/86400000); const c=current();
+    if(diff>1) return `Faltam ${diff} dias para a imersão.`;
+    if(diff===1) return 'A imersão é amanhã. Chegue às 8h no Sebrae do Shopping Goiabeiras.';
+    if(diff===0){ if(c&&!c.fora) return c.pausa?`Agora: ${c.tit} até ${c.f}.`:`Acontecendo agora: <a href="#${c.id}">${c.tit}</a>, até ${c.f}.`; return c&&c.antes?'É hoje! Começamos às 8h.':'Dia encerrado. Use este guia como consulta no dia a dia.'; }
+    return 'A imersão aconteceu em 04/11/2026. Use este guia como consulta no dia a dia.';
   }
 
-  /* NUNCA cards */
-  const never=[
-    {id:'n1',t:'Pedir senha ao usuário',s:'"Anota minha senha aí e entra no meu usuário para ver, é mais rápido."',a:'"Não preciso da sua senha e você não deve passar ela para ninguém, nem para o suporte. Vamos fazer juntos: me diga o que aparece na sua tela."'},
-    {id:'n2',t:'Prometer prazo de correção',s:'"Até que horas vocês arrumam isso? Preciso emitir hoje."',a:'"Registrei com prioridade alta e já está com a equipe técnica. Eu te dou um retorno até as 16h, mesmo que ainda não esteja resolvido." Prometa o retorno, não a correção.'},
-    {id:'n3',t:'Alterar dados em produção',s:'"Só muda o valor dessa guia aí direto no sistema, ela saiu errada."',a:'"Eu não altero dados do município. Vou registrar com o número da guia e o valor correto que você me passou, e a correção segue pelo procedimento com registro."'},
-    {id:'n4',t:'Comentar o caso de um cliente com outro',s:'"A prefeitura vizinha também está com esse problema? Ouvi falar que sim."',a:'"Não posso falar sobre outros clientes. Sobre o seu caso: já está registrado e acompanhando."'},
-    {id:'n5',t:'Expor CPF ou dados pessoais fora do chamado',s:'"Vou te mandar no WhatsApp a planilha com os CPFs de todos os contribuintes que deram erro."',a:'"Anexe no chamado, pelo canal oficial. E para o teste basta um exemplo: um CPF que deu erro já ajuda o N2."'}
-  ];
-  $('#nvList').innerHTML=never.map(n=>`
-    <div class="nv-c item" data-id="${n.id}" style="overflow:visible">
-      <h3>${svg('ban')}${n.t}</h3>
-      <div class="say"><i>O cliente diz</i>${n.s}</div>
-      <div class="ans" hidden><i>Responda assim</i>${n.a}</div>
-      <button class="btn btn-o reveal" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Ver como responder</button>
-    </div>`).join('');
-  $$('.reveal').forEach(b=>b.addEventListener('click',()=>{
-    const c=b.closest('.nv-c'); c.querySelector('.ans').hidden=false; b.remove();
-    done.add(c.dataset.id); save(); refresh();
-  }));
-
-  /* accordion + marking */
-  $$('.item-h').forEach(h=>h.addEventListener('click',()=>{
-    const it=h.closest('.item'), b=it.querySelector('.item-b'), open=b.hidden;
-    b.hidden=!open; it.classList.toggle('open',open); h.setAttribute('aria-expanded',open);
-  }));
-  $$('.mark-btn').forEach(b=>b.addEventListener('click',()=>{
-    const it=b.closest('.item'); done.add(it.dataset.id); save(); refresh();
-    const items=[...it.parentElement.children]; const nx=items[items.indexOf(it)+1];
-    it.querySelector('.item-b').hidden=true; it.classList.remove('open'); it.querySelector('.item-h').setAttribute('aria-expanded','false');
-    if(nx && !done.has(nx.dataset.id)){ nx.querySelector('.item-h').click(); nx.scrollIntoView({block:'nearest',behavior:'smooth'}); }
-  }));
-
-  function refresh(){
-    $$('.item').forEach(it=>{
-      const d=done.has(it.dataset.id); it.classList.toggle('done',d);
-      if(it.classList.contains('nv-c') && d){ const a=it.querySelector('.ans'); if(a) a.hidden=false; const r=it.querySelector('.reveal'); if(r) r.remove(); }
-    });
-    const cnt=g=>[...done].filter(x=>x[0]===g).length;
-    $('#n-responder').textContent=cnt('r')+'/3'; $('#n-escalar').textContent=cnt('e')+'/6'; $('#n-nunca').textContent=cnt('n')+'/5';
-    const total=done.size; $('#progTxt').textContent=total+' de 14'; $('#barFill').style.width=(total/14*100)+'%';
+  /* ================= nav ================= */
+  let done=new Set(S.get('done',[]));
+  function buildNav(){
+    const c=current(); const nowId=c&&!c.fora&&!c.pausa?c.id:null;
+    const item=(id,tm,tit,cls='')=>`<a class="ni ${cls}${done.has(id)?' done':''}" href="#${id}" data-v="${id}"><span class="tm">${tm}</span><span>${tit}</span>${id===nowId?'<span class="now-pill">AGORA</span>':(done.has(id)||ORDER.includes(id)&&id!=='inicio'?'<span class="ok"></span>':'')}</a>`;
+    let h=`<div class="ng"><div class="ng-h i">Começo</div>${item('inicio','','Início e cronograma')}</div>`;
+    h+=`<div class="ng"><div class="ng-h m">Manhã · Comportamental</div>`;
+    AG.forEach(a=>{ if(toMin(a.t)>=780) return; h+=a.pausa?`<div class="ni pausa"><span class="tm">${a.t}</span><span>${a.tit}</span></div>`:item(a.id,a.t,a.tit); });
+    h+=`</div><div class="ng"><div class="ng-h t">Tarde · Técnico</div>`;
+    AG.forEach(a=>{ if(toMin(a.t)<780) return; h+=a.pausa?`<div class="ni pausa"><span class="tm">${a.t}</span><span>${a.tit}</span></div>`:item(a.id,a.t,a.tit); });
+    h+=`</div><div class="ng"><div class="ng-h f">Ferramenta do dia a dia</div>${item('os','OS','Montar a OS')}</div>`;
+    h+=`<div class="ng"><div class="ng-h n2">Depois da imersão · Trilha N2</div>${N2.map(n=>item(n.id,'N2·'+n.n,n.tit)).join('')}</div>`;
+    $('#nav').innerHTML=h;
+    const nb=$('#nowBar');
+    if(nowId){ const a=AG.find(x=>x.id===nowId); nb.hidden=false; nb.href='#'+nowId; nb.innerHTML=`<b>Acontecendo agora</b><span>${a.tit} · até ${a.f}</span>`; } else nb.hidden=true;
+    markActive();
   }
+  function progress(){ const n=BLOCKS.filter(b=>done.has(b.id)).length; $('#progTxt').textContent=`${n} de ${BLOCKS.length}`; $('#barFill').style.width=(n/BLOCKS.length*100)+'%'; }
 
-  /* classify quiz */
-  const qs=[
-    {p:'"Onde fica a opção de segunda via da guia?"',a:'Dúvida',f:'O sistema funciona, a pessoa só não achou o caminho. Resolva no N1.'},
-    {p:'"Ao clicar em Emitir aparece Erro inesperado."',a:'Erro',f:'O sistema não fez o que deveria. Colete evidências e escale.'},
-    {p:'"O desconto do IPTU à vista não aparece para 2026."',a:'Configuração',f:'Provável parâmetro do exercício não cadastrado pelo município. Se não tiver certeza, registre como erro e explique a suspeita.'},
-    {p:'"Queria que o relatório de arrecadação saísse em Excel."',a:'Melhoria',f:'O sistema faz o que foi feito para fazer. O cliente quer outra coisa: vira pedido para o produto.'}
-  ];
-  const types=['Dúvida','Erro','Configuração','Melhoria'];
-  $('#quiz').innerHTML=qs.map((q,i)=>`<div class="q" data-q="${i}"><p>${q.p}</p><div class="opts">${types.map(t=>`<button class="opt" type="button">${t}</button>`).join('')}</div><p class="fb" hidden></p></div>`).join('');
-  $$('#quiz .q').forEach(el=>{
-    const q=qs[+el.dataset.q];
-    el.querySelectorAll('.opt').forEach(o=>o.addEventListener('click',()=>{
-      el.querySelectorAll('.opt').forEach(x=>x.classList.remove('right','wrong'));
-      const ok=o.textContent===q.a; o.classList.add(ok?'right':'wrong');
-      const fb=el.querySelector('.fb'); fb.hidden=false; fb.textContent=(ok?'Isso. ':'Quase. A resposta é '+q.a+'. ')+q.f;
-    }));
+  /* ================= view headers and footers ================= */
+  BLOCKS.forEach(a=>{
+    const sec=$('#v-'+a.id); if(!sec) return;
+    const lbl=a.per==='m'?'Manhã · Comportamental':'Tarde · Técnico';
+    const hd=document.createElement('div'); hd.className='vh';
+    hd.innerHTML=`<div class="vmeta"><span class="per ${a.per}">${lbl}</span>${a.tag?`<span class="per x">${a.tag}</span>`:''}<span class="mono">${a.t} às ${a.f} · ${a.min} min</span></div><h1>${a.tit}</h1><div class="whos">${a.q.map(avatar).join('')}</div><div class="topics"><span class="tl">${a.per==='m'?'Tópicos do facilitador:':'Tópicos:'}</span>${a.top.map(t=>`<span class="topic">${t}</span>`).join('')}</div>`;
+    sec.prepend(hd);
+    const nt=document.createElement('div'); nt.className='card notes';
+    nt.innerHTML=`<label class="flbl" for="nt-${a.id}">Minhas anotações deste bloco</label><textarea id="nt-${a.id}" rows="4" placeholder="${a.per==='m'?'Anote o que o Leonardo trouxer: exemplos, frases, técnicas.':'Anote dúvidas, exemplos e o que você quer lembrar.'}"></textarea><span class="note">Fica salvo só neste aparelho.</span>`;
+    sec.appendChild(nt);
+    const ta=nt.querySelector('textarea'); ta.value=S.get('nt-'+a.id,''); ta.addEventListener('input',()=>S.set('nt-'+a.id,ta.value));
+  });
+  N2.forEach(n=>{
+    const sec=$('#v-'+n.id); const hd=document.createElement('div'); hd.className='vh';
+    hd.innerHTML=`<div class="vmeta"><span class="per n2">Trilha N2 · ${n.n} de ${N2.length}</span><span class="mono">depois da imersão</span></div><h1>${n.tit}</h1>`;
+    sec.prepend(hd);
+  });
+  ORDER.forEach((id,i)=>{
+    const sec=$('#v-'+id); if(!sec) return;
+    const prev=ORDER[i-1], next=ORDER[i+1]; const isBlock=id!=='inicio';
+    const f=document.createElement('div'); f.className='vf';
+    f.innerHTML=(isBlock?`<div class="row"><button class="btn btn-g done-btn" type="button" data-id="${id}"></button></div>`:'')+
+      `<div class="nav2">${prev?`<a href="#${prev}"><span>Anterior</span><b>${TITLE[prev]}</b></a>`:''}${next?`<a class="nx" href="#${next}"><span>Próximo</span><b>${TITLE[next]}</b></a>`:''}</div>`;
+    sec.appendChild(f);
+  });
+  function paintDone(){ $$('.done-btn').forEach(b=>{ const d=done.has(b.dataset.id); b.className='btn done-btn '+(d?'btn-o':'btn-g'); b.innerHTML=d?'Bloco concluído · desmarcar':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l5 5L20 7"/></svg>Concluí este bloco'; }); }
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('.done-btn'); if(!b) return;
+    const id=b.dataset.id; if(done.has(id)) done.delete(id); else { done.add(id); const i=ORDER.indexOf(id); if(ORDER[i+1]) location.hash=ORDER[i+1]; }
+    S.set('done',[...done]); paintDone(); progress(); buildNav();
   });
 
-  /* devtools mock */
-  const reqs=[
+  /* ================= router ================= */
+  let curView='inicio';
+  function markActive(){ $$('#nav .ni[data-v]').forEach(a=>a.classList.toggle('on',a.dataset.v===curView)); }
+  function show(id){
+    if(!$('#v-'+id)) id='inicio'; curView=id;
+    $$('.view').forEach(v=>v.hidden=v.id!=='v-'+id);
+    markActive(); closeDrawer(); window.scrollTo(0,0);
+    document.title=(id==='inicio'?'':TITLE[id]+' · ')+'Guia de Capacitação N1';
+  }
+  addEventListener('hashchange',()=>show(location.hash.slice(1)));
+
+  /* drawer */
+  const side=$('#side'), scrim=$('#scrim'), mb=$('#menuBtn');
+  function openDrawer(){ side.classList.add('open'); scrim.hidden=false; mb.setAttribute('aria-expanded','true'); }
+  function closeDrawer(){ side.classList.remove('open'); scrim.hidden=true; mb.setAttribute('aria-expanded','false'); }
+  mb.addEventListener('click',()=>side.classList.contains('open')?closeDrawer():openDrawer());
+  scrim.addEventListener('click',closeDrawer);
+  addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
+
+  /* ================= agenda ================= */
+  function renderAgenda(){
+    const c=current(); const nowT=c&&!c.fora?c.t:null;
+    const head=(per)=>per==='m'
+      ?`<div class="ag-h m"><div class="row"><h3>Manhã · Atendimento &amp; Comunicação</h3><span class="per m">Comportamental · 4 horas</span></div>${avatar('l')}</div>`
+      :`<div class="ag-h t"><div class="row"><h3>Tarde · A Coplan e o Atendimento</h3><span class="per t">Técnico · 3h30</span></div>${avatar('d')}</div>`;
+    let h=''; let last='';
+    AG.forEach(a=>{
+      const per=toMin(a.t)<780?'m':'t'; if(per!==last){ h+=head(per); last=per; }
+      const now=a.t===nowT?' now':'';
+      if(a.pausa){ h+=`<div class="ag pausa${now}"><div class="tm">${a.t}</div><div class="tt"><b>${a.tit} · ${a.min} min</b></div></div>`; return; }
+      h+=`<a class="ag${now}" href="#${a.id}"><div class="tm">${a.t} às ${a.f}<small>${a.min} min</small></div><div class="tt"><b>${a.tit}${a.tag?`<span class="tag">${a.tag}</span>`:''}</b><span>${a.top.join(' · ')}</span></div><div class="q">${a.q.map(k=>P[k].n.split(' ')[0]).join(' e ')}</div></a>`;
+    });
+    $('#agenda').innerHTML=h;
+    $('#dayStat').innerHTML=dayStatus();
+  }
+
+  /* ================= quizzes ================= */
+  function makeQuiz(id,items){
+    const el=document.getElementById(id); if(!el) return; el.className='quiz';
+    el.innerHTML=items.map(q=>`<div class="q">${q.chat?`<div class="msg in"><span class="ms">${q.chat}</span>${q.p}</div>`:`<p class="qp">${q.p}</p>`}<div class="opts${q.stack?' stack':''}">${q.o.map((o,j)=>`<button class="opt" type="button" data-j="${j}">${o}</button>`).join('')}</div><p class="fb" hidden></p></div>`).join('');
+    el.querySelectorAll('.q').forEach((qe,i)=>{ const q=items[i];
+      qe.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
+        const j=+b.dataset.j, ok=j===q.a;
+        qe.querySelectorAll('.opt').forEach(x=>x.classList.remove('right','wrong')); b.classList.add(ok?'right':'wrong');
+        const fb=qe.querySelector('.fb'); fb.hidden=false; fb.className='fb '+(ok?'ok':'no');
+        const own=q.fb&&q.fb[j];
+        fb.textContent=ok?'Isso. '+(own||q.x||''):(own?'Ainda não. '+own:'Ainda não. A resposta é '+q.o[q.a].replace(/<[^>]+>/g,'')+'. '+(q.x||''));
+      }));
+    });
+  }
+  const JOANA='Joana · Setor de Tributos';
+  makeQuiz('q-emp1',[{p:'Escolha a resposta:',stack:1,a:1,o:['"Bom dia. Informe o número do protocolo."','"Bom dia, Joana! Entendi, tem contribuinte esperando, então vamos direto ao ponto. Qual é a inscrição do imóvel?"','"Calma, Joana, não precisa se estressar 😊"','"Bom dia! Como está o seu dia? Aqui está bem corrido também, hahaha"'],
+    fb:['Correta, mas fria. Ela está sob pressão e você começou cobrando algo dela.','Usa o nome, reconhece a urgência e já faz a primeira pergunta útil. Rapport e quebra-gelo em uma linha.','Pedir calma para quem está pressionado costuma soar como "você está exagerando".','Quebra-gelo longo demais para quem tem fila no balcão.']}]);
+  makeQuiz('q-emp3',[{chat:JOANA,p:'...não está emitindo a guia...',stack:1,a:0,o:['"Entendi, Joana: a guia não está emitindo. Vou te ajudar agora."','"Compreendo que o DAM não está sendo gerado pelo módulo de arrecadação."','"Ok."'],
+    fb:['Usa as palavras dela. Ela sente que foi entendida.','Correto tecnicamente, mas com palavras que ela não usou. Ela pode achar que você não entendeu.','Não mostra que você entendeu nada.']}]);
+  const PERF=['Executor','Comunicador','Planejador','Analítico'];
+  makeQuiz('q-perfis',[
+    {chat:'Mensagem 1',p:'Bom dia. O sistema não está emitindo a guia de IPTU e tenho contribuinte esperando no balcão. Preciso disso URGENTE!!',o:PERF,a:0,x:'Curta, cobra rapidez e foca no resultado.'},
+    {chat:'Mensagem 2',p:'Bom dia, tudo bem com você? Olha, hoje está uma loucura aqui, o secretário passou na sala, e no meio disso o relatório resolveu não abrir 😅 você consegue me ajudar?',o:PERF,a:1,x:'Conta o contexto, usa emoji, conversa antes de chegar no problema.'},
+    {chat:'Mensagem 3',p:'Desculpa incomodar. Eu não sei se fiz algo errado, mas apareceu uma mensagem e fiquei com medo de clicar e estragar alguma coisa. Pode me explicar com calma o que eu faço?',o:PERF,a:2,x:'Pede desculpa, tem medo de errar e quer passo a passo.'},
+    {chat:'Mensagem 4',p:'O contracheque da matrícula 3021 saiu com R$ 312,40 a menos no adicional. Pela minha conta deveria ser 10% sobre o vencimento base de R$ 3.124,00. Qual regra o sistema está usando?',o:PERF,a:3,x:'Números, fórmula e a pergunta "qual regra".'},
+    {chat:'Mensagem 5',p:'Preciso do relatório de arrecadação até as 11h. Funciona ou não?',o:PERF,a:0,x:'Direto, com prazo e sem rodeio.'}
+  ]);
+  makeQuiz('q-corp',[{p:'Escolha a mensagem:',stack:1,a:2,o:['"OK."','"VOU VERIFICAR."','"Certo, Joana! Vou verificar agora e te dou um retorno em até 10 minutos."','"vc já tentou limpar o cache??"'],
+    fb:['Seco. Parece que você não se importa.','Maiúsculas soam como grito.','Nome, ação e prazo de retorno. Postura aberta, no texto.','Abreviação e "??" passam impaciência.']}]);
+  const AREAS=['Tributário','Contábil','RH','Educação','Administrativo'];
+  makeQuiz('q-area',[
+    {chat:'Servidor',p:'Não consigo emitir a guia do ISS de um prestador.',o:AREAS,a:0},
+    {chat:'Servidor',p:'O contracheque de um servidor saiu com o desconto errado.',o:AREAS,a:2},
+    {chat:'Servidor',p:'O empenho que lancei ontem não aparece no relatório.',o:AREAS,a:1},
+    {chat:'Servidor',p:'A escola não consegue lançar a requisição de material.',o:AREAS,a:3},
+    {chat:'Servidor',p:'O processo que tramitei não chegou no setor de compras.',o:AREAS,a:4}
+  ]);
+  const TYP=['Dúvida','Erro','Configuração','Melhoria'];
+  makeQuiz('q-class',[
+    {chat:'Servidor',p:'Onde fica a opção de segunda via da guia?',o:TYP,a:0,x:'O sistema funciona, a pessoa só não achou o caminho. Resolva no N1.'},
+    {chat:'Servidor',p:'Ao clicar em Emitir aparece "Erro inesperado".',o:TYP,a:1,x:'O sistema não fez o que deveria. Colete evidências e escale.'},
+    {chat:'Servidor',p:'O desconto do IPTU à vista não aparece para 2026.',o:TYP,a:2,x:'Provável parâmetro do exercício não cadastrado. Se não tiver certeza, registre como erro e explique a suspeita.'},
+    {chat:'Servidor',p:'Queria que o relatório de arrecadação saísse em Excel.',o:TYP,a:3,x:'O sistema faz o que foi feito para fazer. O cliente quer outra coisa: vira sugestão.'}
+  ]);
+  const WHO=['N1','N2','Desenvolvedor','Gestão do produto'];
+  makeQuiz('q-quem',[
+    {p:'Servidor não sabe onde emitir a segunda via da guia.',o:WHO,a:0,x:'Dúvida de uso. Você resolve na hora.'},
+    {p:'Falta cadastrar o parâmetro de desconto do IPTU 2026 do município.',o:WHO,a:1,x:'Configuração: o N2 analisa e ajusta, sem mudar o sistema.'},
+    {p:'O N2 confirmou que o botão Emitir quebrou depois da última atualização do sistema.',o:WHO,a:2,x:'Defeito no código. Só o desenvolvedor corrige.'},
+    {p:'Cliente pede um relatório novo, com total por secretaria.',o:WHO,a:3,x:'Melhoria. Registre como sugestão; quem decide se e quando faz é a gestão do produto.'},
+    {p:'Servidora esqueceu como filtrar o relatório por data.',o:WHO,a:0,x:'Dúvida de uso. Você resolve com passo a passo.'},
+    {p:'Erro 500 ao emitir guia, reproduzido em homologação, sem causa clara.',o:WHO,a:1,x:'Erro confirmado: vai para o N2 investigar, com a OS completa.'}
+  ]);
+  makeQuiz('q-swagger',[
+    {p:'Para buscar um contribuinte, qual método você usa?',o:['GET','POST','DELETE'],a:0,x:'Buscar é GET.'},
+    {p:'Onde vai a inscrição na busca do contribuinte?',o:['No corpo (body)','Na query (no endereço)','No cabeçalho'],a:1,x:'A tabela de parâmetros diz "query".'},
+    {p:'A emissão da guia respondeu 500. O que isso indica?',o:['O usuário digitou errado','Falha no servidor, caso para o N2','A inscrição não existe'],a:1,x:'5xx é erro do lado do servidor.'}
+  ]);
+
+  /* ================= escuta ativa ================= */
+  const ESC=[['O problema é no IPTU',1],['A tela é a de emissão de guia',1],['Existe urgência: contribuinte no balcão',1],['A mensagem de erro que aparece',0],['A inscrição do imóvel',0],['Desde quando acontece',0],['Se outros colegas também não conseguem',0]];
+  $('#escuta').innerHTML=ESC.map((e,i)=>`<label class="ck"><input type="checkbox" id="es${i}"> ${e[0]}</label>`).join('');
+  $('#escutaBtn').addEventListener('click',()=>{
+    let ok=0; ESC.forEach((e,i)=>{ const c=$('#es'+i); const right=c.checked===!!e[1]; if(right) ok++; c.parentElement.style.color=right?'var(--accent-dk)':'var(--bad)'; });
+    const fb=$('#escutaFb'); fb.hidden=false; fb.className='fb '+(ok===ESC.length?'ok':'no');
+    fb.textContent=(ok===ESC.length?'Perfeito. ':`${ok} de ${ESC.length} certos. `)+'Ela só disse que é IPTU, emissão de guia e que é urgente. O resto vira as suas perguntas, uma de cada vez.';
+  });
+
+  /* ================= SSC ================= */
+  ['ssc-start','ssc-stop','ssc-cont','ssc-depois'].forEach(id=>{ const el=$('#'+id); el.value=S.get(id,''); el.addEventListener('input',()=>{S.set(id,el.value); if(id!=='ssc-depois') sscBack();}); });
+  function sscBack(){
+    const box=(lbl,cls,id)=>`<div class="card stack"><span class="chip ${cls}">${lbl}</span><p>${esc(S.get(id,''))||'<span class="note">Você não preencheu de manhã. <a href="#ssc">Preencher agora</a></span>'}</p></div>`;
+    $('#sscBack').innerHTML=box('Start','ok','ssc-start')+box('Stop','bad','ssc-stop')+box('Continue','info','ssc-cont');
+  }
+  sscBack();
+
+  /* ================= pitches ================= */
+  const paIds=['pa-eu','pa-cli','pa-ass','pa-perg'];
+  paIds.forEach(id=>{ const el=$('#'+id); const v=S.get(id,null); if(v!==null) el.value=v; el.addEventListener('input',()=>{S.set(id,el.value);paRender();}); });
+  function paText(){ const g=id=>$('#'+id).value.trim(); return `Bom dia, ${g('pa-cli')||'[cliente]'}! Aqui é ${g('pa-eu')||'[seu nome]'}, do suporte da Coplan. Já li a sua mensagem e vou te ajudar com ${g('pa-ass')||'[assunto]'}. Para começar, me confirma ${g('pa-perg')||'[pergunta]'}?`; }
+  function paRender(){ $('#paPrev').innerHTML='<span class="ms">Você · Suporte Coplan</span>'+esc(paText()); }
+  paRender();
+  $('#paCopy').addEventListener('click',()=>copy(paText(),'Abertura copiada.'));
+  const pe=$('#pe-txt'); pe.value=S.get('pe-txt',''); const pc=$('#peCount');
+  function peCount(){ const w=(pe.value.trim().match(/\S+/g)||[]).length; const s=Math.round(w/2.5); pc.textContent=`${w} palavras · cerca de ${s} segundos falando`+(s>30?' · passou de 30 segundos, corte':''); pc.classList.toggle('over',s>30); }
+  pe.addEventListener('input',()=>{S.set('pe-txt',pe.value);peCount();}); peCount();
+  ['pp-txt','rw1','rw2','rw3','rq1','rq2','pmPitch'].forEach(id=>{ const el=$('#'+id); if(!el) return; el.value=S.get(id,''); el.addEventListener('input',()=>S.set(id,el.value)); });
+
+  /* ================= products ================= */
+  const IC={
+    trib:'<path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+    cont:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',
+    rh:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M17 11a3 3 0 1 0 0-6M21 20c0-2-1.5-3.5-3.5-4.3"/>',
+    edu:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',
+    adm:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+    port:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>'
+  };
+  const PROD=[['trib','Tributário','IPTU, ISS, taxas, dívida ativa e emissão de guias.','Setor de tributos e fiscalização'],['cont','Contábil e Financeiro','Orçamento, empenhos, pagamentos e prestação de contas.','Contabilidade e finanças'],['rh','Recursos Humanos','Cadastro de servidores, folha de pagamento, férias e contracheques.','RH e departamento pessoal'],['edu','Educação','Gestão da rede municipal e das unidades escolares.','Secretaria de educação e escolas'],['adm','Administrativo e Protocolo','Processos, documentos e tramitação entre setores.','Protocolo e todos os setores'],['port','Portais','Serviços pela internet para cidadão, servidor e fornecedor.','Público externo']];
+  $('#prods').innerHTML=PROD.map(p=>`<div class="card prod"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IC[p[0]]}</svg></div><h3>${p[1]}</h3><p>${p[2]}</p><small>Quem usa: ${p[3]}</small></div>`).join('');
+
+  /* ================= nunca ================= */
+  const NV=[
+    ['Pedir senha ao usuário','"Anota minha senha aí e entra no meu usuário para ver, é mais rápido."','"Não preciso da sua senha, e você não deve passar ela para ninguém, nem para o suporte. Vamos fazer juntos: me diga o que aparece na sua tela."'],
+    ['Prometer prazo de correção','"Até que horas vocês arrumam isso? Preciso emitir hoje."','"Registrei com prioridade alta e já está com a equipe técnica. Te dou um retorno até as 16h, mesmo que ainda não esteja resolvido." Prometa o retorno, não a correção.'],
+    ['Alterar dados em produção','"Só muda o valor dessa guia aí direto no sistema, ela saiu errada."','"Eu não altero dados do município. Vou registrar com o número da guia e o valor correto, e a correção segue pelo procedimento com registro."'],
+    ['Comentar o caso de um cliente com outro','"A prefeitura vizinha também está com esse problema? Ouvi falar que sim."','"Não posso falar sobre outros clientes. Sobre o seu caso: já está registrado e eu estou acompanhando."'],
+    ['Expor CPF ou dados pessoais fora do Cliente Mais','"Vou te mandar no seu WhatsApp a planilha com os CPFs dos contribuintes que deram erro."','"Anexe na OS, pelo Cliente Mais. E para o teste basta um exemplo: um caso que deu erro já ajuda o N2."']
+  ];
+  $('#nunca').innerHTML=NV.map(n=>`<details class="it"><summary><svg viewBox="0 0 24 24" fill="none" stroke="var(--bad)" stroke-width="2" style="width:20px;height:20px;flex:none"><circle cx="12" cy="12" r="10"/><path d="M4.9 4.9l14.2 14.2"/></svg>${n[0]}${CHEV}</summary><div class="db" style="padding-left:16px"><div class="chat"><div class="msg in"><span class="ms">O cliente diz</span>${n[1]}</div><div class="msg out"><span class="ms">Responda assim</span>${n[2]}</div></div></div></details>`).join('');
+
+  /* ================= F12 mock ================= */
+  const REQ=[
     {n:'emissao-guia.html',s:200,m:'GET',t:'document',ms:'84 ms'},
     {n:'contribuinte?inscricao=01.02.003.0045',s:200,m:'GET',t:'fetch',ms:'132 ms',url:'https://homolog.exemplo.gov.br/api/tributario/contribuinte?inscricao=01.02.003.0045',body:'{ "nome": "Contribuinte de Teste", "situacao": "ATIVO" }'},
     {n:'guias/iptu/emitir',s:500,m:'POST',t:'fetch',ms:'1.2 s',url:'https://homolog.exemplo.gov.br/api/tributario/guias/iptu/emitir',body:'{\n  "status": 500,\n  "error": "Internal Server Error",\n  "message": "Parâmetro de desconto do exercício 2026 não encontrado"\n}'},
     {n:'logo-prefeitura.png',s:200,m:'GET',t:'png',ms:'40 ms'}
   ];
   let devSel=null;
-  $('#devRows').innerHTML=reqs.map((r,i)=>`<tr data-i="${i}" class="${r.s>=400?'err':''}" tabindex="0"><td>${r.n}</td><td>${r.s}</td><td>${r.m}</td><td>${r.t}</td><td>${r.ms}</td></tr>`).join('');
+  $('#devRows').innerHTML=REQ.map((r,i)=>`<tr data-i="${i}" class="${r.s>=400?'err':''}" tabindex="0"><td>${r.n}</td><td>${r.s}</td><td>${r.m}</td><td>${r.t}</td><td>${r.ms}</td></tr>`).join('');
   function pick(tr){
     $$('#devRows tr').forEach(x=>x.classList.remove('sel')); tr.classList.add('sel');
-    const r=reqs[+tr.dataset.i]; devSel=r;
-    $('#devDet').innerHTML=`<div><span class="k">Request URL:</span> ${r.url||r.n}</div><div><span class="k">Request Method:</span> ${r.m}</div><div><span class="k">Status Code:</span> <span style="color:${r.s>=400?'#F28B82':'#81C995'}">${r.s}</span></div>`+(r.body?`<div><span class="k">Response:</span><pre>${r.body}</pre></div>`:'');
+    const r=REQ[+tr.dataset.i]; devSel=r;
+    $('#devDet').innerHTML=`<div><span class="k">Request URL:</span> ${esc(r.url||r.n)}</div><div><span class="k">Request Method:</span> ${r.m}</div><div><span class="k">Status Code:</span> <span style="color:${r.s>=400?'#F28B82':'#81C995'}">${r.s}</span></div>`+(r.body?`<div><span class="k">Response:</span><pre>${esc(r.body)}</pre></div>`:'');
     $('#devCopy').disabled=!(r.s>=400);
-    $('#devHint').innerHTML = r.s>=400
-      ? '<b>Achou.</b> Status 500 é falha no servidor, e a resposta diz o motivo: falta o parâmetro de desconto de 2026. Isso vai no chamado e economiza horas do N2.'
-      : 'Esta deu certo (status '+r.s+'). Procure a linha vermelha.';
+    $('#devHint').innerHTML=r.s>=400?'<b>Achou.</b> Status 500 é falha no servidor, e a resposta diz o motivo: falta o parâmetro de desconto de 2026. Isso vai na OS e economiza horas do N2.':'Esta deu certo (status '+r.s+'). Procure a linha vermelha.';
   }
   $$('#devRows tr').forEach(tr=>{ tr.addEventListener('click',()=>pick(tr)); tr.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(tr);} }); });
-  $('#devCopy').addEventListener('click',()=>{ if(!devSel) return; copy(`Requisição com erro (F12 > Network)\nURL: ${devSel.url}\nMétodo: ${devSel.m}\nStatus: ${devSel.s}\nResposta: ${devSel.body.replace(/\s+/g,' ')}`,'Copiado. Cole no campo Evidências do chamado.'); });
+  const devText=()=>`Requisição com erro (F12 > Network)\nURL: ${devSel.url}\nMétodo: ${devSel.m}\nStatus: ${devSel.s}\nResposta: ${devSel.body.replace(/\s+/g,' ')}`;
+  $('#devCopy').addEventListener('click',()=>{ if(devSel&&devSel.body) copy(devText(),'Copiado. Cole no campo de evidências da OS.'); });
 
-  /* practice */
-  const base={Municipio:'',Usuario:'',Modulo:'',Classificacao:'',Prioridade:'',Descricao:'Cliente ligou dizendo que o sistema não emite a guia. Pediu urgência.',Reproducao:'',Passos:'',Evidencias:'',DataHora:'',Tentativas:''};
-  const labels={Municipio:'Município',Usuario:'Usuário',Modulo:'Módulo',Classificacao:'Classificação',Prioridade:'Prioridade',Descricao:'Descrição',Reproducao:'Reprodução',Passos:'Passos / esperado / obtido',Evidencias:'Evidências',DataHora:'Data e hora',Tentativas:'Já tentado'};
-  const steps=[
-    {name:'identificar município, usuário e módulo',set:{Municipio:'Prefeitura de Exemplo',Usuario:'Joana Lima, Setor de Tributos',Modulo:'Tributário'},kill:[0,1]},
-    {name:'classificar e avaliar impacto e prazo',set:{Classificacao:'Erro',Prioridade:'Alta: única emissora de guias do setor, vencimento do IPTU na sexta'},kill:[2]},
-    {name:'tentar reproduzir',set:{Reproducao:'Reproduzi em homologação com a inscrição 01.02.003.0045'},kill:[3]},
-    {name:'descrever passos, esperado e obtido',set:{Passos:'Tributário > Emissão de guia de IPTU > inscrição 01.02.003.0045 > Emitir. Esperado: PDF da guia. Obtido: "Erro inesperado".'},kill:[4]},
-    {name:'anexar prints e a requisição do F12',set:{Evidencias:'print-tela-inteira.png · POST /guias/iptu/emitir → 500 "Parâmetro de desconto do exercício 2026 não encontrado"'},kill:[5]},
-    {name:'registrar data e hora',set:{DataHora:'07/10/2026 às 14:12 (Cuiabá)'},kill:[6]},
-    {name:'registrar o que já tentou',set:{Tentativas:'Cache limpo, testado no Chrome e no Edge. Outro servidor do setor também não emite.'},kill:[7]}
+  /* ================= simulação ================= */
+  const CASES=[
+    {t:'Guia de IPTU não emite',a:'Tributário',p:'Executor',ab:'Bom dia. O sistema não está emitindo a guia de IPTU e tenho contribuinte esperando no balcão. Preciso disso URGENTE!!',rv:['Inscrição do imóvel: 01.02.003.0045','A tela mostra "Erro inesperado"','Começou hoje, umas 9h','A colega do lado também não consegue emitir','O vencimento do IPTU é na sexta'],cp:'Responda curto e com pressa. Se o atendente fizer muitas perguntas de uma vez, reclame: "Isso vai demorar muito?"',cl:'Erro',pr:'Alta ou crítica: mais de uma pessoa parada e vencimento próximo',pt:['Reconheceu a urgência logo na primeira mensagem','Perguntou a inscrição e a mensagem de erro','Descobriu que a colega também não consegue (aumenta o impacto)','Prometeu horário de retorno, não de correção']},
+    {t:'Segunda via do carnê',a:'Tributário',p:'Planejador',ab:'Boa tarde. Desculpa incomodar... um contribuinte pediu a segunda via do carnê e eu não sei onde faz isso. Tenho medo de clicar errado e emitir duas vezes.',rv:['Você é nova no setor, entrou este mês','Já procurou no menu, mas não achou','O contribuinte volta amanhã'],cp:'Seja educada e insegura. Agradeça muito. Se o atendente explicar rápido demais, diga que não entendeu.',cl:'Dúvida',pr:'Normal',pt:['Tranquilizou antes de explicar','Explicou passo a passo e confirmou cada passo','Resolveu no N1, sem escalar','Registrou a OS como dúvida resolvida']},
+    {t:'Contracheque com valor diferente',a:'Recursos Humanos',p:'Analítico',ab:'Boa tarde. O contracheque da matrícula 3021 saiu com R$ 312,40 a menos no adicional. Pela minha conta deveria ser 10% sobre o vencimento base de R$ 3.124,00. Qual regra o sistema está usando?',rv:['Só acontece com essa matrícula','O servidor mudou de cargo no mês passado','Os outros contracheques da folha estão certos','Você tem o print do contracheque e da ficha do servidor'],cp:'Seja precisa e pergunte "por quê" para tudo. Se o atendente chutar uma resposta, desconfie e peça a fonte.',cl:'Configuração provável (a mudança de cargo pode não ter atualizado o adicional). Na dúvida, erro com a suspeita explicada.',pr:'Normal ou alta: um servidor, mas mexe com salário',pt:['Não chutou a regra de cálculo','Perguntou se acontece com outros servidores','Descobriu a mudança de cargo','Pediu os prints que ela tinha']},
+    {t:'Relatório que não sai em Excel',a:'Contábil',p:'Comunicador',ab:'Oi, tudo bem? 😊 Olha, hoje está uma correria aqui, o secretário pediu uma planilha e o relatório de arrecadação está com problema, não sai em Excel de jeito nenhum! Você consegue me ajudar?',rv:['O relatório sai normal em PDF','Nunca saiu em Excel, você que achou que saía','O secretário quer a planilha para montar uma apresentação'],cp:'Fale bastante, conte da correria e do secretário, mude de assunto. Só conte que nunca saiu em Excel se perguntarem diretamente.',cl:'Melhoria (disfarçada de erro)',pr:'Normal',pt:['Foi simpático, mas trouxe a conversa de volta para os fatos','Perguntou se já funcionou em Excel antes','Identificou que é melhoria, não erro','Registrou como sugestão sem prometer que vai ser feito']},
+    {t:'Fornecedores sem acesso ao portal',a:'Portal do Fornecedor',p:'Executor',ab:'Nenhum fornecedor consegue enviar documento pelo portal desde hoje cedo. A licitação encerra amanhã às 10h. O que vocês vão fazer?',rv:['A tela fica carregando e não termina','Pelo menos 5 fornecedores reclamaram','Você mesma testou de casa e também não foi','Começou por volta das 7h30'],cp:'Cobre solução e pergunte quem é o responsável. Se o atendente prometer prazo de correção, aceite: o observador tem que pegar isso.',cl:'Erro',pr:'Crítica: muitos usuários parados e prazo da licitação',pt:['Classificou como crítica e escalou rápido','Coletou horário de início e quantos são afetados','Tentou capturar a requisição no F12','Prometeu retorno, nunca prazo de correção']},
+    {t:'Pedido para mudar o valor direto',a:'Tributário',p:'Comunicador',ab:'Oi, tudo bom? Saiu uma guia com valor errado para um contribuinte, coisa pequena. Você não consegue mudar o valor direto aí no sistema rapidinho? Me passa seu WhatsApp que eu te mando o CPF dele.',rv:['A guia é de ISS e saiu R$ 50 a mais','Você acha que digitou errado a base de cálculo','O contribuinte é seu conhecido'],cp:'Insista de forma simpática: "é rapidinho, ninguém vai saber". Tente passar o CPF por fora.',cl:'Dúvida ou configuração: provável erro de digitação, com procedimento próprio de correção',pr:'Normal',pt:['Não aceitou alterar dado em produção','Não passou contato pessoal nem recebeu CPF por fora','Explicou que a correção segue o procedimento com registro','Registrou tudo na OS']}
   ];
-  const n2q=['Qual município?','Quem é o usuário e qual sistema ele estava usando?','É erro mesmo? Qual a urgência real?','Vocês conseguiram reproduzir?','O que ele fez, passo a passo? O que deveria acontecer?','Tem print? Qual mensagem apareceu?','Quando aconteceu?','O que já foi tentado?'];
-  let st=0, tk={...base};
-  function drawTicket(changed){
-    $('#tkFields').innerHTML=Object.keys(labels).map(k=>`<div class="tf${changed&&changed.includes(k)?' new':''}"><div class="k">${labels[k]}</div><div class="v${tk[k]?'':' empty'}">${tk[k]||'não informado'}</div></div>`).join('');
-    const killed=new Set(steps.slice(0,st).flatMap(s=>s.kill));
-    $('#n2q').innerHTML=n2q.map((q,i)=>`<li class="${killed.has(i)?'gone':''}">${q}</li>`).join('');
-    $('#prScore').textContent=st;
-    const s=$('#tkStatus');
-    if(st===steps.length){ s.textContent='Pronto para o N2'; s.style.background='var(--accent-dk)'; $('#prNext').textContent='O N2 não precisa perguntar nada. Repare que o F12 já sugeriu a causa.'; $('#prStep').disabled=true; }
-    else { s.textContent=st===0?'Incompleto':'Melhorando'; s.style.background=st===0?'var(--bad)':'var(--warn)'; $('#prNext').textContent='Próximo: '+steps[st].name+'.'; $('#prStep').disabled=false; }
-  }
-  $('#prStep').addEventListener('click',()=>{ const s=steps[st]; Object.assign(tk,s.set); st++; drawTicket(Object.keys(s.set)); });
-  $('#prReset').addEventListener('click',()=>{ st=0; tk={...base}; drawTicket(); });
-  drawTicket();
+  const OBS=['Identificou município, usuário e módulo','Classificou o pedido','Avaliou impacto e prazo','Tentou reproduzir ou registrou por que não','Descreveu passos, esperado e obtido','Pediu print e a mensagem de erro','Pensou no F12 (ou viu que não se aplica)','Registrou data e hora','Registrou o que já foi tentado','Usou o nome do cliente e uma pergunta por vez'];
+  let curCase=null;
+  $('#cases').innerHTML=CASES.map((c,i)=>`<button class="cbtn" type="button" data-c="${i}"><span>Caso ${i+1} · ${c.a}</span><b>${c.t}</b></button>`).join('');
+  $$('#cases .cbtn').forEach(b=>b.addEventListener('click',()=>{
+    curCase=+b.dataset.c; $$('#cases .cbtn').forEach(x=>x.classList.toggle('on',x===b));
+    const c=CASES[curCase]; $('#caseBox').hidden=false; $('#caseTit').textContent=`Caso ${curCase+1} · ${c.t}`; $('#caseArea').textContent=c.a;
+    $$('#roles button').forEach(x=>x.classList.remove('on')); $('#roleBox').innerHTML='<p class="note">Escolha o seu papel.</p>';
+    $('#caseBox').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  }));
+  $$('#roles button').forEach(b=>b.addEventListener('click',()=>{
+    if(curCase===null) return; const c=CASES[curCase]; $$('#roles button').forEach(x=>x.classList.toggle('on',x===b));
+    const r=b.dataset.role; let h='';
+    if(r==='cli') h=`<div class="kv"><span class="k">Seu perfil</span><p><b>${c.p}</b>. Releia o bloco <a href="#perfis">Perfis Comportamentais</a> se precisar.</p></div><div class="kv"><span class="k">Comece com esta mensagem</span><div class="chat"><div class="msg in"><span class="ms">Você, como cliente</span>${c.ab}</div></div></div><div class="kv"><span class="k">Só revele se perguntarem</span><ul class="clean">${c.rv.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="kv"><span class="k">Como agir</span><p>${c.cp}</p></div>`;
+    if(r==='n1') h=`<p>Esta mensagem acabou de chegar no chat do Cliente Mais:</p><div class="chat"><div class="msg in"><span class="ms">Cliente</span>${c.ab}</div></div><div class="callout"><b>Sua missão</b><p>Atenda o cliente e monte a OS no montador. Ao final, mostre a OS para o observador.</p></div><div class="row"><a class="btn btn-p" href="#os">Abrir o montador de OS</a></div>`;
+    if(r==='obs'){ h=`<div class="g2"><div class="kv"><span class="k">Classificação esperada</span><p>${c.cl}</p></div><div class="kv"><span class="k">Prioridade esperada</span><p>${c.pr}</p></div></div><div class="kv"><span class="k">Pontos-chave deste caso</span><ul class="clean">${c.pt.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="kv"><span class="k">Marque o que o atendente fez</span><div class="stack" id="obsList">${OBS.map((o,i)=>`<label class="ck"><input type="checkbox" class="ob" id="ob${i}"> ${o}</label>`).join('')}<label class="ck"><input type="checkbox" class="ob-bad" id="obBad"> <span style="color:var(--bad)">Fez algo da lista do Nunca</span></label></div></div><div class="score"><b id="obScore">0</b><span class="note">de ${OBS.length} itens</span></div><p class="note">No feedback, diga um Start, um Stop e um Continue para o atendente.</p>`; }
+    $('#roleBox').innerHTML=h;
+    if(r==='obs'){ const up=()=>{ $('#obScore').textContent=$$('.ob').filter(x=>x.checked).length; }; $$('.ob').forEach(x=>x.addEventListener('change',up)); }
+  }));
+  /* timer */
+  let tLeft=720, tInt=null, round=1;
+  const clock=$('#clock'), tMsg=$('#tMsg');
+  const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  function tPaint(){ clock.textContent=fmt(tLeft); clock.classList.toggle('end',tLeft<=120);
+    if(tLeft===0) tMsg.textContent=round<3?`Tempo! Troquem de papel e escolham outro caso para a rodada ${round+1}.`:'Tempo! Fim das simulações.';
+    else if(tLeft<=120) tMsg.textContent='Hora do feedback: o observador fala um Start, um Stop e um Continue.';
+    else tMsg.textContent=`Rodada ${round} de 3 · atendimento em andamento.`; }
+  function tStop(){ clearInterval(tInt); tInt=null; $('#tStart').textContent='Iniciar'; }
+  $('#tStart').addEventListener('click',()=>{ if(tInt){ tStop(); return; } if(tLeft===0) tLeft=720; $('#tStart').textContent='Pausar'; tInt=setInterval(()=>{ tLeft=Math.max(0,tLeft-1); tPaint(); if(tLeft===0) tStop(); },1000); tPaint(); });
+  $('#tReset').addEventListener('click',()=>{ tStop(); tLeft=720; tPaint(); tMsg.textContent='Aos 2 minutos finais, o timer avisa que é hora do feedback.'; });
+  $$('#rounds button').forEach(b=>b.addEventListener('click',()=>{ round=+b.dataset.r; $$('#rounds button').forEach(x=>x.classList.toggle('on',x===b)); tStop(); tLeft=720; tPaint(); }));
 
-  /* builder */
-  const BK='coplan-n1-rascunho';
-  const fids=['f-mun','f-usu','f-mod','f-cla','f-pri','f-imp','f-rep','f-pas','f-esp','f-obt','f-msg','f-prt','f-f12','f-nof12','f-hor','f-ten','nv1','nv2','nv3','nv4','nv5'];
+  /* ================= tests ================= */
+  const TQ=[
+    {p:'Um servidor escreve "o sistema não funciona". Qual é o primeiro passo?',o:['Escalar para o N2','Identificar município, usuário e módulo','Pedir a senha para testar','Dizer que já vai ser resolvido'],a:1,x:'Sem saber onde é o problema, ninguém consegue ajudar.'},
+    {p:'"Queria que o relatório saísse em Excel" é um pedido de:',o:['Dúvida','Erro','Configuração','Melhoria'],a:3,x:'O sistema faz o que foi feito para fazer. O cliente quer outra coisa.'},
+    {p:'O que a aba Network do F12 mostra?',o:['As senhas dos usuários','A conversa entre a tela e o servidor, com status e resposta','O banco de dados inteiro','O histórico do chat'],a:1,x:'É ali que aparece o motivo real de um "Erro inesperado".'},
+    {p:'Status 500 significa:',o:['Deu certo','Página não encontrada','Falha no servidor','Sem permissão'],a:2,x:'5xx é falha do lado do servidor.'},
+    {p:'O cliente pergunta "até que horas vocês arrumam?". A melhor resposta é:',o:['"Até as 16h fica pronto."','"Não sei."','"Registrei com prioridade alta e te dou um retorno até as 16h, mesmo que ainda não esteja resolvido."','"Depende do desenvolvedor."'],a:2,x:'Prometa o retorno, nunca o prazo de correção.'},
+    {p:'Escuta ativa no chat é:',o:['Responder o mais rápido possível, com qualquer coisa','Ler tudo, confirmar o que entendeu e perguntar só o que falta','Mandar várias perguntas de uma vez','Colar uma resposta pronta'],a:1,x:'Entender antes de responder.'},
+    {p:'O cliente manda mensagens curtas, escreve "URGENTE" e quer solução já. Perfil provável:',o:PERF,a:0,x:'Direto, rápido, focado em resultado.'},
+    {p:'Onde fica o registro oficial do atendimento?',o:['No WhatsApp do atendente','Na OS do Cliente Mais','Num caderno','Na memória do N1'],a:1,x:'Se não está na OS, não aconteceu.'}
+  ];
+  function renderTest(id,key){
+    const el=$('#'+id); const ans=S.get('t-'+key,{});
+    el.innerHTML=`<div class="quiz">${TQ.map((q,i)=>`<div class="q" data-i="${i}"><p class="qp">${i+1}. ${q.p}</p><div class="opts stack">${q.o.map((o,j)=>`<button class="opt${ans[i]===j?' sel':''}" type="button" data-j="${j}">${o}</button>`).join('')}</div><p class="fb" hidden></p></div>`).join('')}</div><div class="row" style="margin-top:12px"><button class="btn btn-p" type="button" data-res>Ver meu resultado</button><span class="note" data-cnt></span></div><div class="tres" data-out hidden></div>`;
+    const cnt=()=>{ el.querySelector('[data-cnt]').textContent=`${Object.keys(ans).length} de ${TQ.length} respondidas`; };
+    el.querySelectorAll('.q').forEach(qe=>{ const i=+qe.dataset.i; qe.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{ ans[i]=+b.dataset.j; S.set('t-'+key,ans); qe.querySelectorAll('.opt').forEach(x=>x.classList.toggle('sel',x===b)); cnt(); })); });
+    cnt();
+    el.querySelector('[data-res]').addEventListener('click',()=>{
+      const n=Object.keys(ans).length; const out=el.querySelector('[data-out]'); out.hidden=false;
+      if(n<TQ.length){ out.innerHTML=`<p class="note">Responda as ${TQ.length} perguntas antes de ver o resultado.</p>`; return; }
+      const sc=TQ.filter((q,i)=>ans[i]===q.a).length; S.set('s-'+key,sc);
+      if(key==='pre'){ out.innerHTML=`<span class="tbig">${sc}/${TQ.length}</span><span class="note">Guarde este número. As respostas certas você descobre ao longo do dia e no teste final.</span>`; return; }
+      const pre=S.get('s-pre',null);
+      out.innerHTML=`<span class="tbig">${sc}/${TQ.length}</span><span class="note">${pre!==null?`De manhã: ${pre}/${TQ.length}. ${sc>pre?'Você evoluiu.':sc===pre?'Mesmo resultado: reveja os blocos das questões erradas.':'Reveja os blocos das questões erradas.'}`:'Você não fez o teste da manhã neste aparelho.'}</span>`;
+      el.querySelectorAll('.q').forEach(qe=>{ const i=+qe.dataset.i, q=TQ[i]; qe.querySelectorAll('.opt').forEach((b,j)=>{ b.classList.remove('sel','right','wrong'); if(j===q.a) b.classList.add('right'); else if(j===ans[i]) b.classList.add('wrong'); }); const fb=qe.querySelector('.fb'); fb.hidden=false; fb.className='fb '+(ans[i]===q.a?'ok':'no'); fb.textContent=q.x; });
+    });
+  }
+  renderTest('t-pre','pre'); renderTest('t-pos','pos');
+
+  /* ================= OS builder ================= */
+  const FIDS=['f-mun','f-usu','f-mod','f-cla','f-pri','f-imp','f-rep','f-pas','f-esp','f-obt','f-msg','f-prt','f-f12','f-nof12','f-hor','f-ten','nv1','nv2','nv3','nv4','nv5'];
   const v=id=>{ const el=document.getElementById(id); return el.type==='checkbox'?el.checked:el.value.trim(); };
-  const rules={
-    ident:()=>v('f-mun')&&v('f-usu')&&v('f-mod'),
-    class:()=>!!v('f-cla'),
-    prio:()=>v('f-pri')&&v('f-imp'),
-    repro:()=>!!v('f-rep'),
-    passos:()=>v('f-pas')&&v('f-esp')&&v('f-obt'),
-    print:()=>v('f-prt')&&(v('f-msg')||v('f-cla')!=='Erro'),
-    f12:()=>!!(v('f-f12')||v('f-nof12')),
-    hora:()=>!!v('f-hor'),
-    tent:()=>!!v('f-ten')
-  };
-  const labelsB={ident:'município, usuário e módulo',class:'classificação',prio:'prioridade e motivo',repro:'reprodução',passos:'passos, esperado e obtido',print:'print e mensagem de erro',f12:'requisição do F12 (ou marcar que não se aplica)',hora:'data e hora',tent:'o que já tentou'};
+  const RULES={ident:()=>v('f-mun')&&v('f-usu')&&v('f-mod'),class:()=>!!v('f-cla'),prio:()=>v('f-pri')&&v('f-imp'),repro:()=>!!v('f-rep'),passos:()=>v('f-pas')&&v('f-esp')&&v('f-obt'),print:()=>v('f-prt')&&(v('f-msg')||v('f-cla')!=='Erro'),f12:()=>!!(v('f-f12')||v('f-nof12')),hora:()=>!!v('f-hor'),tent:()=>!!v('f-ten')};
+  const LB={ident:'município, usuário e módulo',class:'classificação',prio:'prioridade e motivo',repro:'reprodução',passos:'passos, esperado e obtido',print:'print e mensagem de erro',f12:'requisição do F12 (ou "não se aplica")',hora:'data e hora',tent:'o que já tentou'};
   function evalB(){
-    const miss=[];
-    $$('.build .bi').forEach(b=>{ const ok=!!rules[b.dataset.k](); b.classList.toggle('ok',ok); if(!ok) miss.push(b.dataset.k); });
-    const r=['ident','class','prio'].filter(k=>!miss.includes(k)).length;
-    const e=['repro','passos','print','f12','hora','tent'].filter(k=>!miss.includes(k)).length;
-    const n=$$('.nv-in').filter(x=>x.checked).length;
+    const miss=[]; $$('.build .bi').forEach(b=>{ const ok=!!RULES[b.dataset.k](); b.classList.toggle('ok',ok); if(!ok) miss.push(b.dataset.k); });
+    const r=['ident','class','prio'].filter(k=>!miss.includes(k)).length, e=['repro','passos','print','f12','hora','tent'].filter(k=>!miss.includes(k)).length, n=$$('.nv-in').filter(x=>x.checked).length;
     $('#cR').textContent=r+'/3'; $('#cE').textContent=e+'/6'; $('#cN').textContent=n+'/5';
     const chip=$('#bbChip'), txt=$('#bbTxt');
-    if(!miss.length && n===5){ chip.textContent='Pronto para o N2'; chip.style.background='var(--accent-dk)'; txt.textContent='Tudo preenchido. Pode copiar e escalar.'; }
-    else if(!miss.length){ chip.textContent='Quase'; chip.style.background='var(--warn)'; txt.textContent='Confirme os itens do Nunca antes de fechar.'; }
-    else { chip.textContent=miss.length>5?'Incompleto':'Melhorando'; chip.style.background=miss.length>5?'var(--bad)':'var(--warn)'; txt.textContent='Falta: '+miss.map(k=>labelsB[k]).join(', ')+'.'; }
+    if(!miss.length&&n===5){ chip.textContent='Pronta para o N2'; chip.className='chip ok'; txt.textContent='Tudo preenchido. Copie e registre no Cliente Mais.'; }
+    else if(!miss.length){ chip.textContent='Quase'; chip.className='chip warn'; txt.textContent='Confirme os itens do Nunca antes de fechar.'; }
+    else { chip.textContent=miss.length>5?'Incompleta':'Melhorando'; chip.className='chip '+(miss.length>5?'bad':'warn'); txt.textContent='Falta: '+miss.map(k=>LB[k]).join(', ')+'.'; }
     return miss;
   }
-  function saveB(){ try{ const o={}; fids.forEach(id=>o[id]=v(id)); localStorage.setItem(BK,JSON.stringify(o)); }catch(e){} }
-  try{ const o=JSON.parse(localStorage.getItem(BK)||'null'); if(o) fids.forEach(id=>{ const el=document.getElementById(id); if(id in o){ if(el.type==='checkbox') el.checked=!!o[id]; else el.value=o[id]; } }); }catch(e){}
-  fids.forEach(id=>{ const el=document.getElementById(id); el.addEventListener('input',()=>{evalB();saveB();}); el.addEventListener('change',()=>{evalB();saveB();}); });
-  $('#agora').addEventListener('click',()=>{ const d=new Date(); const p=x=>String(x).padStart(2,'0'); $('#f-hor').value=`${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`; evalB(); saveB(); });
+  function saveB(){ const o={}; FIDS.forEach(id=>o[id]=v(id)); S.set('os',o); }
+  function loadB(o){ FIDS.forEach(id=>{ const el=document.getElementById(id); if(o&&id in o){ if(el.type==='checkbox') el.checked=!!o[id]; else el.value=o[id]; } else { if(el.type==='checkbox') el.checked=false; else el.value=''; } }); evalB(); saveB(); }
+  const saved=S.get('os',null); if(saved) loadB(saved);
+  FIDS.forEach(id=>{ const el=document.getElementById(id); el.addEventListener('input',()=>{evalB();saveB();}); el.addEventListener('change',()=>{evalB();saveB();}); });
+  $('#agora').addEventListener('click',()=>{ const d=new Date(), p=x=>String(x).padStart(2,'0'); $('#f-hor').value=`${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`; evalB(); saveB(); });
+  $('#bbEx').addEventListener('click',()=>{ loadB({'f-mun':'Prefeitura de Exemplo','f-usu':'Joana Lima, Setor de Tributos','f-mod':'Tributário, emissão de guia de IPTU','f-cla':'Erro','f-pri':'Alta','f-imp':'Duas servidoras sem emitir guia, contribuinte no balcão, vencimento na sexta','f-rep':'Reproduzi em homologação com a inscrição 01.02.003.0045','f-pas':'1. Entrar no Tributário\n2. Abrir Emissão de guia de IPTU\n3. Informar a inscrição 01.02.003.0045\n4. Clicar em Emitir','f-esp':'Abrir o PDF da guia 2026','f-obt':'Aparece "Erro inesperado" e nada abre','f-msg':'Erro inesperado','f-prt':true,'f-f12':'POST /api/tributario/guias/iptu/emitir · status 500 · "Parâmetro de desconto do exercício 2026 não encontrado"','f-nof12':false,'f-hor':'04/11/2026 09:12','f-ten':'Limpou o cache e entrou de novo. Testou no Chrome e no Edge. A colega do lado também não consegue.'}); toast('Exemplo da Joana carregado. Repare em cada campo.'); });
   let confirmNew=false;
-  $('#bbNew').addEventListener('click',()=>{
-    const b=$('#bbNew');
-    if(!confirmNew){ confirmNew=true; b.lastChild.textContent='Clique de novo para limpar'; setTimeout(()=>{confirmNew=false; b.lastChild.textContent='Novo chamado';},3000); return; }
-    fids.forEach(id=>{ const el=document.getElementById(id); if(el.type==='checkbox') el.checked=false; else el.value=''; });
-    confirmNew=false; b.lastChild.textContent='Novo chamado'; evalB(); saveB(); toast('Campos limpos para um novo chamado.');
-  });
-  $('#bbCopy').addEventListener('click',()=>{
-    const miss=evalB(); const o=k=>v(k)||'(não informado)';
-    const text=
-`Município / cliente: ${o('f-mun')}
-Usuário (nome e setor): ${o('f-usu')}
-Módulo / tela: ${o('f-mod')}
-Classificação: ${o('f-cla')}
-Prioridade: ${o('f-pri')}${v('f-imp')?' ('+v('f-imp')+')':''}
-Reprodução: ${o('f-rep')}
-Passos para reproduzir:
-${o('f-pas')}
-Resultado esperado: ${o('f-esp')}
-Resultado obtido: ${o('f-obt')}
-Mensagem de erro: ${o('f-msg')}
-Print anexado: ${v('f-prt')?'sim':'não'}
-Requisição (F12): ${v('f-nof12')&&!v('f-f12')?'não se aplica':o('f-f12')}
-Data e hora: ${o('f-hor')}
-Já tentado: ${o('f-ten')}`;
-    copy(text, miss.length?'Copiado, mas faltam '+miss.length+' itens. Revise antes de escalar.':'Chamado copiado. Cole na ferramenta de chamados.');
-  });
+  $('#bbNew').addEventListener('click',()=>{ const b=$('#bbNew'); if(!confirmNew){ confirmNew=true; b.textContent='Clique de novo para limpar'; setTimeout(()=>{confirmNew=false;b.textContent='Nova OS';},3000); return; } confirmNew=false; b.textContent='Nova OS'; loadB(null); toast('Campos limpos para uma nova OS.'); });
+  $('#bbCopy').addEventListener('click',()=>{ const miss=evalB(), o=k=>v(k)||'(não informado)';
+    const text=`Município / cliente: ${o('f-mun')}\nUsuário (nome e setor): ${o('f-usu')}\nMódulo / tela: ${o('f-mod')}\nClassificação: ${o('f-cla')}\nPrioridade: ${o('f-pri')}${v('f-imp')?' ('+v('f-imp')+')':''}\nReprodução: ${o('f-rep')}\nPassos para reproduzir:\n${o('f-pas')}\nResultado esperado: ${o('f-esp')}\nResultado obtido: ${o('f-obt')}\nMensagem de erro: ${o('f-msg')}\nPrint anexado: ${v('f-prt')?'sim':'não'}\nRequisição (F12): ${v('f-nof12')&&!v('f-f12')?'não se aplica':o('f-f12')}\nData e hora: ${o('f-hor')}\nJá tentado: ${o('f-ten')}`;
+    copy(text,miss.length?`Copiado, mas faltam ${miss.length} itens. Revise antes de escalar.`:'Texto copiado. Cole na OS do Cliente Mais.'); });
   evalB();
 
-  /* scroll spy */
-  const links=$$('#nav a'); const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
-  const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id)); } }); },{rootMargin:'-40% 0px -55% 0px'});
-  secs.forEach(s=>s&&io.observe(s));
+  /* ================= Postman simulator ================= */
+  const RX=/^\d{2}\.\d{2}\.\d{3}\.\d{4}$/;
+  function pmRun(){
+    const m=$('#pmM').value, p=$('#pmP').value, ins=$('#pmI').value.trim(), ex=$('#pmE').value.trim();
+    let st, body, ms=Math.round(80+Math.random()*120);
+    if(p==='contribuinte'){
+      if(m!=='GET'){ st=405; body={status:405,error:'Method Not Allowed',message:'Use GET para buscar contribuinte'}; }
+      else if(!ins){ st=400; body={status:400,message:'O parâmetro inscricao é obrigatório'}; }
+      else if(!RX.test(ins)){ st=400; body={status:400,message:'Inscrição em formato inválido. Use 00.00.000.0000'}; }
+      else if(ins==='01.02.003.0045'){ st=200; body={nome:'Contribuinte de Teste',situacao:'ATIVO'}; }
+      else { st=404; body={status:404,message:'Inscrição não encontrada'}; }
+    } else {
+      if(m!=='POST'){ st=405; body={status:405,error:'Method Not Allowed',message:'Use POST para emitir guia'}; }
+      else if(!ins||!ex){ st=400; body={status:400,message:'Informe inscricao e exercicio no corpo da requisição'}; }
+      else if(!RX.test(ins)||!/^\d{4}$/.test(ex)){ st=400; body={status:400,message:'Dados em formato inválido'}; }
+      else if(ins!=='01.02.003.0045'){ st=404; body={status:404,message:'Inscrição não encontrada'}; }
+      else if(ex==='2026'){ st=500; ms=1180; body={status:500,error:'Internal Server Error',message:'Parâmetro de desconto do exercício 2026 não encontrado'}; }
+      else { st=200; body={numeroGuia:ex+'000123',valor:1840.32,vencimento:ex+'-11-06'}; }
+    }
+    const cls=st<300?'s2':st<500?'s4':'s5';
+    const hint=st===500?'<p class="fb ok">Missão cumprida: você reproduziu o erro da Joana fora da tela. É exatamente isso que vai na OS.</p>':st===405?'<p class="fb no">Método errado para este endereço. Confira no Swagger.</p>':st===400?'<p class="fb no">Faltou dado ou o formato está errado. Confira os parâmetros.</p>':'';
+    $('#pmRes').innerHTML=`<div class="pm-st"><span>Status: <span class="code ${cls}">${st}</span></span><span>Tempo: ${ms} ms</span><span class="mono">${m} {{baseUrl}}/api/tributario/${p==='emitir'?'guias/iptu/emitir':'contribuinte'}</span></div><pre class="json">${esc(JSON.stringify(body,null,2))}</pre>${hint}`;
+  }
+  $('#pmSend').addEventListener('click',pmRun);
 
-  refresh();
-  /* open first item so the page shows an example at rest */
-  const first=$('.item[data-id="r1"] .item-h'); if(first) first.click();
+  /* ================= init ================= */
+  buildNav(); paintDone(); progress(); renderAgenda();
+  show(location.hash.slice(1)||'inicio');
+  setInterval(()=>{ buildNav(); renderAgenda(); },60000);
 })();
 </script>
 

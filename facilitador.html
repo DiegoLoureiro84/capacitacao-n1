@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Roteiro do facilitador · Tarde técnica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: shell do Design System Coplan v2.0 (header fixo, menu lateral com o roteiro do dia, rodapé). Uma tela por bloco do cronograma, com anterior/próximo. Tema claro único, como o DS v2.0. */
+:root{
+  color-scheme:light;
+  --primary:#1F4993; --primary-dk:#183A78; --brand:#032861;
+  --accent:#75C566; --accent-dk:#01814E; --accent-soft:#E6F8F0; --row:#EAF7EE;
+  --bg:#F5F7FC; --card:#FFFFFF; --fg:#0A1A2E; --muted:#6E6E73; --sec-fg:#57575A;
+  --border:#E0E0E1; --secondary:#F5F5F6; --readonly:#EEF1FA;
+  --bad:#DC2626; --bad-soft:#FDECEC; --warn:#C2410C; --warn-soft:#FEF0E6;
+  --manha:#9A5B06; --manha-soft:#FEF4D8; --tarde:#1F4993; --tarde-soft:#E8EEF9; --n2:#6B21A8; --n2-soft:#F3EAFB;
+  --font:"Exo 2",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r-lg:12.8px; --r-md:10.8px; --r-sm:8.8px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15.5px;line-height:1.55;margin:0}
+h1,h2,h3,h4{margin:0;line-height:1.2;text-wrap:balance}
+p{margin:0}
+a{color:var(--primary)}
+button,input,select,textarea{font-family:var(--font);color:var(--fg)}
+:focus-visible{outline:2px solid var(--accent-dk);outline-offset:2px}
+.mono{font-family:var(--mono);font-size:13px}
+.note{font-size:13px;color:var(--muted)}
+
+/* ===== header ===== */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--card);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;gap:12px;padding-inline:16px}
+.menu-btn{display:none;width:40px;height:40px;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--card);align-items:center;justify-content:center;cursor:pointer;flex:none}
+.menu-btn svg{width:20px;height:20px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;text-decoration:none;color:inherit}
+.brand .mark{width:32px;height:32px;border-radius:8px;background:var(--primary);display:grid;place-items:center;color:#fff;font-weight:800;font-size:16px;flex:none}
+.brand .bt{display:grid;line-height:1.15;min-width:0}
+.brand b{font-size:17px;font-weight:700;color:var(--brand)}
+.brand small{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--sec-fg);white-space:nowrap}
+.bar{width:120px;height:8px;border-radius:99px;background:#E6E6E7;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+@media (max-width:560px){.bar{width:56px}.prog .lbl{display:none}}
+
+/* ===== shell ===== */
+.shell{display:grid;grid-template-columns:288px minmax(0,1fr)}
+.side{position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;background:var(--card);border-right:1px solid var(--border);padding:12px 10px 32px}
+.ng{display:grid;gap:2px;margin-bottom:12px}
+.ng-h{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:8px 10px 4px;display:flex;gap:6px;align-items:center}
+.ng-h.m{color:var(--manha)} .ng-h.t{color:var(--tarde)} .ng-h.f{color:var(--accent-dk)} .ng-h.n2{color:var(--n2)} .ng-h.i{color:var(--muted)}
+.ni{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:6px;align-items:center;padding:7px 10px;border-radius:8px;text-decoration:none;color:var(--sec-fg);font-size:14px;font-weight:500;transition:background .15s,color .15s}
+.ni .tm{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.ni:hover{background:var(--accent-soft);color:var(--fg)}
+.ni.on{background:var(--accent);color:#fff} .ni.on .tm{color:#fff}
+.ni .ok{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border);display:grid;place-items:center}
+.ni.done .ok{background:var(--accent-dk);border-color:var(--accent-dk)}
+.ni.done .ok::after{content:"";width:7px;height:4px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(0,-1px)}
+.ni.on.done .ok{background:#fff;border-color:#fff} .ni.on.done .ok::after{border-color:var(--accent-dk)}
+.ni.pausa{grid-template-columns:42px minmax(0,1fr);font-size:12.5px;color:var(--muted);padding:3px 10px;pointer-events:none}
+.now-pill{font-size:10.5px;font-weight:700;background:var(--bad);color:#fff;border-radius:6px;padding:1px 6px;letter-spacing:.04em}
+main{padding-inline:24px;padding-block:24px 40px;min-width:0;display:grid;gap:24px;align-content:start}
+.scrim{position:fixed;inset:0;background:rgba(3,40,97,.35);z-index:34}
+@media (max-width:960px){
+  .menu-btn{display:inline-flex}
+  .shell{grid-template-columns:1fr}
+  .side{position:fixed;top:calc(60px + env(safe-area-inset-top,0px));left:0;bottom:0;height:auto;width:min(320px,88vw);z-index:35;transform:translateX(-105%);transition:transform .2s ease;box-shadow:8px 0 24px rgba(3,40,97,.12)}
+  .side.open{transform:none}
+  main{padding-inline:16px;padding-block:18px 40px}
+}
+
+/* ===== now bar ===== */
+.nowbar{max-width:880px;width:100%;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bad-soft);border:1px solid #F7C4C4;color:var(--fg);border-radius:var(--r-md);padding:10px 14px;text-decoration:none;font-size:14px}
+.nowbar b{color:var(--bad)}
+
+/* ===== views ===== */
+.view{max-width:880px;width:100%;margin:0 auto;display:grid;gap:22px;min-width:0}
+#v-os{max-width:1120px}
+.vh{display:grid;gap:12px}
+.vmeta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px;color:var(--sec-fg)}
+.per{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.per.m{background:var(--manha-soft);color:var(--manha)} .per.t{background:var(--tarde-soft);color:var(--tarde)}
+.per.f{background:var(--accent-soft);color:var(--accent-dk)} .per.n2{background:var(--n2-soft);color:var(--n2)}
+.per.x{background:var(--bad-soft);color:var(--bad)}
+.vh h1{font-size:clamp(26px,4.4vw,34px);font-weight:800;color:var(--brand)}
+.lead{font-size:16.5px;color:var(--sec-fg);max-width:66ch}
+.topics{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.topics .tl{font-size:12px;color:var(--muted);margin-right:2px}
+.topic{font-size:13px;border:1px solid var(--border);background:var(--card);border-radius:999px;padding:3px 11px;color:var(--fg)}
+.whos{display:flex;flex-wrap:wrap;gap:10px 18px}
+.who{display:flex;gap:10px;align-items:center;min-width:0}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;color:#fff;flex:none}
+.who b{font-size:14px;display:block}
+.who span{font-size:12.5px;color:var(--muted)}
+
+.blk{display:grid;gap:12px;min-width:0}
+.blk > h2{font-size:21px;font-weight:700;color:var(--brand)}
+.blk > p{max-width:68ch;color:var(--sec-fg)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;min-width:0}
+.card h3{font-size:16.5px;font-weight:700;color:var(--brand)}
+.stack{display:grid;gap:10px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.g3{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.g2,.g3{grid-template-columns:1fr}}
+.kv{display:grid;gap:4px}
+.kv .k{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.kv.coplan .k{color:var(--accent-dk)}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:5px}
+ol.clean{margin:0;padding-left:20px;display:grid;gap:6px}
+.ex-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--primary)}
+.ex-badge::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent)}
+.exercise{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:var(--r-lg);padding:18px;display:grid;gap:12px;min-width:0}
+.exercise h3{font-size:17px;font-weight:700;color:var(--fg)}
+.callout{background:var(--readonly);border:1px solid #D5DCF0;border-radius:var(--r-lg);padding:14px 16px;display:grid;gap:6px}
+.callout.warn{background:var(--warn-soft);border-color:#F9D3B5}
+.callout b{color:var(--brand)}
+
+/* hero */
+.hero{background:var(--brand);color:#fff;border-radius:var(--r-lg);padding:24px;display:grid;gap:16px}
+.hero .eb{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#9FD993}
+.hero h1{color:#fff;font-size:clamp(28px,5vw,40px);font-weight:800}
+.hero p{color:#D6E0F2;max-width:62ch;font-size:16px}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.facts{grid-template-columns:1fr 1fr}}
+.fact{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:var(--r-md);padding:10px 12px;display:grid;gap:2px;min-width:0}
+.fact span{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#AFC1E3}
+.fact b{font-size:15.5px;font-weight:600}
+.fact small{font-size:12.5px;color:#C9D5EC}
+.daystat{display:flex;align-items:center;gap:8px;font-size:14px;background:rgba(117,197,102,.16);border:1px solid rgba(117,197,102,.4);border-radius:var(--r-sm);padding:8px 12px;color:#fff}
+.daystat a{color:#B9E8AE}
+.halves{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:620px){.halves{grid-template-columns:1fr}}
+.half{border-radius:var(--r-lg);padding:16px;display:grid;gap:6px;border:1px solid var(--border);background:var(--card)}
+.half.m{border-top:4px solid var(--manha)} .half.t{border-top:4px solid var(--tarde)}
+.half .per{justify-self:start}
+
+/* agenda */
+.agenda{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.ag-h{display:grid;gap:8px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.ag-h.m{background:var(--manha-soft)} .ag-h.t{background:var(--tarde-soft)}
+.ag-h .row{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between}
+.ag-h h3{font-size:17px;color:var(--fg)}
+.ag{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--fg);align-items:start}
+.ag:last-child{border-bottom:0}
+a.ag:hover{background:var(--row)}
+.ag .tm{font-family:var(--mono);font-size:12.5px;color:var(--sec-fg);display:grid}
+.ag .tm small{font-family:var(--font);color:var(--muted);font-size:12px}
+.ag .tt{display:grid;gap:2px;min-width:0}
+.ag .tt b{font-size:15px}
+.ag .tt span{font-size:13px;color:var(--sec-fg)}
+.ag .q{font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
+.ag.pausa{background:var(--secondary);padding:7px 16px;font-size:13px;color:var(--muted)}
+.ag.pausa .tt b{font-size:13px;font-weight:500;color:var(--sec-fg)}
+.ag.now{box-shadow:inset 4px 0 0 var(--bad);background:var(--bad-soft)}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-dk);background:var(--accent-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+@media (max-width:560px){.ag{grid-template-columns:72px minmax(0,1fr)}.ag .q{grid-column:2;text-align:left}}
+
+/* chat */
+.chat{display:grid;gap:8px}
+.msg{max-width:min(560px,94%);padding:10px 12px;border-radius:12px;font-size:14.5px;line-height:1.45;min-width:0;overflow-wrap:anywhere}
+.msg.in{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:4px;justify-self:start}
+.msg.out{background:#DDF3D7;border:1px solid #C3E6BA;border-bottom-right-radius:4px;justify-self:end}
+.msg .ms{display:block;font-size:11.5px;color:var(--muted);margin-bottom:3px;font-weight:600}
+.case{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;background:var(--readonly);border:1px solid #D5DCF0;border-radius:var(--r-lg);padding:14px 16px}
+.case .av{background:#7C3AED}
+.case .lbl{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--primary)}
+.case .body{display:grid;gap:8px;min-width:0}
+
+/* quiz */
+.quiz{display:grid;gap:10px}
+.q{border:1px solid var(--border);border-radius:var(--r-md);padding:12px;display:grid;gap:10px;background:var(--card)}
+.qp{font-weight:500}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts.stack{display:grid}
+.opt{border:1px solid var(--border);background:var(--card);border-radius:8px;padding:7px 12px;font-size:14px;cursor:pointer;color:var(--fg);text-align:left;line-height:1.4}
+.opt:hover{background:var(--row)}
+.opt.sel{border-color:var(--primary);background:var(--tarde-soft);box-shadow:inset 0 0 0 1px var(--primary)}
+.opt.right{background:var(--accent-dk);border-color:var(--accent-dk);color:#fff}
+.opt.wrong{background:var(--bad);border-color:var(--bad);color:#fff}
+.fb{font-size:14px;border-radius:8px;padding:8px 10px}
+.fb.ok{background:var(--accent-soft);color:#0B5A37}
+.fb.no{background:var(--bad-soft);color:#991B1B}
+
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:640px){.cmp{grid-template-columns:1fr}}
+.ex{border-radius:var(--r-md);padding:12px 14px;display:grid;gap:6px;font-size:14px;min-width:0}
+.ex.bad{background:var(--bad-soft);border:1px solid #F7C4C4}
+.ex.good{background:var(--accent-soft);border:1px solid #BFE5B6}
+.ex .lbl{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.ex.bad .lbl{color:#B42318} .ex.good .lbl{color:var(--accent-dk)}
+.ex pre{margin:0;font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;word-break:break-word;color:var(--fg)}
+.ex ul{margin:0;padding-left:18px;display:grid;gap:4px}
+
+/* details (checklist, reveal) */
+details.it{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+details.it[open]{border-color:#BFE5B6}
+details.it > summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:13px 16px;font-weight:600;font-size:15px}
+details.it > summary::-webkit-details-marker{display:none}
+details.it > summary:hover{background:var(--row)}
+details.it > summary .n{width:26px;height:26px;border-radius:7px;background:var(--tarde-soft);color:var(--primary);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+details.it > summary .chev{margin-left:auto;width:18px;height:18px;color:var(--muted);transition:transform .2s;flex:none}
+details.it[open] > summary .chev{transform:rotate(180deg)}
+details.it .db{padding:2px 16px 16px 54px;display:grid;gap:12px}
+@media (max-width:600px){details.it .db{padding-left:16px}}
+details.rv{border:1px dashed var(--border);border-radius:var(--r-sm);padding:8px 12px;background:var(--card)}
+details.rv summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--primary)}
+details.rv[open]{border-style:solid;border-color:#BFE5B6;background:var(--accent-soft)}
+details.rv > div{margin-top:8px;font-size:14.5px}
+
+/* forms */
+.fld{display:grid;gap:5px;min-width:0}
+.fld label,.flbl{font-size:13px;font-weight:600;color:var(--sec-fg)}
+input[type=text],select,textarea{width:100%;font-size:14.5px;background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 10px;min-width:0}
+textarea{resize:vertical;line-height:1.45}
+input[type=text]:focus,select:focus,textarea:focus{outline:none;border:2px solid var(--accent);padding:7px 9px}
+.ck{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--fg);cursor:pointer}
+.ck input{width:17px;height:17px;margin-top:2px;accent-color:var(--accent-dk);flex:none}
+.counter{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.counter.over{color:var(--warn);font-weight:600}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:var(--r-lg);border:1px solid transparent;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s;text-decoration:none;white-space:nowrap}
+.btn svg{width:16px;height:16px;flex:none}
+.btn-p{background:var(--primary);color:#fff} .btn-p:hover{background:var(--primary-dk)}
+.btn-g{background:var(--accent-dk);color:#fff} .btn-g:hover{background:#016B41}
+.btn-o{background:var(--card);color:var(--sec-fg);border-color:var(--border)} .btn-o:hover{background:var(--accent-soft)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.sm{min-height:34px;padding:0 11px;font-size:13px;border-radius:var(--r-sm)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* view footer */
+.vf{display:grid;gap:12px;border-top:1px solid var(--border);padding-top:18px}
+.vf .nav2{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.vf .nav2 a{display:grid;gap:2px;text-decoration:none;border:1px solid var(--border);background:var(--card);border-radius:var(--r-md);padding:10px 14px;min-width:0;max-width:48%;color:var(--fg)}
+.vf .nav2 a:hover{background:var(--accent-soft)}
+.vf .nav2 a span{font-size:12px;color:var(--muted)}
+.vf .nav2 a b{font-size:14.5px;font-weight:600}
+.vf .nav2 a.nx{margin-left:auto;text-align:right}
+@media (max-width:520px){.vf .nav2 a{max-width:100%;flex:1 1 100%}}
+.notes{display:grid;gap:8px}
+
+/* matrix */
+.mx{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px;font-size:13.5px}
+.mx div{border-radius:8px;padding:10px;display:grid;gap:4px;align-content:start}
+.mx .ax{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;align-content:center}
+.mx .c{border:1px solid var(--border)}
+.mx .c.p1{background:var(--bad-soft);border-color:#F7C4C4}
+.mx .c.p2{background:var(--warn-soft);border-color:#F9D3B5}
+.mx .c.p4{background:var(--secondary)}
+@media (max-width:560px){.mx{grid-template-columns:1fr 1fr}.mx .ax.sd{display:none}}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:var(--r-sm);color:#fff;white-space:nowrap;justify-self:start}
+.chip.ok{background:var(--accent-dk)} .chip.bad{background:var(--bad)} .chip.info{background:var(--primary)} .chip.warn{background:var(--warn)}
+
+/* flow */
+.flow{display:grid;gap:6px;justify-items:center}
+.fs{width:100%;max-width:560px;border-radius:var(--r-md);padding:12px 14px;border:1px solid var(--border);background:var(--card);display:grid;gap:3px}
+.fs .lv{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.fs b{font-size:15px}
+.fs span.d{font-size:13.5px;color:var(--sec-fg)}
+.fs.cli{background:var(--secondary)} .fs.cli .lv{color:var(--muted)}
+.fs.n1{border:2px solid var(--accent);background:var(--accent-soft)} .fs.n1 .lv{color:var(--accent-dk)}
+.fs.n2{border-color:#B9C8E8;background:var(--tarde-soft)} .fs.n2 .lv{color:var(--primary)}
+.fs.dev{border-color:#D8C4F0;background:var(--n2-soft)} .fs.dev .lv{color:var(--n2)}
+.farr{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.farr::before{content:"";width:2px;height:16px;background:var(--border)}
+.fbr{width:100%;max-width:560px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fbr div{border-radius:var(--r-sm);padding:10px 12px;font-size:13.5px;border:1px dashed var(--border);background:var(--card)}
+.fbr b{display:block;font-size:13.5px}
+@media (max-width:480px){.fbr{grid-template-columns:1fr}}
+
+/* products */
+.prod{display:grid;gap:6px;align-content:start}
+.prod .ic{width:34px;height:34px;border-radius:9px;background:var(--tarde-soft);color:var(--primary);display:grid;place-items:center}
+.prod .ic svg{width:18px;height:18px}
+.prod p{font-size:14px;color:var(--sec-fg)}
+.prod small{font-size:12.5px;color:var(--muted)}
+
+/* devtools mock */
+.dev{border:1px solid #3C4043;border-radius:var(--r-md);overflow:hidden;background:#202124;color:#E8EAED;font-family:var(--mono);font-size:12px}
+.dev-tabs{display:flex;gap:2px;background:#292A2D;border-bottom:1px solid #3C4043;overflow-x:auto}
+.dev-tabs span{padding:7px 12px;color:#9AA0A6;white-space:nowrap}
+.dev-tabs span.on{color:#E8EAED;border-bottom:2px solid #8AB4F8}
+.dev-wrap{overflow-x:auto}
+.dev table{border-collapse:collapse;width:100%;min-width:520px}
+.dev th,.dev td{padding:7px 10px;text-align:left;border-bottom:1px solid #3C4043;white-space:nowrap}
+.dev th{color:#9AA0A6;font-weight:400;background:#292A2D}
+.dev tbody tr{cursor:pointer}
+.dev tbody tr:hover{background:#2D3A4F}
+.dev tbody tr.sel{background:#1E3A5F}
+.dev tr.err td{color:#F28B82}
+.dev-det{border-top:1px solid #3C4043;padding:10px 12px;display:grid;gap:4px;background:#1B1C1E}
+.dev-det .k{color:#9AA0A6}
+.dev-det pre{margin:4px 0 0;white-space:pre-wrap;word-break:break-word;color:#E8EAED;font-family:var(--mono);font-size:12px}
+
+/* simulation */
+.rot{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg)}
+.rot table{border-collapse:collapse;width:100%;min-width:440px;font-size:14px}
+.rot th,.rot td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:left}
+.rot th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--secondary);font-weight:600}
+.rot tr:last-child td{border-bottom:0}
+.timer{display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between}
+.clock{font-family:var(--mono);font-size:44px;font-weight:500;color:var(--brand);font-variant-numeric:tabular-nums;line-height:1}
+.clock.end{color:var(--bad)}
+.rounds{display:flex;gap:6px}
+.rounds button{border:1px solid var(--border);background:var(--card);border-radius:8px;padding:6px 12px;font-size:13.5px;cursor:pointer}
+.rounds button.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:720px){.cases{grid-template-columns:1fr 1fr}}
+.cbtn{display:grid;gap:3px;text-align:left;border:1px solid var(--border);background:var(--card);border-radius:var(--r-md);padding:10px 12px;cursor:pointer;min-width:0}
+.cbtn:hover{background:var(--row)}
+.cbtn.on{border:2px solid var(--primary);padding:9px 11px;background:var(--tarde-soft)}
+.cbtn span{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.cbtn b{font-size:14px}
+.roles{display:flex;gap:6px;flex-wrap:wrap}
+.roles button{border:1px solid var(--border);background:var(--card);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;font-weight:500}
+.roles button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.rolebox{display:grid;gap:12px}
+.score{display:flex;align-items:baseline;gap:8px}
+.score b{font-size:30px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums}
+
+/* builder */
+.build{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+@media (max-width:1100px){.build{grid-template-columns:1fr 1fr}.build .never{grid-column:1/-1}}
+@media (max-width:640px){.build{grid-template-columns:1fr}}
+.bcol{display:grid;gap:12px;padding:16px}
+.bcol-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bcol-h h3{font-size:15px;font-weight:700;color:var(--brand)}
+.cnt{font-size:12px;font-weight:600;color:var(--sec-fg);background:var(--secondary);border-radius:8px;padding:2px 8px;font-variant-numeric:tabular-nums}
+.bi{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start}
+.bt2{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);margin-top:1px;display:grid;place-items:center;transition:background .15s}
+.bi.ok .bt2{background:var(--accent);border-color:var(--accent)}
+.bi.ok .bt2::after{content:"";width:9px;height:5px;border:2.5px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.bf{display:grid;gap:6px;min-width:0}
+.bl{font-size:14px;font-weight:500;color:var(--fg)}
+.bi.ok .bl{color:var(--accent-dk)}
+.inl{display:flex;gap:6px}
+.inl input{flex:1;min-width:0}
+.nv-ck{padding:6px 0;border-bottom:1px solid var(--border)}
+.nv-ck:last-child{border-bottom:0}
+.nv-ck input{accent-color:var(--bad)}
+.build-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:12px 16px;position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:5;box-shadow:0 6px 20px rgba(3,40,97,.08)}
+.bb-status{display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-width:0}
+
+/* tests */
+.tres{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.tbig{font-size:28px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums}
+
+/* N2 */
+.tbl{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg)}
+.tbl table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}
+.tbl th,.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.tbl th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--secondary);font-weight:600}
+.tbl tr:last-child td{border-bottom:0}
+.code{font-family:var(--mono);font-size:12.5px;font-weight:500;padding:1px 6px;border-radius:5px;background:var(--secondary)}
+.s2{color:#0B5A37;background:var(--accent-soft)} .s4{color:#9A3412;background:var(--warn-soft)} .s5{color:#991B1B;background:var(--bad-soft)}
+.analogy{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.analogy{grid-template-columns:1fr 1fr}}
+.an{border:1px solid var(--border);border-radius:var(--r-md);padding:12px;background:var(--card);display:grid;gap:4px}
+.an span{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.an b{font-size:15px;color:var(--brand)}
+.an p{font-size:13.5px;color:var(--sec-fg)}
+.sw{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:var(--card)}
+.sw-op{border-bottom:1px solid var(--border)}
+.sw-op:last-child{border-bottom:0}
+.sw-op > summary{list-style:none;display:flex;gap:10px;align-items:center;padding:10px 12px;cursor:pointer;flex-wrap:wrap}
+.sw-op > summary::-webkit-details-marker{display:none}
+.mth{font-family:var(--mono);font-size:12px;font-weight:700;color:#fff;border-radius:5px;padding:4px 8px;min-width:58px;text-align:center}
+.mth.get{background:#0F6CBD} .mth.post{background:#0B7A4B}
+.sw-op.get > summary{background:#EEF5FC} .sw-op.post > summary{background:#ECF7F1}
+.sw-path{font-family:var(--mono);font-size:13px;font-weight:600;overflow-wrap:anywhere}
+.sw-sum{font-size:13px;color:var(--sec-fg)}
+.sw-b{padding:12px;display:grid;gap:10px;font-size:14px}
+.sw-b h4{font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+pre.json{margin:0;background:#1B1C1E;color:#E8EAED;border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:12.5px;white-space:pre-wrap;word-break:break-word}
+.pm{border:1px solid var(--border);border-radius:var(--r-md);background:var(--card);overflow:hidden}
+.pm-bar{display:flex;gap:6px;padding:10px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:var(--secondary)}
+.pm-bar select{width:auto;font-family:var(--mono);font-weight:700;font-size:13px}
+.pm-bar .url{flex:1 1 220px;min-width:0}
+.pm-params{padding:10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border-bottom:1px solid var(--border)}
+@media (max-width:520px){.pm-params{grid-template-columns:1fr}}
+.pm-res{padding:10px;display:grid;gap:8px}
+.pm-st{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--sec-fg)}
+
+.sitefoot{max-width:880px;width:100%;margin:12px auto 0;border-top:1px solid var(--border);padding-top:16px;display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--accent-dk);color:#fff;padding:10px 16px;border-radius:var(--r-md);font-size:14px;z-index:60;max-width:calc(100vw - 32px)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<style>
+/* ===== v3: trilha N1, N2, N3 ===== */
+.qrbox{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+.qrbox .qr{width:150px;height:150px;background:#fff;border-radius:12px;padding:8px;display:block}
+.qrbox .qr svg{width:100%;height:100%;display:block}
+@media (max-width:560px){.qrbox{grid-template-columns:1fr}.qrbox .qr{justify-self:center}}
+.qrfull{position:fixed;inset:0;z-index:80;background:var(--brand);color:#fff;display:grid;place-items:center;align-content:center;gap:18px;padding:24px;text-align:center}
+.qrfull .qr{width:min(64vmin,560px);height:min(64vmin,560px);background:#fff;border-radius:18px;padding:16px}
+.qrfull .qr svg{width:100%;height:100%;display:block}
+.qrfull b{font-size:clamp(20px,3vw,34px);font-weight:800}
+.qrfull span{font-family:var(--mono);font-size:clamp(14px,2vw,22px);color:#CFE3C9}
+.qrfull button{position:absolute;top:16px;right:16px}
+.projbtn{margin-left:auto}
+@media (max-width:760px){.projbtn{display:none}}
+.btn.wrap{white-space:normal;text-align:left;min-height:40px;padding-block:8px}
+html.proj{zoom:1.22}
+html.proj .side{font-size:14px}
+.lvcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.lvcards{grid-template-columns:1fr}}
+.lvc{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;display:grid;gap:10px;align-content:start}
+.lvc.l1{border-top:5px solid var(--accent-dk)} .lvc.l2{border-top:5px solid var(--primary)} .lvc.l3{border-top:5px solid var(--n2)}
+.lvc h3{font-size:18px;color:var(--brand)}
+.lvc .q{font-size:15px;font-weight:600;color:var(--fg)}
+.lv{display:inline-flex;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:6px;white-space:nowrap;justify-self:start}
+.lv.l1{background:var(--accent-soft);color:var(--accent-dk)} .lv.l2{background:var(--tarde-soft);color:var(--primary)} .lv.l3{background:var(--n2-soft);color:var(--n2)} .lv.l0{background:var(--secondary);color:var(--muted)} .lv.lp{background:var(--warn-soft);color:var(--warn)}
+.steps{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.st{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start;background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px}
+.st .num{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+.st .bd{display:grid;gap:4px;min-width:0}
+.st .hd{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.st .hd b{font-size:15.5px}
+.st p{font-size:14px;color:var(--sec-fg)}
+.st .jo{font-size:13.5px;color:var(--fg);background:var(--readonly);border-radius:8px;padding:6px 10px}
+.st .jo i{font-style:normal;font-weight:700;color:var(--primary)}
+.st.n1x{border-left:4px solid var(--accent-dk)} .st.n2x{border-left:4px solid var(--primary)} .st.n3x{border-left:4px solid var(--n2)}
+.dev-tabs button{all:unset;padding:7px 12px;color:#9AA0A6;white-space:nowrap;cursor:pointer}
+.dev-tabs button.on{color:#E8EAED;border-bottom:2px solid #8AB4F8}
+.dev-tabs button:focus-visible{outline:2px solid #8AB4F8;outline-offset:-2px}
+.dev-sub{display:flex;gap:2px;border-bottom:1px solid #3C4043;background:#202124}
+.dev-sub button{all:unset;padding:6px 10px;color:#9AA0A6;cursor:pointer;font-size:12px}
+.dev-sub button.on{color:#E8EAED;border-bottom:2px solid #8AB4F8}
+.dev-tool{display:flex;gap:12px;align-items:center;padding:6px 10px;border-bottom:1px solid #3C4043;color:#9AA0A6;flex-wrap:wrap}
+.dev-tool label{display:inline-flex;gap:5px;align-items:center;cursor:pointer}
+.dev-tool .flt{padding:2px 8px;border-radius:10px;cursor:pointer;border:1px solid transparent}
+.dev-tool .flt.on{background:#394457;color:#E8EAED}
+.con{padding:8px 0;min-height:120px}
+.con div{padding:5px 12px;border-bottom:1px solid #2D2E31;white-space:pre-wrap;word-break:break-word}
+.con .e{background:#290000;color:#F28B82;border-bottom-color:#5C0000}
+.con .w{background:#332B00;color:#FDD663}
+.json-ex{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+@media (max-width:720px){.json-ex{grid-template-columns:1fr}}
+.jrules{display:grid;gap:6px}
+.jrules div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;font-size:14px;align-items:baseline}
+.jrules .code{justify-self:start}
+.sw-try{display:grid;gap:8px;border-top:1px dashed var(--border);padding-top:10px}
+.sw-try .row input{max-width:220px}
+.sw-out{display:grid;gap:6px}
+.outcomes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.outcomes{grid-template-columns:1fr}}
+.fac-only{display:none}
+.mchk{display:grid;gap:6px}
+</style>
+<style>
+main.fac{padding:24px 16px 48px}
+.fac .view{gap:26px}
+.facnav .row{gap:6px 14px}
+.facnav a{font-size:14px;font-weight:600}
+.fb-blk .vmeta .btn{margin-left:auto}
+.fb-blk{scroll-margin-top:72px}
+ol.clean{padding-left:20px}
+@media print{.top,.facnav{display:none}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true">C</span><span class="bt"><b>Roteiro do facilitador</b><small>Tarde técnica · 04/11/2026</small></span></a>
+  <a class="btn btn-o sm projbtn" href="index.html" target="_blank" rel="noopener">Abrir o guia</a>
+</header>
+<main class="fac">
+  <div class="view" style="display:grid">
+    <div class="callout warn"><b>Página do facilitador</b><p>Esta página não aparece no menu do guia, mas é pública: quem tiver o endereço consegue abrir. Não coloque aqui nada que não possa ser lido por um aprendiz.</p></div>
+
+    <nav class="card stack facnav" aria-label="Blocos">
+      <b>Ir para</b>
+      <div class="row">
+        <a href="#antes">Antes de começar</a><a href="#b1">1 Abertura</a><a href="#b2">2 Trilha</a><a href="#b3">3 Coplan</a><a href="#b4">4 Fluxo</a><a href="#b5">5 Levantar</a><a href="#b6">6 F12</a><a href="#b7">7 API</a><a href="#b8">8 OS</a><a href="#b9">9 Retorno</a><a href="#b10">10 Encerramento</a><a href="#cortes">Se atrasar</a><a href="#pendencias">Validar antes</a>
+      </div>
+    </nav>
+
+    <div class="blk" id="antes">
+      <h2>Antes de começar</h2>
+      <div class="g2">
+        <div class="card stack"><h3>Na véspera</h3><ul class="clean">
+          <li>Baixe o guia para o notebook como plano B: abra o guia, aperte <span class="code">Ctrl + S</span> e salve como <span class="code">Página da web, completa</span>. Ele funciona sem internet.</li>
+          <li>Leia as <a href="#pendencias">pendências</a> e resolva as que der.</li>
+          <li>Faça o caminho inteiro uma vez, clicando em tudo que você vai mostrar.</li>
+        </ul></div>
+        <div class="card stack"><h3>30 minutos antes</h3><ul class="clean">
+          <li>Conecte o projetor e abra <span class="code">diegoloureiro84.github.io/capacitacao-n1</span> no Chrome.</li>
+          <li>Clique em <b>Modo telão</b> no topo. Se ainda ficar pequeno, use <span class="code">Ctrl +</span>.</li>
+          <li>Teste o QR code com o seu celular, de onde o último aluno vai sentar.</li>
+          <li>Deixe esta página aberta no seu celular.</li>
+          <li>Feche WhatsApp, e-mail e notificações do notebook. Tudo aparece no telão.</li>
+        </ul></div>
+      </div>
+      <div class="callout"><b>Como conduzir 20 pessoas com um telão</b>
+        <ul class="clean">
+          <li><b>Exercício de escolha:</b> leia a pergunta, conte 10 segundos, peça para levantarem a mão em cada opção e só então clique na resposta. Pergunte a quem errou por que escolheu.</li>
+          <li><b>Exercício de escrever:</b> cada um escreve no celular. Chame dois ou três para ler em voz alta.</li>
+          <li><b>Simulação ao vivo:</b> você faz a Joana. A turma é o N1: cada pessoa manda uma mensagem por vez, em voz alta.</li>
+          <li>Não espere todo mundo terminar. Quando metade terminou, siga.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blk fb-blk" id="b1">
+  <div class="vmeta"><span class="per t">Bloco 1 de 10</span><span class="mono">13:30 às 13:40 · 10 min</span><a class="btn btn-o sm" href="index.html#abertura" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>Abertura da tarde</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Todo mundo com o guia aberto no celular, o caso da Joana apresentado e o teste rápido feito.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Abra o <b>Início</b>. Clique em <b>Mostrar o QR em tela cheia</b> e deixe 2 minutos.</li><li>Feche o QR e role até <b>O caso da Joana</b>. Leia a mensagem dela em voz alta, com pressa.</li><li>Role até o <b>Teste rápido</b>. Dê 3 minutos. Não mostre as respostas.</li><li>Abra o bloco <b>Abertura da tarde</b> e mostre os três cartões (Hoje, Depois, Sempre).</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"De manhã vocês aprenderam a falar com o cliente. Agora vão ver o que acontece com o que ele fala, dentro da Coplan."</li><li>"A Joana vai acompanhar a gente a tarde toda. No fim, ela recebe a solução."</li><li>"O teste não vale nota. É para vocês verem o quanto evoluíram no fim da tarde."</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>Pergunte: "Quem já atendeu um cliente pelo chat? Quem já abriu o F12?" Mão levantada. Isso calibra o resto da tarde.</li></ul></div>
+    
+    <div class="kv"><span class="k">Se atrasar</span><p>Se o QR atrasar, siga com o caso da Joana e deixe o QR na tela de novo no intervalo.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>"Antes de entrar no atendimento, vamos ver onde vocês estão e para onde podem ir."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b2">
+  <div class="vmeta"><span class="per t">Bloco 2 de 10</span><span class="mono">13:40 às 13:55 · 15 min</span><a class="btn btn-o sm" href="index.html#trilha" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>A trilha: N1, N2 e N3</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Entender que cada nível responde uma pergunta diferente e que a OS liga os três.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Mostre os três cartões. Leia só a pergunta de cada nível, em destaque.</li><li>Mostre o callout <b>O que liga os três níveis é a OS</b>.</li><li>Mostre a tabela <b>Como crescer na trilha</b>.</li><li>Faça o exercício <b>Qual nível responde esta pergunta?</b>.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"N1 pergunta o quê e onde. N2 pergunta por quê. O desenvolvedor pergunta como corrigir sem quebrar outra coisa."</li><li>"Quem quer virar N2 precisa primeiro ser um N1 cuja OS não volta."</li><li>"Isto é o caminho de conhecimento. Vaga e promoção quem define é a Coplan." Diga isso para não criar expectativa.</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>Exercício: mão levantada em cada opção antes de clicar.</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>"Em qual tela e com qual inscrição": <b>N1</b></li><li>"Por que só a Prefeitura de Exemplo": <b>N2</b></li><li>"Qual linha do código": <b>N3</b></li><li>"O cliente confirmou": <b>N1</b></li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Pule a tabela de crescimento e mostre só os três cartões.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>"Para saber o que perguntar, primeiro vocês precisam conhecer o que a Coplan entrega."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b3">
+  <div class="vmeta"><span class="per t">Bloco 3 de 10</span><span class="mono">13:55 às 14:15 · 20 min</span><a class="btn btn-o sm" href="index.html#coplan" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>A Coplan e o cliente público</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Saber os produtos e por que um erro na prefeitura pesa mais que em outros lugares.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Leia <b>O que a Coplan faz</b>.</li><li>Passe pelos seis produtos. Para cada um, dê um exemplo real que você conhece.</li><li>Mostre <b>Quem está do outro lado do chat</b>.</li><li>Faça o exercício <b>Em que produto está o problema?</b>.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"Vocês atendem o servidor. Mas atrás dele quase sempre tem um cidadão no balcão."</li><li>"Erro na folha é salário de alguém. Erro no IPTU é prazo de lei."</li><li>No cartão <b>Dados pessoais</b>: "CPF e salário de cidadão. Tudo o que vocês copiam e mandam tem a LGPD por trás."</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>Exercício: leia cada mensagem, a turma fala o produto em voz alta.</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>Guia do ISS: <b>Tributário</b></li><li>Contracheque: <b>RH</b></li><li>Empenho: <b>Contábil</b></li><li>Requisição da escola: <b>Educação</b></li><li>Processo tramitado: <b>Administrativo</b></li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Pule épocas de pico e "Por que um erro pesa mais". Fale em uma frase.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>"Agora o caminho inteiro de um atendimento, do começo ao fim."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b4">
+  <div class="vmeta"><span class="per t">Bloco 4 de 10</span><span class="mono">14:15 às 14:45 · 30 min</span><a class="btn btn-o sm" href="index.html#fluxo" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>O fluxo completo do atendimento</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Conhecer os nove passos, saber classificar, priorizar e decidir quem resolve.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Passe pelos nove passos devagar. Em cada um, leia a linha da <b>Joana</b>.</li><li>Pare no passo 6 e diga que os blocos 5 a 9 da tarde detalham do passo 5 em diante.</li><li>Mostre os quatro tipos de pedido e faça <b>Classifique cada pedido</b>.</li><li>Mostre a matriz de prioridade.</li><li>Faça <b>Quem resolve?</b>.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"Escalar não é passar o problema adiante. É entregar com tudo o que o próximo precisa."</li><li>"Reparem: a Joana chegou como erro e no N2 virou configuração. Classificar como erro e explicar a suspeita está certo."</li><li>Na prioridade: "Duas perguntas. Quantos parados? Tem data que não pode passar?"</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>Simulação ao vivo de 3 minutos, depois do passo 2: você é a Joana, com pressa. Três voluntários mandam, um de cada vez, a primeira resposta. A turma escolhe a melhor.</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>Classificar: segunda via <b>Dúvida</b> · Erro inesperado <b>Erro</b> · desconto 2026 <b>Configuração</b> · Excel <b>Melhoria</b></li><li>Quem resolve: segunda via <b>N1</b> · parâmetro 2026 <b>N2</b> · botão quebrou após atualização <b>Desenvolvedor</b> · relatório novo <b>Gestão do produto</b> · erro 500 sem causa <b>N2</b></li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Faça só 2 perguntas do "Quem resolve?".</p></div>
+    <div class="kv"><span class="k">Transição</span><p>"O passo 5 é onde o N1 faz a diferença. Vamos levantar o problema da Joana."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b5">
+  <div class="vmeta"><span class="per t">Bloco 5 de 10</span><span class="mono">14:45 às 15:15 · 30 min</span><a class="btn btn-o sm" href="index.html#levantar" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>Levantar e mapear o problema</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Fazer as perguntas certas, uma por vez, e montar o mapa do problema.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Comece pelo exercício <b>Marque só o que a Joana já te contou</b>.</li><li>Mostre a tabela das <b>sete perguntas</b>. Leia a coluna do meio, que é o texto que eles vão usar.</li><li>Faça <b>Qual é a melhor próxima pergunta</b>.</li><li>Mostre <b>Reproduzir</b> e os três resultados.</li><li>Mostre o <b>mapa do problema da Joana</b> e pare na nota do final: "falta o motivo real".</li><li>Mostre o checklist pelos títulos. Abra só o item 5 (passos) como exemplo.</li><li>Abra dois itens do <b>Nunca</b>: senha e prazo de correção.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"A Joana só disse três coisas. Todo o resto é pergunta de vocês."</li><li>"Uma pergunta por mensagem. Cinco perguntas juntas recebem meia resposta."</li><li>"Homologação é a cópia de testes. Produção é a prefeitura de verdade. Teste sempre em homologação."</li><li>No Nunca: "Prometa o horário do retorno, nunca o prazo da correção."</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>Escuta: mão levantada em cada item. Depois clique em Conferir.</li><li>Simulação ao vivo de 5 minutos: você é a Joana e só responde o que perguntarem (use a lista do Caso 1 em Simulações em trios). A turma faz as sete perguntas, uma pessoa por vez. Quem fizer duas perguntas juntas, devolva: "Qual delas eu respondo primeiro?"</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>Escuta: marcar só <b>IPTU</b>, <b>tela de emissão</b> e <b>urgência</b>.</li><li>Próxima pergunta: <b>"Qual é a inscrição do imóvel?"</b></li><li>Respostas da Joana na simulação: inscrição 01.02.003.0045; tela mostra "Erro inesperado"; começou hoje às 9h; a colega também não consegue; vencimento na sexta.</li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Mostre o checklist só pelos títulos, sem abrir nenhum item.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>Antes do intervalo: "Na volta, vamos descobrir o motivo real do erro da Joana. A tela não conta, mas o navegador conta."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b6">
+  <div class="vmeta"><span class="per t">Bloco 6 de 10</span><span class="mono">15:30 às 15:50 · 20 min</span><a class="btn btn-o sm" href="index.html#f12" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>Inspecionar no navegador (F12)</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Saber abrir o DevTools, achar a requisição com erro e levar para a OS sem vazar dados.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Leia <b>Por que olhar por trás da tela</b>.</li><li>Abra o F12 de verdade no seu Chrome, nesta própria página, para eles verem que existe. Mostre a aba Network e feche.</li><li>Mostre a tabela das abas.</li><li>Passe pelo passo a passo.</li><li>Na simulação: clique em <b>Console</b> e mostre a linha vermelha. Volte para <b>Network</b>, clique na linha vermelha <b>emitir</b>, depois em <b>Payload</b> e em <b>Response</b>.</li><li>Clique em <b>Copiar para a OS</b>.</li><li>Mostre <b>Cuidados com o F12</b>.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"A tela é o salão do restaurante. O servidor é a cozinha. O F12 mostra o que o garçom trouxe da cozinha."</li><li>Na Response: "Aqui está. A tela dizia Erro inesperado, mas o servidor disse que falta o parâmetro de desconto de 2026. Isso economiza horas do N2."</li><li>No Authorization: "Isso é a chave da casa do usuário. Nunca copiem."</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>Pergunte antes de clicar: "Qual linha vocês abririam primeiro?" A turma aponta a vermelha.</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>A linha certa é <b>emitir · 500 · POST</b>. A mensagem é "Parâmetro de desconto do exercício 2026 não encontrado".</li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Não corte este bloco. Se precisar, pule a demonstração do F12 real e use só a simulação.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>"O que o garçom trouxe veio num formato chamado JSON. Vamos aprender a ler."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b7">
+  <div class="vmeta"><span class="per t">Bloco 7 de 10</span><span class="mono">15:50 às 16:20 · 30 min</span><a class="btn btn-o sm" href="index.html#api" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>API, JSON e Swagger</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Entender o que é uma API, ler um JSON simples e usar um Swagger para comparar cenários.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Mostre a analogia do restaurante.</li><li>Passe rápido pela tabela da requisição e pela de status. Detenha-se em 401, 403 e 500.</li><li>Mostre as regras do JSON ao lado do exemplo. Aponte cada regra no exemplo.</li><li>Faça <b>Leia o JSON acima e responda</b>.</li><li>Leia o texto do Swagger. Abra o <b>GET</b> e mostre parâmetros e respostas.</li><li>Abra o <b>POST</b>. Em Try it out, digite <span class="code">01.02.003.0045</span> e <span class="code">2026</span>, clique em Execute (500). Troque para <span class="code">2025</span> e clique de novo (200).</li><li>Faça <b>Leia o Swagger e responda</b>.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"401 é sessão expirada. 403 é sem permissão. 500 é problema do nosso lado."</li><li>"null é vazio. false é não. Colchete é lista."</li><li>Depois do 2025: "Mudou só o ano e o erro sumiu. O problema não é o imóvel da Joana, é o exercício de 2026. Isso vai na OS."</li><li>No Postman: "É a ferramenta do N2. Está na trilha N2 do guia para quem quiser."</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>JSON: chame quatro pessoas diferentes, uma por pergunta.</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>JSON: parcela 2 <b>613.44</b> · paga? <b>não, dataPagamento é null</b> · desconto? <b>não</b> · parcelas <b>3</b></li><li>Swagger: buscar <b>GET</b> · inscrição vai na <b>query</b> · 2025 ok e 2026 erro <b>problema do exercício 2026</b></li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Pule o Try it out e o exercício do Swagger. Mostre só a página.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>"Agora vocês têm tudo. Vamos montar a OS da Joana."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b8">
+  <div class="vmeta"><span class="per t">Bloco 8 de 10</span><span class="mono">16:20 às 16:35 · 15 min</span><a class="btn btn-o sm" href="index.html#escalar" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>Montar a OS e escalar ao N2</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Reconhecer uma OS incompleta, ver uma completa e avisar o cliente do jeito certo.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Leia a <b>Regra de ouro</b>.</li><li>Faça <b>Esta OS está pronta para o N2?</b>.</li><li>Mostre a <b>OS da Joana, completa</b>. Aponte de onde veio cada linha: blocos 4, 5, 6 e 7.</li><li>Clique em <b>Abrir o montador de OS</b> e depois em <b>Preencher com o caso da Joana</b>. Mostre os itens ficando verdes. Volte.</li><li>Leia o pitch da Joana e a mensagem <b>Avise o cliente que escalou</b>.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"Se não está na OS, não aconteceu."</li><li>Na OS ruim: "Esta OS volta com oito perguntas. Enquanto isso, a Joana está com o contribuinte no balcão."</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>OS ruim: a turma fala em voz alta o que está faltando. Depois clique em Conferir.</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>Falta tudo, menos o <b>nome do município</b>.</li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Pule a demonstração do montador. Diga onde fica.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>"A OS saiu do N1. Mas o atendimento ainda não acabou."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b9">
+  <div class="vmeta"><span class="per t">Bloco 9 de 10</span><span class="mono">16:35 às 16:50 · 15 min</span><a class="btn btn-o sm" href="index.html#retorno" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>Do N2 de volta ao cliente</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Saber o que acontece depois do N1 e como devolver a solução ao cliente.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Mostre os três passos do N2.</li><li>Mostre os quatro desfechos. Aponte o cartão <b>Configuração</b>: é o caso da Joana.</li><li>Mostre o ciclo do desenvolvedor.</li><li>Mostre <b>Enquanto espera</b>: a mensagem das 11h.</li><li>Mostre os quatro passos de <b>Devolver a solução</b>.</li><li>Faça <b>Qual é a melhor mensagem de solução para a Joana?</b>.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"Cliente sem notícia acha que foi esquecido. Retorno sem solução ainda é retorno."</li><li>"Só encerre depois que o cliente confirmar que funcionou."</li><li>"Na mensagem para o cliente, nada de endpoint e erro 500. Diga o que mudou para ela."</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>Mensagem de solução: mão levantada em cada opção. Pergunte a quem escolheu a segunda por que ela é ruim, mesmo estando certa.</li><li>Se der tempo: dois voluntários leem a devolutiva de melhoria que escreveram.</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>A melhor é a <b>terceira</b>: "Joana, já está liberado: faltava um ajuste de configuração..."</li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Pule o exercício de escrever a devolutiva.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>"Vamos ver o quanto vocês evoluíram desde as 13h30."</p></div>
+  </div>
+</div>
+<div class="blk fb-blk" id="b10">
+  <div class="vmeta"><span class="per t">Bloco 10 de 10</span><span class="mono">16:50 às 17:00 · 10 min</span><a class="btn btn-o sm" href="index.html#encerramento" target="_blank" rel="noopener">Abrir no guia</a></div>
+  <h2>Teste final e encerramento</h2>
+  <div class="card stack">
+    <div class="kv"><span class="k">Objetivo</span><p>Refazer o teste, comparar e passar a palavra para o RH.</p></div>
+    <div class="kv"><span class="k">Na tela, nesta ordem</span><ol class="clean"><li>Abra o bloco e dê 3 minutos para o teste.</li><li>Depois de todos verem o resultado, peça uma mão levantada: "Quem acertou mais que no começo?"</li><li>Mostre <b>Este guia continua com você</b> e <b>Os seus próximos 30 dias</b>.</li><li>Volte ao Início e deixe o QR em tela cheia enquanto o RH fala.</li></ol></div>
+    <div class="kv coplan"><span class="k">Fale</span><ul class="clean"><li>"O guia continua no celular de vocês. O checklist e o montador são para usar amanhã."</li><li>"Quem quiser ir para o N2, a trilha está lá. Quem quiser programar, a trilha N3 diz por onde começar."</li></ul></div>
+    <div class="kv"><span class="k">Com a turma</span><ul class="clean"><li>Pergunte a uma ou duas pessoas: "O que você vai fazer diferente amanhã?"</li></ul></div>
+    <div class="kv"><span class="k">Gabarito</span><ul class="clean"><li>Teste: 1 <b>Identificar município, usuário e módulo</b> · 2 <b>Melhoria</b> · 3 <b>Desenvolvedor</b> · 4 <b>A conversa entre a tela e o servidor</b> · 5 <b>Falha no servidor</b> · 6 <b>Vazio</b> · 7 <b>Documentar e testar a API</b> · 8 <b>Retorno até as 16h</b> · 9 <b>Cliente confirma e OS encerrada</b></li></ul></div>
+    <div class="kv"><span class="k">Se atrasar</span><p>Se faltar tempo, peça para fazerem o teste em casa e passe direto para o RH.</p></div>
+    <div class="kv"><span class="k">Transição</span><p>Passe a palavra para a Gabryelle.</p></div>
+  </div>
+</div>
+
+    <div class="blk" id="cortes">
+      <h2>Se atrasar: o que cortar, nesta ordem</h2>
+      <div class="tbl"><table><thead><tr><th>Atraso</th><th>Corte</th><th>Ganha</th></tr></thead><tbody>
+        <tr><td>5 min</td><td>Bloco 3: pule "Épocas de pico" e "Por que um erro pesa mais". Fale em uma frase.</td><td>5 min</td></tr>
+        <tr><td>10 min</td><td>Bloco 4: faça só 2 perguntas do "Quem resolve?".</td><td>3 min</td></tr>
+        <tr><td>15 min</td><td>Bloco 5: mostre o checklist só pelos títulos, sem abrir. Os alunos leem depois.</td><td>5 min</td></tr>
+        <tr><td>20 min</td><td>Bloco 7: pule o Try it out e o exercício do Swagger. Mostre só a página do Swagger.</td><td>7 min</td></tr>
+        <tr><td>25 min</td><td>Bloco 9: pule o exercício de escrever a devolutiva.</td><td>4 min</td></tr>
+      </tbody></table></div>
+      <p class="note">Nunca corte o F12 nem o fluxo. São o centro da tarde. Se sobrar tempo, faça o Caso 2 da simulação ao vivo (Segunda via do carnê), com você como cliente.</p>
+    </div>
+
+    <div class="blk" id="pendencias">
+      <h2>Validar antes da aula</h2>
+      <ol class="clean">
+        <li><b>Quem devolve a solução ao cliente:</b> o guia diz "N1 com N2". Confirme com quem coordena o atendimento se é o N1 que fala com o cliente no retorno.</li>
+        <li><b>Nomes dos níveis:</b> o guia chama o desenvolvedor de N3. Confirme que é assim que a Coplan fala.</li>
+        <li><b>Horário do encerramento:</b> no cronograma do RH, a avaliação ia das 16h40 às 17h com a Gabryelle. No guia ficaram 10 minutos (16h50). Combine com ela se 10 minutos bastam.</li>
+        <li><b>Swagger:</b> o guia diz "quando uma API da Coplan tiver Swagger". Se você souber de um Swagger real de homologação, mostre no bloco 7 só como demonstração.</li>
+        <li><b>Campos da OS:</b> o montador usa os campos do checklist, não os campos reais do formulário da OS no Cliente Mais.</li>
+        <li><b>Avaliação de reação:</b> não tem link no guia. Se a Gabryelle tiver um formulário, eu coloco no bloco 10.</li>
+        <li><b>Página da manhã:</b> "Comunicação no chat" foi escrita por mim, não pelo Leonardo. Se ele puder dar uma olhada, melhor.</li>
+      </ol>
+    </div>
+
+    <footer class="sitefoot"><span>Roteiro do facilitador · uso interno</span><a href="index.html">Voltar ao guia</a></footer>
+  </div>
+</main>
+
+</body>
+</html>
